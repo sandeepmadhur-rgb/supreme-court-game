@@ -50,6 +50,12 @@
             </svg>
         );
 
+        const ChevronDownIcon = () => (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        );
+
         const RotateCcwIcon = () => (
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="1 4 1 10 7 10"></polyline>
@@ -64,6 +70,13 @@
             </svg>
         );
 
+        const BookOpenIcon = () => (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+        );
+
         const SupremeCourtGame = () => {
             const [currentCase, setCurrentCase] = useState(0);
             const [gamePhase, setGamePhase] = useState('intro');
@@ -71,6 +84,7 @@
             const [score, setScore] = useState(0);
             const [audioEnabled, setAudioEnabled] = useState(true);
             const [isPlaying, setIsPlaying] = useState(false);
+            const [expandedSections, setExpandedSections] = useState({});
 
             const cases = [
                 {
@@ -78,7 +92,9 @@
                     year: 1954,
                     name: "Brown v. Board of Education",
                     context: "In 1950s America, racial segregation was legal and enforced across the South. 'Separate but equal' had been the law since 1896. Schools, restaurants, and public facilities were divided by race. The civil rights movement was just beginning to gain momentum.",
+                    contextDeep: "The 1896 Plessy v. Ferguson decision had established that racial segregation was constitutional as long as facilities were 'equal.' In practice, Black schools received a fraction of the funding of white schools. In the South, this inequality was stark: Black students used hand-me-down textbooks, attended schools without proper heating, and had far fewer resources. The NAACP had been methodically challenging segregation through the courts, winning cases about graduate schools and law schools. By the early 1950s, they were ready to challenge the foundation: elementary school segregation itself.",
                     facts: "Linda Brown, a Black third-grader, had to walk miles to her segregated school while a white school was just blocks away. Her father, with the NAACP, challenged school segregation in Topeka, Kansas.",
+                    factsDeep: "The case actually combined five different cases from Kansas, South Carolina, Virginia, Delaware, and Washington D.C. Thurgood Marshall, who would later become the first Black Supreme Court Justice, led the legal team. They presented groundbreaking social science evidence, including psychologist Kenneth Clark's 'doll tests,' which showed that segregation damaged Black children's self-esteem. White children chose white dolls as 'nice' and Black dolls as 'bad.' When Black children made the same choices, it revealed the psychological harm of being told they were inferior. This was revolutionary—using social science in constitutional law.",
                     question: "Should racial segregation in public schools be constitutional?",
                     options: [
                         { id: 'uphold', text: 'Uphold segregation - "separate but equal" is constitutional', correct: false },
@@ -86,14 +102,21 @@
                     ],
                     decision: "The Court unanimously ruled that 'separate educational facilities are inherently unequal' and violate the 14th Amendment. Chief Justice Warren wrote that segregation generates 'a feeling of inferiority' that affects children's hearts and minds.",
                     impact: "This decision dismantled legal segregation and energized the civil rights movement. It led to lunch counter sit-ins, Freedom Rides, and eventually the Civil Rights Act of 1964. Society's views on racial equality fundamentally shifted.",
-                    societalShift: "From: Segregation was socially acceptable and legal → To: Integration as a constitutional mandate and moral imperative"
+                    societalShift: "From: Segregation was socially acceptable and legal → To: Integration as a constitutional mandate and moral imperative",
+                    deepDive: {
+                        dissent: "This was a unanimous decision, which was crucial for its legitimacy. Chief Justice Earl Warren worked tirelessly behind the scenes to ensure unanimity, knowing that a divided court would give segregationists ammunition to resist. There were no dissents, but the path to unanimity was complex—Justice Jackson had initially drafted a concurrence expressing doubts about using social science evidence.",
+                        laterCases: "Brown II (1955) ordered desegregation 'with all deliberate speed,' but massive resistance followed. Southern states closed public schools rather than integrate. It took the 1964 Civil Rights Act and aggressive federal enforcement to truly implement Brown. Later cases like Green v. County School Board (1968) and Swann v. Charlotte-Mecklenburg (1971) addressed busing and affirmative integration measures. The court's approach evolved from merely ending legal segregation to requiring active desegregation.",
+                        modernControversy: "School segregation has resurged through de facto segregation—housing patterns and school district boundaries creating separate, unequal schools without explicit racial laws. Parents Involved in Community Schools v. Seattle (2007) struck down voluntary integration plans that used race as a factor, with Chief Justice Roberts writing 'the way to stop discrimination on the basis of race is to stop discriminating on the basis of race.' Critics argue this ignores ongoing inequality and reverses Brown's spirit."
+                    }
                 },
                 {
                     id: 2,
                     year: 1961,
                     name: "Mapp v. Ohio",
                     context: "In 1961, police often conducted searches without warrants. Evidence obtained illegally could still be used in most state courts. The Fourth Amendment's protection against unreasonable searches wasn't fully enforced at the state level.",
+                    contextDeep: "The Fourth Amendment, ratified in 1791, protected against 'unreasonable searches and seizures,' but for most of American history, states could use illegally obtained evidence. The 'exclusionary rule'—excluding such evidence—only applied in federal courts after Weeks v. United States (1914). States were free to admit evidence however they obtained it. This created a two-tiered system where constitutional rights depended on whether you were prosecuted in state or federal court. Most criminal cases happened in state courts, meaning the Fourth Amendment was largely toothless for most Americans.",
                     facts: "Police forced entry into Dollree Mapp's home without a proper warrant, searching for a bombing suspect. They found obscene materials and convicted her. The 'exclusionary rule' (excluding illegally obtained evidence) only applied to federal cases.",
+                    factsDeep: "On May 23, 1957, Cleveland police received a tip that a bombing suspect was hiding in Dollree Mapp's house. Officers knocked and she refused entry without a warrant. They waited for backup, then forced their way in, allegedly waving a fake 'warrant' when she demanded to see it. She grabbed the paper and stuffed it in her bosom; police wrestled it back. They searched her entire house, including her basement and bedroom, finding allegedly obscene books and photos in a trunk. She claimed the materials belonged to a former boarder. She was convicted not for harboring a fugitive (he wasn't there) but for possessing obscenity—evidence found in an illegal search.",
                     question: "Should illegally obtained evidence be excluded from state criminal trials?",
                     options: [
                         { id: 'admit', text: 'Admissible - states can use evidence regardless of how obtained', correct: false },
@@ -101,14 +124,21 @@
                     ],
                     decision: "The Court ruled 6-3 that evidence obtained in violation of the Fourth Amendment cannot be used in state courts. This 'exclusionary rule' was deemed essential to deter police misconduct.",
                     impact: "Police procedures transformed overnight. Law enforcement had to obtain proper warrants and follow constitutional procedures. The decision professionalized policing but sparked debates about criminals 'getting off on technicalities.'",
-                    societalShift: "From: Loose warrant requirements in state prosecutions → To: Strict Fourth Amendment enforcement protecting privacy rights"
+                    societalShift: "From: Loose warrant requirements in state prosecutions → To: Strict Fourth Amendment enforcement protecting privacy rights",
+                    deepDive: {
+                        dissent: "Justice Harlan's dissent argued that the exclusionary rule was not constitutionally required and that deterring police misconduct was insufficient justification for potentially freeing guilty criminals. He believed states should be free to find other remedies, like civil suits against officers. Justice Stewart thought the conviction should be overturned on First Amendment grounds (the obscenity law itself was unconstitutional) rather than imposing a sweeping exclusionary rule on all states.",
+                        laterCases: "The exclusionary rule has been steadily eroded through exceptions. United States v. Leon (1984) created the 'good faith exception'—if police reasonably believed a warrant was valid, evidence is admissible even if the warrant was defective. Hudson v. Michigan (2006) held that violations of the 'knock-and-announce' rule don't trigger exclusion. Herring v. United States (2009) allowed evidence when police errors were negligent rather than deliberate. Critics argue these exceptions have gutted Mapp's protections.",
+                        modernControversy: "The exclusionary rule remains contentious. Conservatives argue it's a 'judge-made rule' that lets criminals escape justice over technicalities. They point out that most countries don't exclude illegally obtained evidence. Progressives counter that without exclusion, there's no effective remedy for Fourth Amendment violations—police can violate rights with impunity since civil suits rarely succeed. The debate intensified with mass surveillance and digital searches, where the exclusionary rule may be the only check on government overreach."
+                    }
                 },
                 {
                     id: 3,
                     year: 1963,
                     name: "Gideon v. Wainwright",
                     context: "In early 1960s, poor defendants in most states had no right to appointed counsel in non-capital cases. The legal system heavily favored those who could afford lawyers. Clarence Earl Gideon's handwritten petition from prison would change everything.",
+                    contextDeep: "The Sixth Amendment guarantees the right to counsel, but courts long interpreted this as merely the right to hire a lawyer if you could afford one—not a right to have one provided. In Betts v. Brady (1942), the Supreme Court ruled that appointed counsel was only required in death penalty cases or 'special circumstances' like mental disability. This left most poor defendants to fend for themselves in a complex legal system designed by and for lawyers. The disparity was stark: wealthy defendants had skilled advocates; poor defendants stumbled through trials, often not knowing basic rights or procedures.",
                     facts: "Gideon, a drifter, was charged with breaking into a poolroom in Florida. Too poor to afford a lawyer, he requested appointed counsel. The judge denied his request. Gideon defended himself and was convicted.",
+                    factsDeep: "Clarence Earl Gideon, 51, was accused of breaking into the Bay Harbor Pool Room in Panama City, Florida, and stealing money from a vending machine and jukebox. At his trial, he asked the judge to appoint a lawyer because he couldn't afford one. The judge refused, citing Florida law that only provided counsel in capital cases. Gideon did his best—cross-examining witnesses, presenting evidence—but he lacked legal training. He was convicted and sentenced to five years. From prison, using prison library resources, Gideon hand-wrote a petition to the Supreme Court in pencil. The Court appointed Abe Fortas (later a Justice) to argue his case. At retrial with a lawyer, Gideon was acquitted in less than an hour.",
                     question: "Do poor defendants have a constitutional right to appointed counsel?",
                     options: [
                         { id: 'no', text: 'No right to counsel - only in death penalty cases', correct: false },
@@ -116,14 +146,21 @@
                     ],
                     decision: "The Court unanimously ruled that the Sixth Amendment requires states to provide attorneys for defendants who cannot afford them in criminal cases. Justice Black wrote that 'lawyers in criminal courts are necessities, not luxuries.'",
                     impact: "Public defender systems were created across America. The decision acknowledged that fair trials require equal access to legal representation regardless of wealth. It fundamentally changed the criminal justice landscape.",
-                    societalShift: "From: Justice dependent on ability to pay → To: Constitutional guarantee of counsel for the poor"
+                    societalShift: "From: Justice dependent on ability to pay → To: Constitutional guarantee of counsel for the poor",
+                    deepDive: {
+                        dissent: "This was a unanimous decision overruling Betts v. Brady. Even the most conservative justices recognized that the previous rule was untenable. The lack of dissent reflected a consensus that fundamental fairness required counsel—though implementation challenges would prove enormous.",
+                        laterCases: "Argersinger v. Hamlin (1972) extended Gideon to any case where imprisonment is imposed, including misdemeanors. Alabama v. Shelton (2002) held that defendants can't receive suspended sentences without counsel. However, the quality of appointed counsel remains a massive problem. Strickland v. Washington (1984) set an extremely deferential standard for ineffective assistance of counsel claims, making it hard to prove your lawyer was constitutionally inadequate even when representation is abysmal.",
+                        modernControversy: "Public defender systems are chronically underfunded and overwhelmed. Defenders handle hundreds of cases simultaneously, meeting clients for mere minutes before trials. Many states appoint lawyers who are paid laughably small flat fees, creating incentives to plead clients out quickly rather than investigate or go to trial. The promise of Gideon—equal justice—remains unrealized. Some argue Gideon should be extended to civil cases involving basic necessities like eviction, child custody, or termination of parental rights, but courts have consistently refused."
+                    }
                 },
                 {
                     id: 4,
                     year: 1966,
                     name: "Miranda v. Arizona",
                     context: "In 1960s America, police interrogation tactics were often coercive. Suspects didn't always know their rights. The Warren Court was expanding protections for criminal defendants. Popular culture depicted police as heroes who could bend rules.",
+                    contextDeep: "Police interrogation manuals of the era taught psychological manipulation techniques: isolating suspects, using good cop/bad cop routines, lying about evidence, and exploiting suspects' ignorance of their rights. The manuals explicitly advised not informing suspects of their rights because it would make getting confessions harder. Confessions were the 'queen of proofs'—juries almost always convicted when presented with a confession. But coerced confessions led to false convictions. The Fifth Amendment protected against self-incrimination, but how could suspects invoke a right they didn't know existed?",
                     facts: "Ernesto Miranda confessed to kidnapping and rape after two hours of police questioning without being told of his right to remain silent or have an attorney present. He had a history of mental illness.",
+                    factsDeep: "Ernesto Miranda, 23, was arrested in Phoenix for kidnapping and rape based on a lineup identification. Police interrogated him for two hours. Miranda, with an eighth-grade education and history of mental problems, signed a written confession that stated he was confessing 'with full knowledge of my legal rights, understanding any statement I make may be used against me.' But police never told him he had a right to remain silent or to a lawyer. His court-appointed lawyer argued the confession was involuntary. The prosecution relied almost entirely on the confession—other evidence was weak. Miranda was convicted, but the Supreme Court overturned it. Ironically, at retrial without the confession, Miranda was convicted anyway based on other evidence and served time.",
                     question: "Should confessions obtained without informing suspects of their rights be admissible?",
                     options: [
                         { id: 'admit', text: 'Admissible - confessions are valid if voluntary', correct: false },
@@ -131,14 +168,21 @@
                     ],
                     decision: "The Court ruled 5-4 that suspects must be informed of their rights (right to remain silent, right to attorney) before police questioning. These became known as 'Miranda rights' or 'Miranda warnings.'",
                     impact: "Every arrest now includes the famous phrase 'You have the right to remain silent...' The ruling transformed police procedures nationwide and became embedded in American culture through TV and movies.",
-                    societalShift: "From: Police interrogation with minimal oversight → To: Mandatory rights warnings protecting against self-incrimination"
+                    societalShift: "From: Police interrogation with minimal oversight → To: Mandatory rights warnings protecting against self-incrimination",
+                    deepDive: {
+                        dissent: "Justice Harlan's dissent argued the Court was imposing rigid requirements without constitutional basis, handcuffing law enforcement. He noted that the Fifth Amendment doesn't explicitly require warnings and that the new rules would free guilty criminals. Justice White warned that the decision would return 'killers, rapists, and other criminals to the streets' because police errors would invalidate confessions. The dissents reflected law enforcement fears that Miranda would cripple crime-fighting.",
+                        laterCases: "Miranda has been weakened but not overruled. New York v. Quarles (1984) created a 'public safety exception'—police can ask questions without warnings if public safety demands it. Berghuis v. Thompkins (2010) held that suspects must explicitly invoke Miranda rights; silence isn't enough. Maryland v. Shatzer (2010) allowed re-interrogation after 14-day breaks in custody. Vega v. Tekoh (2022) ruled that Miranda violations can't be sued over in federal civil rights cases—Miranda is a procedural rule, not a constitutional right itself.",
+                        modernControversy: "Critics argue Miranda warnings have become a meaningless ritual—suspects waive rights without understanding them, and police use sophisticated tactics to obtain waivers. Studies show most suspects waive Miranda rights and talk to police, often to their detriment. Defense attorneys universally advise 'never talk to police,' but the warnings don't effectively communicate this. Meanwhile, police say Miranda has become routine and doesn't significantly hamper investigations. The debate continues over whether the warnings protect rights or merely create the illusion of protection."
+                    }
                 },
                 {
                     id: 5,
                     year: 1967,
                     name: "Loving v. Virginia",
                     context: "In 1967, interracial marriage was illegal in 16 states. Anti-miscegenation laws had existed since colonial times. Many Americans viewed racial mixing as taboo. The civil rights movement had made progress, but interracial marriage remained controversial.",
+                    contextDeep: "Anti-miscegenation laws dated to the 1660s in colonial America, designed to maintain racial hierarchy and prevent challenges to slavery. After the Civil War, these laws proliferated as Southern states sought to preserve white supremacy. By 1967, 16 states still banned interracial marriage—all in the South and border regions. The rhetoric was explicitly racist: Virginia's law aimed to preserve 'racial integrity' and prevent 'mongrelization.' Scientific racism had been discredited, but cultural taboos remained strong. Even after Brown v. Board desegregated schools, many whites viewed interracial marriage as going 'too far.' Gallup polls showed only 20% of Americans approved of Black-white marriages in 1968.",
                     facts: "Mildred Jeter (Black) and Richard Loving (white) married in Washington D.C., then returned to Virginia. They were arrested, convicted, and banished from the state for violating Virginia's Racial Integrity Act.",
+                    factsDeep: "Mildred Jeter and Richard Loving grew up together in rural Caroline County, Virginia. When Mildred became pregnant, they traveled to D.C. to marry legally, then returned home. Five weeks later, police raided their bedroom in the middle of the night, arrested them, and charged them with violating Virginia's ban on interracial marriage. The judge suspended their one-year jail sentence on the condition they leave Virginia for 25 years. The judge proclaimed: 'Almighty God created the races white, black, yellow, malay and red, and he placed them on separate continents... The fact that he separated the races shows that he did not intend for the races to mix.' The Lovings moved to D.C. but missed home. With ACLU help, they sued, and the case reached the Supreme Court.",
                     question: "Can states ban interracial marriage?",
                     options: [
                         { id: 'yes', text: 'Yes - states can regulate marriage as they see fit', correct: false },
@@ -146,14 +190,21 @@
                     ],
                     decision: "The Court unanimously struck down all anti-miscegenation laws, declaring that 'the freedom to marry has long been recognized as one of the vital personal rights essential to the orderly pursuit of happiness.'",
                     impact: "Interracial marriages went from 3% in 1967 to 19% by 2019. This case laid groundwork for later marriage equality decisions. Social acceptance of interracial relationships dramatically increased.",
-                    societalShift: "From: Interracial marriage as criminal act in many states → To: Marriage as fundamental right regardless of race"
+                    societalShift: "From: Interracial marriage as criminal act in many states → To: Marriage as fundamental right regardless of race",
+                    deepDive: {
+                        dissent: "This was a unanimous decision with no dissents. Chief Justice Warren wrote the opinion, signaling the Court's complete rejection of racial classifications in marriage. The unanimity was important for legitimacy, given the cultural resistance expected from Southern states.",
+                        laterCases: "Loving established marriage as a fundamental right that states cannot restrict based on race. This principle became crucial in Zablocki v. Redhail (1978), which struck down restrictions on marriage for parents behind on child support, and Turner v. Safley (1987), establishing prisoners' right to marry. Most significantly, Justice Kennedy cited Loving extensively in Obergefell v. Hodges (2015), which legalized same-sex marriage, writing that the cases share a 'transcendent' principle: the freedom to marry is inherent in individual autonomy.",
+                        modernControversy: "Though Loving is settled law, Alabama didn't remove its (unenforceable) interracial marriage ban from its constitution until 2000, and 40% of voters voted to keep it. Cultural acceptance has grown dramatically—94% of Americans now approve of interracial marriage—but implementation questions remain. The case is invoked in debates over religious objections to same-sex marriage: can religious officials refuse to perform interracial marriages? (No.) Can they refuse same-sex marriages? (Courts say generally no for government officials; private religious exceptions are murky.)"
+                    }
                 },
                 {
                     id: 6,
                     year: 1969,
                     name: "Tinker v. Des Moines",
                     context: "During the Vietnam War, protests were everywhere—college campuses, streets, and increasingly, high schools. Authorities viewed student protests as disruptive. The question of whether students had free speech rights at school was unsettled.",
+                    contextDeep: "The Vietnam War divided America. By 1969, over 30,000 Americans had died, and the draft meant young men faced the choice of fighting or fleeing. Protests erupted nationwide. Students led anti-war demonstrations at colleges, and the movement spread to high schools. School administrators, often veterans or war supporters, viewed student protests as disrespectful and dangerous. The prevailing view was that students were subject to school authority and didn't have full constitutional rights on campus. In loco parentis—'in place of parents'—doctrine gave schools broad power to regulate student behavior. But students argued they were citizens too.",
                     facts: "Mary Beth Tinker (13) and other students wore black armbands to school to protest the Vietnam War. School officials suspended them, fearing disruption. The students had been peaceful and non-disruptive.",
+                    factsDeep: "In December 1965, Mary Beth Tinker, her brother John (15), and friend Christopher Eckhardt (16) planned to wear black armbands to Des Moines schools to mourn Vietnam War deaths and support a Christmas truce. Hearing of the plan, principals preemptively adopted a policy banning armbands, threatening suspension. The students wore them anyway. Mary Beth, a quiet eighth-grader, was called to the principal's office and suspended. The suspensions lasted until they agreed to return without armbands. Other students wore political buttons and even an Iron Cross without punishment—only the anti-war armbands were banned. The Tinkers sued, arguing selective enforcement violated their First Amendment rights.",
                     question: "Do students have First Amendment rights in public schools?",
                     options: [
                         { id: 'no', text: 'No - schools can restrict student speech to maintain order', correct: false },
@@ -161,14 +212,21 @@
                     ],
                     decision: "The Court ruled 7-2 that students don't 'shed their constitutional rights to freedom of speech at the schoolhouse gate.' Schools can only restrict speech that substantially disrupts school operations.",
                     impact: "Students gained recognized First Amendment protections. The case empowered youth activism and established that schools aren't absolute authorities over expression. It remains the foundation for student speech rights today.",
-                    societalShift: "From: Students as subjects of school authority with no speech rights → To: Students as citizens with constitutional protections"
+                    societalShift: "From: Students as subjects of school authority with no speech rights → To: Students as citizens with constitutional protections",
+                    deepDive: {
+                        dissent: "Justice Black's dissent argued that the Court was usurping school authority and encouraging student defiance. He wrote that schools need order and discipline, and the decision would embolden students to disrupt education with protests. Justice Harlan also dissented, believing schools should have broad discretion to prevent disturbances without courts second-guessing administrators. Both dissenters feared the ruling would lead to chaos in schools.",
+                        laterCases: "Tinker's protection has been significantly limited. Bethel School District v. Fraser (1986) allowed punishment for vulgar speech at a school assembly, distinguishing political from lewd speech. Hazelwood v. Kuhlmeier (1988) gave schools broad power to censor school-sponsored speech like newspapers if it's educationally justified. Most significantly, Morse v. Frederick (2007) upheld punishment for a 'BONG HiTS 4 JESUS' banner at a school event, creating an exception for speech promoting illegal drug use. Lower courts have struggled to define when Tinker applies versus these exceptions.",
+                        modernControversy: "Student speech issues have exploded with social media. Can schools punish off-campus cyberbullying? Racist or threatening posts made at home? Mahanoy Area School District v. B.L. (2021) held that schools have diminished authority over off-campus speech but didn't establish clear rules. Students continue fighting for rights over LGBTQ+ expression, Black Lives Matter messages, and political symbols in schools. Meanwhile, some argue Tinker goes too far—that disruptive protests harm learning environments, especially when students walk out over controversial speakers or policies."
+                    }
                 },
                 {
                     id: 7,
                     year: 1973,
                     name: "Roe v. Wade",
                     context: "In the early 1970s, abortion was illegal in most states. Women's liberation movement was gaining strength. The contraceptive pill had been legal for only a decade. Debates about women's autonomy and privacy rights were intensifying.",
+                    contextDeep: "Before Roe, abortion was illegal in most states except to save the mother's life. Women sought illegal 'back-alley' abortions, often in dangerous conditions. Thousands died or suffered complications. Wealthy women could travel to states or countries where abortion was legal; poor women risked their lives. The women's movement argued bodily autonomy was essential to equality—without control over reproduction, women couldn't fully participate in society. Opponents viewed abortion as murder of unborn children. The debate was (and remains) fundamental: when does life begin? Who decides? The case emerged as Griswold v. Connecticut (1965) had established a constitutional right to privacy regarding contraception.",
                     facts: "Jane Roe (pseudonym for Norma McCorvey), a pregnant woman in Texas, challenged the state's abortion ban. Texas law only allowed abortion to save the mother's life.",
+                    factsDeep: "Norma McCorvey, 22, was unmarried, poor, and already had two children she'd given up. Pregnant again, she sought an abortion in Texas but couldn't afford to travel to a legal state. Two recent law school graduates, Sarah Weddington and Linda Coffee, took her case as a vehicle to challenge abortion bans. McCorvey never had an abortion—she gave birth and placed the child for adoption before the case was decided. The case consolidated privacy rights established in Griswold with equal protection arguments. Justice Blackmun researched abortion history, finding that for much of Western history, abortion before 'quickening' (feeling fetal movement) wasn't criminal. The trimester framework balanced state interests: no regulation in first trimester, reasonable regulation in second, and prohibition in third except for mother's health.",
                     question: "Does the Constitution protect a woman's right to choose abortion?",
                     options: [
                         { id: 'no', text: 'No right to abortion - states can ban it completely', correct: false },
@@ -176,14 +234,21 @@
                     ],
                     decision: "The Court ruled 7-2 that the Constitution's right to privacy extends to a woman's decision to have an abortion, balanced against state interests that grow stronger through pregnancy (trimester framework).",
                     impact: "This decision became one of the most contested in American history, spawning decades of political and cultural battles. It was overturned by Dobbs v. Jackson (2022), showing how legal interpretations can reverse course.",
-                    societalShift: "From: Abortion as criminal act → To: Recognized constitutional right (for 49 years) → Back to state-by-state regulation"
+                    societalShift: "From: Abortion as criminal act → To: Recognized constitutional right (for 49 years) → Back to state-by-state regulation",
+                    deepDive: {
+                        dissent: "Justice White's dissent called the decision 'an exercise of raw judicial power' with no basis in the Constitution's text. He argued the Court was imposing its values on a political question that should be left to legislatures. Justice Rehnquist agreed, noting that most states restricted abortion when the 14th Amendment was ratified in 1868, so it couldn't have been understood to protect abortion rights. Both argued the Court was inventing rights rather than interpreting the Constitution.",
+                        laterCases: "Planned Parenthood v. Casey (1992) reaffirmed Roe's 'core holding' but replaced the trimester framework with an 'undue burden' standard—states could regulate abortion so long as they didn't impose substantial obstacles. This allowed waiting periods, counseling requirements, and parental consent laws. The decision preserved abortion rights while allowing more restrictions. Whole Woman's Health v. Hellerstedt (2016) struck down Texas regulations as imposing undue burdens without health benefits. But Dobbs v. Jackson Women's Health Organization (2022) overruled both Roe and Casey, returning abortion regulation to states.",
+                        modernControversy: "After Dobbs, abortion is banned or severely restricted in many states, while others have expanded access. The political and cultural war intensified, with debates over whether Congress can codify or ban abortion nationwide, whether medication abortion can be restricted, and whether abortion bans violate other constitutional rights. Opponents of Dobbs argue it strips women of bodily autonomy and will lead to deaths from illegal abortions or pregnancy complications. Supporters argue it corrects a constitutional error and returns democratic decision-making to the people. The issue remains the most divisive in American politics."
+                    }
                 },
                 {
                     id: 8,
                     year: 1989,
                     name: "Texas v. Johnson",
                     context: "In the 1980s, patriotism and flag symbolism were particularly strong amid the Cold War. Many viewed flag burning as the ultimate act of disrespect. Both major political parties supported laws protecting the flag.",
+                    contextDeep: "The American flag held sacred status in political culture. Federal law and 48 states banned flag desecration. Veterans' groups lobbied fiercely for flag protection. The Cold War emphasized American values versus Communist oppression, and the flag symbolized freedom. Ronald Reagan's presidency heightened patriotic rhetoric. Flag burning was rare but visceral—when it occurred, public outrage was intense. The legal question was whether symbolic conduct (burning a flag as protest) constituted 'speech' protected by the First Amendment or whether the flag's unique symbolic status justified special protection from desecration.",
                     facts: "Gregory Lee Johnson burned an American flag during a 1984 Republican National Convention protest in Dallas. He was convicted under Texas law criminalizing flag desecration.",
+                    factsDeep: "During the 1984 Republican National Convention in Dallas, Gregory Johnson participated in a 'Reagan Funeral' demonstration protesting Reagan administration policies. The group marched through Dallas, spray-painting buildings and overturning planters. Someone handed Johnson an American flag taken from a flagpole. When they reached Dallas City Hall, Johnson doused the flag in kerosene and set it on fire while protesters chanted 'America, the red, white, and blue, we spit on you.' Witnesses testified feeling 'deeply offended.' No one was physically harmed. Texas prosecuted Johnson under a law banning desecration of 'venerated objects.' He received one year in jail and a $2,000 fine.",
                     question: "Is flag burning protected political speech under the First Amendment?",
                     options: [
                         { id: 'no', text: 'No protection - flag burning can be criminalized', correct: false },
@@ -191,14 +256,21 @@
                     ],
                     decision: "The Court ruled 5-4 that flag burning constitutes symbolic speech protected by the First Amendment. Justice Brennan wrote that 'the government may not prohibit expression of an idea simply because society finds it offensive.'",
                     impact: "This deeply unpopular decision reinforced that free speech protections extend to offensive and unpatriotic expression. It demonstrated the Court's willingness to protect unpopular speech against majoritarian preferences.",
-                    societalShift: "From: Patriotic symbols deserving special legal protection → To: Free speech protection even for deeply offensive symbolic acts"
+                    societalShift: "From: Patriotic symbols deserving special legal protection → To: Free speech protection even for deeply offensive symbolic acts",
+                    deepDive: {
+                        dissent: "Chief Justice Rehnquist's passionate dissent argued the flag occupies a unique position as a symbol of national unity, worthy of special protection. He quoted the Star-Spangled Banner and described the flag's role in American history—at Iwo Jima, on the moon, draped over veterans' coffins. He argued flag burning isn't essential to expressing anti-government views—protesters can use words. Justice Stevens also dissented, arguing the flag symbolizes ideas (freedom, equality) that transcend politics, and the government can protect this symbol without suppressing dissent.",
+                        laterCases: "Congress responded to Johnson by passing the Flag Protection Act of 1989, attempting to write a content-neutral law. In United States v. Eichman (1990), the Court struck that down too, 5-4, with the same majority. Since then, Congress has repeatedly proposed constitutional amendments to ban flag desecration—they've passed the House multiple times but never achieved the two-thirds Senate vote needed. The issue resurfaces periodically when flag burning incidents occur, especially during politically charged moments.",
+                        modernControversy: "Flag burning remains rare but deeply inflammatory. When it happens—at protests, by foreign demonstrators, or in artistic expression—calls for banning it resurface. President Trump tweeted that flag burners should lose citizenship or face jail time (both unconstitutional). Supporters of bans argue the flag's unique symbolic role justifies special protection—it represents the nation itself. Free speech advocates respond that protecting offensive speech is when the First Amendment matters most; popular speech doesn't need protection. The debate reflects fundamental tensions between honoring symbols and protecting dissent."
+                    }
                 },
                 {
                     id: 9,
                     year: 2010,
                     name: "Citizens United v. FEC",
                     context: "In 2010, campaign finance laws limited corporate spending in elections. The McCain-Feingold Act restricted when corporations could air political ads. Money in politics was controversial, but most agreed on some limits.",
+                    contextDeep: "Campaign finance reform had a long history. Watergate scandals led to the Federal Election Campaign Act, which the Court partially upheld in Buckley v. Valeo (1976), ruling that spending money is speech but contribution limits are constitutional to prevent corruption. The McCain-Feingold Act (2002) banned 'electioneering communications'—corporate-funded ads mentioning candidates within 60 days of general elections or 30 days of primaries. The law aimed to prevent corporations from influencing elections with treasury funds. Previous Court precedent in Austin v. Michigan Chamber of Commerce (1990) upheld such restrictions. But the Roberts Court was skeptical of campaign finance limits, viewing them as restricting political speech.",
                     facts: "Citizens United, a conservative group, wanted to air a film critical of Hillary Clinton near the 2008 primary. The FEC blocked it under laws banning corporate-funded 'electioneering communications' near elections.",
+                    factsDeep: "Citizens United, a conservative nonprofit, produced 'Hillary: The Movie,' a 90-minute documentary highly critical of Hillary Clinton. They wanted to air it on video-on-demand within 30 days of the 2008 Democratic primaries and run TV ads promoting it. The FEC said this violated McCain-Feingold's ban on corporate electioneering communications. Citizens United initially challenged the law narrowly, arguing the documentary was exempt. But at oral argument, the government lawyer said the logic of the law would allow banning books if corporations published them near elections. This alarmed the Court. The justices ordered re-argument on whether to overturn Austin and parts of McConnell v. FEC entirely—a much broader question than originally briefed.",
                     question: "Can the government restrict corporate political spending?",
                     options: [
                         { id: 'yes', text: 'Yes - corporate money can be limited to prevent corruption', correct: false },
@@ -206,14 +278,21 @@
                     ],
                     decision: "The Court ruled 5-4 that corporate political spending is protected speech under the First Amendment. The decision equated money with speech and said 'independent expenditures' don't corrupt or create appearance of corruption.",
                     impact: "This unleashed unlimited corporate and union money into elections through Super PACs. Campaign spending exploded. Critics say it gave wealthy interests outsized influence; supporters say it protected political speech.",
-                    societalShift: "From: Broad acceptance of campaign finance limits → To: Unlimited independent political spending as constitutional right"
+                    societalShift: "From: Broad acceptance of campaign finance limits → To: Unlimited independent political spending as constitutional right",
+                    deepDive: {
+                        dissent: "Justice Stevens's 90-page dissent, his last major opinion, argued the majority misunderstood the First Amendment. He distinguished corporations from natural persons—corporations are legal fictions created by state law, not rights-bearing citizens. Unlimited corporate spending creates corruption and the appearance of corruption, drowning out individual voices. He accused the majority of 'judicial activism,' overturning decades of precedent and laws, and deciding issues not properly before the Court. Stevens warned of a 'cataclysmic' effect on democracy, predicting unlimited corporate money would distort elections.",
+                        laterCases: "SpeechNow.org v. FEC (2010) quickly followed, applying Citizens United to allow unlimited contributions to Super PACs (committees making independent expenditures). McCutcheon v. FEC (2014) struck down aggregate contribution limits—the total amount individuals could give across all federal candidates and parties. These decisions created the current system: limited direct contributions to candidates but unlimited independent spending through Super PACs. Critics note the 'independent' label is fiction—Super PACs coordinate closely with campaigns despite nominal legal barriers.",
+                        modernControversy: "Citizens United transformed American elections. Super PAC spending skyrocketed from virtually nothing to billions per cycle. A tiny number of mega-donors now dominate election funding. Critics argue this creates an oligarchy where wealthy interests control politics, pointing to studies showing politicians are more responsive to donors than constituents. Defenders argue spending hasn't proven to buy elections (many big spenders lose) and that restrictions are paternalistic—voters can assess arguments regardless of funding sources. Reform proposals include constitutional amendments, public financing, or disclosure requirements, but the Court's equation of money with speech makes regulation difficult."
+                    }
                 },
                 {
                     id: 10,
                     year: 2015,
                     name: "Obergefell v. Hodges",
                     context: "In 2015, same-sex marriage was legal in some states but banned in others. Public opinion had shifted dramatically—from 27% support in 1996 to 60% in 2015. The gay rights movement had achieved growing acceptance, but marriage remained a battleground.",
+                    contextDeep: "The gay rights movement's journey was remarkable. In 1986, Bowers v. Hardwick upheld laws criminalizing same-sex intimacy. Just 17 years later, Lawrence v. Texas (2003) overruled Bowers, decriminalizing same-sex relationships nationwide. Massachusetts became the first state to legalize same-sex marriage in 2004. Some states followed through legislation or court decisions; others passed constitutional amendments banning it. The Defense of Marriage Act (1996) defined marriage federally as between man and woman. United States v. Windsor (2013) struck down DOMA's federal definition, requiring federal recognition of state-legal same-sex marriages. By 2015, the question was whether states could still ban same-sex marriage or whether the Constitution required nationwide recognition.",
                     facts: "James Obergefell sued Ohio after it refused to recognize his marriage to John Arthur (who had since died). Multiple same-sex couples from several states challenged laws defining marriage as between one man and one woman.",
+                    factsDeep: "The case consolidated challenges from Michigan, Kentucky, Ohio, and Tennessee. James Obergefell and John Arthur, together 20+ years, married in Maryland because Ohio banned same-sex marriage. Arthur was dying of ALS. They wanted Obergefell recognized as surviving spouse on the death certificate. They chartered a medical plane to Maryland, married on the airport tarmac, and flew home. Arthur died three months later. Ohio refused to list Obergefell as spouse. Other plaintiffs included couples denied marriage licenses and couples whose out-of-state marriages weren't recognized for adoption, death benefits, and other purposes. All raised Fourteenth Amendment challenges: denying marriage violated due process (fundamental right to marry) and equal protection (discriminating based on sexual orientation).",
                     question: "Must states recognize same-sex marriages?",
                     options: [
                         { id: 'no', text: 'No - states can define marriage traditionally', correct: false },
@@ -221,9 +300,21 @@
                     ],
                     decision: "The Court ruled 5-4 that the fundamental right to marry extends to same-sex couples. Justice Kennedy wrote that they 'ask for equal dignity in the eyes of the law. The Constitution grants them that right.'",
                     impact: "Same-sex marriage became legal nationwide overnight. This represented one of the fastest shifts in social attitudes and law in American history—from criminalization to constitutional protection in just decades.",
-                    societalShift: "From: Same-sex relationships criminalized (until 2003) → To: Marriage equality as constitutional right"
+                    societalShift: "From: Same-sex relationships criminalized (until 2003) → To: Marriage equality as constitutional right",
+                    deepDive: {
+                        dissent: "All four dissenting justices wrote separate opinions. Chief Justice Roberts argued marriage has been understood as between man and woman throughout history, and the Court was imposing its policy preferences rather than interpreting the Constitution. He warned that the decision short-circuited democratic debate and would fuel resentment. Justice Scalia called it a 'judicial putsch' and 'threat to American democracy.' Justice Thomas argued it violated states' sovereignty and individual liberty by forcing participation in same-sex marriages. Justice Alito emphasized that marriage has historically been about procreation and child-rearing, and many religions view same-sex marriage as inconsistent with their beliefs.",
+                        laterCases: "Post-Obergefell litigation focuses on religious liberty conflicts. Masterpiece Cakeshop v. Colorado (2018) ruled for a baker who refused to make a same-sex wedding cake, but on narrow grounds of religious hostility by the civil rights commission, not establishing a broad religious exemption. 303 Creative v. Elenis (2023) held that a website designer couldn't be compelled to create same-sex wedding websites, ruling that compelled speech violated the First Amendment. Courts are still working out when religious objections allow refusal of services to same-sex couples versus when they constitute illegal discrimination.",
+                        modernControversy: "Obergefell remains controversial despite broad public support for same-sex marriage. Justice Thomas suggested in his Dobbs concurrence that the Court should reconsider Obergefell, Lawrence, and Griswold—all based on similar substantive due process reasoning. This alarmed LGBTQ+ advocates. Congress responded with the Respect for Marriage Act (2022), requiring states to recognize out-of-state same-sex marriages even if Obergefell is overturned. Religious liberty conflicts continue: can adoption agencies refuse same-sex couples? Can schools be required to recognize same-sex marriage in curricula over parental objections? The law has settled; cultural and religious debates continue."
+                    }
                 }
             ];
+
+            const toggleSection = (section) => {
+                setExpandedSections(prev => ({
+                    ...prev,
+                    [section]: !prev[section]
+                }));
+            };
 
             const speak = (text) => {
                 if (!audioEnabled) return;
@@ -265,10 +356,13 @@
                     setGamePhase('impact');
                     speak(cases[currentCase].impact + " " + cases[currentCase].societalShift);
                 } else if (gamePhase === 'impact') {
+                    setGamePhase('deepdive');
+                } else if (gamePhase === 'deepdive') {
                     if (currentCase < cases.length - 1) {
                         setCurrentCase(currentCase + 1);
                         setGamePhase('intro');
                         setUserPrediction(null);
+                        setExpandedSections({});
                         speak(cases[currentCase + 1].context);
                     }
                 }
@@ -280,6 +374,7 @@
                 setGamePhase('intro');
                 setUserPrediction(null);
                 setScore(0);
+                setExpandedSections({});
             };
 
             const handlePrediction = (optionId) => {
@@ -293,7 +388,7 @@
             }, [currentCase]);
 
             const currentCaseData = cases[currentCase];
-            const isComplete = currentCase === cases.length - 1 && gamePhase === 'impact';
+            const isComplete = currentCase === cases.length - 1 && gamePhase === 'deepdive';
 
             return (
                 <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white p-4">
@@ -353,6 +448,24 @@
                                         <div className="space-y-4">
                                             <h3 className="text-xl font-semibold text-blue-200">Historical Context</h3>
                                             <p className="text-lg leading-relaxed">{currentCaseData.context}</p>
+                                            
+                                            {currentCaseData.contextDeep && (
+                                                <div className="mt-4">
+                                                    <button
+                                                        onClick={() => toggleSection('contextDeep')}
+                                                        className="flex items-center gap-2 text-blue-300 hover:text-blue-200 transition-colors"
+                                                    >
+                                                        <BookOpenIcon />
+                                                        <span className="font-semibold">Learn More About This Era</span>
+                                                        <ChevronDownIcon className={`transition-transform ${expandedSections.contextDeep ? 'rotate-180' : ''}`} />
+                                                    </button>
+                                                    {expandedSections.contextDeep && (
+                                                        <div className="mt-3 p-4 bg-slate-800/50 rounded-lg">
+                                                            <p className="text-sm leading-relaxed">{currentCaseData.contextDeep}</p>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
                                         </div>
                                     )}
 
@@ -360,6 +473,24 @@
                                         <div className="space-y-4">
                                             <h3 className="text-xl font-semibold text-blue-200">The Case</h3>
                                             <p className="text-lg leading-relaxed">{currentCaseData.facts}</p>
+                                            
+                                            {currentCaseData.factsDeep && (
+                                                <div className="mt-4">
+                                                    <button
+                                                        onClick={() => toggleSection('factsDeep')}
+                                                        className="flex items-center gap-2 text-blue-300 hover:text-blue-200 transition-colors"
+                                                    >
+                                                        <BookOpenIcon />
+                                                        <span className="font-semibold">Learn More About This Case</span>
+                                                        <ChevronDownIcon className={`transition-transform ${expandedSections.factsDeep ? 'rotate-180' : ''}`} />
+                                                    </button>
+                                                    {expandedSections.factsDeep && (
+                                                        <div className="mt-3 p-4 bg-slate-800/50 rounded-lg">
+                                                            <p className="text-sm leading-relaxed">{currentCaseData.factsDeep}</p>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
                                         </div>
                                     )}
 
@@ -420,6 +551,29 @@
                                         </div>
                                     )}
 
+                                    {gamePhase === 'deepdive' && currentCaseData.deepDive && (
+                                        <div className="space-y-6">
+                                            <h3 className="text-2xl font-bold text-blue-200 mb-4">Deep Dive Analysis</h3>
+                                            
+                                            <div className="space-y-4">
+                                                <div className="bg-slate-800/50 rounded-lg p-5 border border-slate-700">
+                                                    <h4 className="text-lg font-semibold text-orange-300 mb-3">Dissenting Opinions</h4>
+                                                    <p className="text-sm leading-relaxed">{currentCaseData.deepDive.dissent}</p>
+                                                </div>
+
+                                                <div className="bg-slate-800/50 rounded-lg p-5 border border-slate-700">
+                                                    <h4 className="text-lg font-semibold text-green-300 mb-3">Later Cases & Evolution</h4>
+                                                    <p className="text-sm leading-relaxed">{currentCaseData.deepDive.laterCases}</p>
+                                                </div>
+
+                                                <div className="bg-slate-800/50 rounded-lg p-5 border border-slate-700">
+                                                    <h4 className="text-lg font-semibold text-red-300 mb-3">Modern Controversy</h4>
+                                                    <p className="text-sm leading-relaxed">{currentCaseData.deepDive.modernControversy}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+
                                     <div className="mt-8 flex justify-between">
                                         <button
                                             onClick={handleRestart}
@@ -434,7 +588,7 @@
                                             disabled={gamePhase === 'predict' && !userPrediction}
                                             className="px-6 py-2 rounded-lg bg-blue-500 hover:bg-blue-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                                         >
-                                            {gamePhase === 'impact' && currentCase < cases.length - 1 ? 'Next Case' : 'Continue'}
+                                            {gamePhase === 'deepdive' && currentCase < cases.length - 1 ? 'Next Case' : 'Continue'}
                                             <ChevronRightIcon />
                                         </button>
                                     </div>
