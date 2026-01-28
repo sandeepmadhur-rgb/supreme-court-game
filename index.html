@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supreme Court Stories - 100 Years of Evolving Justice</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const Volume2Icon = () => (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+        );
+
+        const VolumeXIcon = () => (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+        );
+
+        const PauseIcon = () => (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+        );
+
+        const ChevronRightIcon = () => (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        );
+
+        const RotateCcwIcon = () => (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+        );
+
+        const AwardIcon = () => (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="8" r="7"></circle>
+                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+            </svg>
+        );
+
+        const SupremeCourtGame = () => {
+            const [currentCase, setCurrentCase] = useState(0);
+            const [gamePhase, setGamePhase] = useState('intro');
+            const [userPrediction, setUserPrediction] = useState(null);
+            const [score, setScore] = useState(0);
+            const [audioEnabled, setAudioEnabled] = useState(true);
+            const [isPlaying, setIsPlaying] = useState(false);
+
+            const cases = [
+                {
+                    id: 1,
+                    year: 1954,
+                    name: "Brown v. Board of Education",
+                    context: "In 1950s America, racial segregation was legal and enforced across the South. 'Separate but equal' had been the law since 1896. Schools, restaurants, and public facilities were divided by race. The civil rights movement was just beginning to gain momentum.",
+                    facts: "Linda Brown, a Black third-grader, had to walk miles to her segregated school while a white school was just blocks away. Her father, with the NAACP, challenged school segregation in Topeka, Kansas.",
+                    question: "Should racial segregation in public schools be constitutional?",
+                    options: [
+                        { id: 'uphold', text: 'Uphold segregation - "separate but equal" is constitutional', correct: false },
+                        { id: 'strike', text: 'Strike down segregation - it violates equal protection', correct: true }
+                    ],
+                    decision: "The Court unanimously ruled that 'separate educational facilities are inherently unequal' and violate the 14th Amendment. Chief Justice Warren wrote that segregation generates 'a feeling of inferiority' that affects children's hearts and minds.",
+                    impact: "This decision dismantled legal segregation and energized the civil rights movement. It led to lunch counter sit-ins, Freedom Rides, and eventually the Civil Rights Act of 1964. Society's views on racial equality fundamentally shifted.",
+                    societalShift: "From: Segregation was socially acceptable and legal → To: Integration as a constitutional mandate and moral imperative"
+                },
+                {
+                    id: 2,
+                    year: 1961,
+                    name: "Mapp v. Ohio",
+                    context: "In 1961, police often conducted searches without warrants. Evidence obtained illegally could still be used in most state courts. The Fourth Amendment's protection against unreasonable searches wasn't fully enforced at the state level.",
+                    facts: "Police forced entry into Dollree Mapp's home without a proper warrant, searching for a bombing suspect. They found obscene materials and convicted her. The 'exclusionary rule' (excluding illegally obtained evidence) only applied to federal cases.",
+                    question: "Should illegally obtained evidence be excluded from state criminal trials?",
+                    options: [
+                        { id: 'admit', text: 'Admissible - states can use evidence regardless of how obtained', correct: false },
+                        { id: 'exclude', text: 'Exclude it - Fourth Amendment requires exclusionary rule in state courts', correct: true }
+                    ],
+                    decision: "The Court ruled 6-3 that evidence obtained in violation of the Fourth Amendment cannot be used in state courts. This 'exclusionary rule' was deemed essential to deter police misconduct.",
+                    impact: "Police procedures transformed overnight. Law enforcement had to obtain proper warrants and follow constitutional procedures. The decision professionalized policing but sparked debates about criminals 'getting off on technicalities.'",
+                    societalShift: "From: Loose warrant requirements in state prosecutions → To: Strict Fourth Amendment enforcement protecting privacy rights"
+                },
+                {
+                    id: 3,
+                    year: 1963,
+                    name: "Gideon v. Wainwright",
+                    context: "In early 1960s, poor defendants in most states had no right to appointed counsel in non-capital cases. The legal system heavily favored those who could afford lawyers. Clarence Earl Gideon's handwritten petition from prison would change everything.",
+                    facts: "Gideon, a drifter, was charged with breaking into a poolroom in Florida. Too poor to afford a lawyer, he requested appointed counsel. The judge denied his request. Gideon defended himself and was convicted.",
+                    question: "Do poor defendants have a constitutional right to appointed counsel?",
+                    options: [
+                        { id: 'no', text: 'No right to counsel - only in death penalty cases', correct: false },
+                        { id: 'yes', text: 'Yes - Sixth Amendment requires lawyers for poor defendants', correct: true }
+                    ],
+                    decision: "The Court unanimously ruled that the Sixth Amendment requires states to provide attorneys for defendants who cannot afford them in criminal cases. Justice Black wrote that 'lawyers in criminal courts are necessities, not luxuries.'",
+                    impact: "Public defender systems were created across America. The decision acknowledged that fair trials require equal access to legal representation regardless of wealth. It fundamentally changed the criminal justice landscape.",
+                    societalShift: "From: Justice dependent on ability to pay → To: Constitutional guarantee of counsel for the poor"
+                },
+                {
+                    id: 4,
+                    year: 1966,
+                    name: "Miranda v. Arizona",
+                    context: "In 1960s America, police interrogation tactics were often coercive. Suspects didn't always know their rights. The Warren Court was expanding protections for criminal defendants. Popular culture depicted police as heroes who could bend rules.",
+                    facts: "Ernesto Miranda confessed to kidnapping and rape after two hours of police questioning without being told of his right to remain silent or have an attorney present. He had a history of mental illness.",
+                    question: "Should confessions obtained without informing suspects of their rights be admissible?",
+                    options: [
+                        { id: 'admit', text: 'Admissible - confessions are valid if voluntary', correct: false },
+                        { id: 'exclude', text: 'Inadmissible - suspects must be warned of their rights', correct: true }
+                    ],
+                    decision: "The Court ruled 5-4 that suspects must be informed of their rights (right to remain silent, right to attorney) before police questioning. These became known as 'Miranda rights' or 'Miranda warnings.'",
+                    impact: "Every arrest now includes the famous phrase 'You have the right to remain silent...' The ruling transformed police procedures nationwide and became embedded in American culture through TV and movies.",
+                    societalShift: "From: Police interrogation with minimal oversight → To: Mandatory rights warnings protecting against self-incrimination"
+                },
+                {
+                    id: 5,
+                    year: 1967,
+                    name: "Loving v. Virginia",
+                    context: "In 1967, interracial marriage was illegal in 16 states. Anti-miscegenation laws had existed since colonial times. Many Americans viewed racial mixing as taboo. The civil rights movement had made progress, but interracial marriage remained controversial.",
+                    facts: "Mildred Jeter (Black) and Richard Loving (white) married in Washington D.C., then returned to Virginia. They were arrested, convicted, and banished from the state for violating Virginia's Racial Integrity Act.",
+                    question: "Can states ban interracial marriage?",
+                    options: [
+                        { id: 'yes', text: 'Yes - states can regulate marriage as they see fit', correct: false },
+                        { id: 'no', text: 'No - such bans violate equal protection and due process', correct: true }
+                    ],
+                    decision: "The Court unanimously struck down all anti-miscegenation laws, declaring that 'the freedom to marry has long been recognized as one of the vital personal rights essential to the orderly pursuit of happiness.'",
+                    impact: "Interracial marriages went from 3% in 1967 to 19% by 2019. This case laid groundwork for later marriage equality decisions. Social acceptance of interracial relationships dramatically increased.",
+                    societalShift: "From: Interracial marriage as criminal act in many states → To: Marriage as fundamental right regardless of race"
+                },
+                {
+                    id: 6,
+                    year: 1969,
+                    name: "Tinker v. Des Moines",
+                    context: "During the Vietnam War, protests were everywhere—college campuses, streets, and increasingly, high schools. Authorities viewed student protests as disruptive. The question of whether students had free speech rights at school was unsettled.",
+                    facts: "Mary Beth Tinker (13) and other students wore black armbands to school to protest the Vietnam War. School officials suspended them, fearing disruption. The students had been peaceful and non-disruptive.",
+                    question: "Do students have First Amendment rights in public schools?",
+                    options: [
+                        { id: 'no', text: 'No - schools can restrict student speech to maintain order', correct: false },
+                        { id: 'yes', text: 'Yes - students retain free speech rights unless substantially disruptive', correct: true }
+                    ],
+                    decision: "The Court ruled 7-2 that students don't 'shed their constitutional rights to freedom of speech at the schoolhouse gate.' Schools can only restrict speech that substantially disrupts school operations.",
+                    impact: "Students gained recognized First Amendment protections. The case empowered youth activism and established that schools aren't absolute authorities over expression. It remains the foundation for student speech rights today.",
+                    societalShift: "From: Students as subjects of school authority with no speech rights → To: Students as citizens with constitutional protections"
+                },
+                {
+                    id: 7,
+                    year: 1973,
+                    name: "Roe v. Wade",
+                    context: "In the early 1970s, abortion was illegal in most states. Women's liberation movement was gaining strength. The contraceptive pill had been legal for only a decade. Debates about women's autonomy and privacy rights were intensifying.",
+                    facts: "Jane Roe (pseudonym for Norma McCorvey), a pregnant woman in Texas, challenged the state's abortion ban. Texas law only allowed abortion to save the mother's life.",
+                    question: "Does the Constitution protect a woman's right to choose abortion?",
+                    options: [
+                        { id: 'no', text: 'No right to abortion - states can ban it completely', correct: false },
+                        { id: 'yes', text: 'Constitutional right to privacy includes abortion choice', correct: true }
+                    ],
+                    decision: "The Court ruled 7-2 that the Constitution's right to privacy extends to a woman's decision to have an abortion, balanced against state interests that grow stronger through pregnancy (trimester framework).",
+                    impact: "This decision became one of the most contested in American history, spawning decades of political and cultural battles. It was overturned by Dobbs v. Jackson (2022), showing how legal interpretations can reverse course.",
+                    societalShift: "From: Abortion as criminal act → To: Recognized constitutional right (for 49 years) → Back to state-by-state regulation"
+                },
+                {
+                    id: 8,
+                    year: 1989,
+                    name: "Texas v. Johnson",
+                    context: "In the 1980s, patriotism and flag symbolism were particularly strong amid the Cold War. Many viewed flag burning as the ultimate act of disrespect. Both major political parties supported laws protecting the flag.",
+                    facts: "Gregory Lee Johnson burned an American flag during a 1984 Republican National Convention protest in Dallas. He was convicted under Texas law criminalizing flag desecration.",
+                    question: "Is flag burning protected political speech under the First Amendment?",
+                    options: [
+                        { id: 'no', text: 'No protection - flag burning can be criminalized', correct: false },
+                        { id: 'yes', text: 'Protected speech - even offensive symbolic expression is constitutional', correct: true }
+                    ],
+                    decision: "The Court ruled 5-4 that flag burning constitutes symbolic speech protected by the First Amendment. Justice Brennan wrote that 'the government may not prohibit expression of an idea simply because society finds it offensive.'",
+                    impact: "This deeply unpopular decision reinforced that free speech protections extend to offensive and unpatriotic expression. It demonstrated the Court's willingness to protect unpopular speech against majoritarian preferences.",
+                    societalShift: "From: Patriotic symbols deserving special legal protection → To: Free speech protection even for deeply offensive symbolic acts"
+                },
+                {
+                    id: 9,
+                    year: 2010,
+                    name: "Citizens United v. FEC",
+                    context: "In 2010, campaign finance laws limited corporate spending in elections. The McCain-Feingold Act restricted when corporations could air political ads. Money in politics was controversial, but most agreed on some limits.",
+                    facts: "Citizens United, a conservative group, wanted to air a film critical of Hillary Clinton near the 2008 primary. The FEC blocked it under laws banning corporate-funded 'electioneering communications' near elections.",
+                    question: "Can the government restrict corporate political spending?",
+                    options: [
+                        { id: 'yes', text: 'Yes - corporate money can be limited to prevent corruption', correct: false },
+                        { id: 'no', text: 'No - such restrictions violate First Amendment free speech', correct: true }
+                    ],
+                    decision: "The Court ruled 5-4 that corporate political spending is protected speech under the First Amendment. The decision equated money with speech and said 'independent expenditures' don't corrupt or create appearance of corruption.",
+                    impact: "This unleashed unlimited corporate and union money into elections through Super PACs. Campaign spending exploded. Critics say it gave wealthy interests outsized influence; supporters say it protected political speech.",
+                    societalShift: "From: Broad acceptance of campaign finance limits → To: Unlimited independent political spending as constitutional right"
+                },
+                {
+                    id: 10,
+                    year: 2015,
+                    name: "Obergefell v. Hodges",
+                    context: "In 2015, same-sex marriage was legal in some states but banned in others. Public opinion had shifted dramatically—from 27% support in 1996 to 60% in 2015. The gay rights movement had achieved growing acceptance, but marriage remained a battleground.",
+                    facts: "James Obergefell sued Ohio after it refused to recognize his marriage to John Arthur (who had since died). Multiple same-sex couples from several states challenged laws defining marriage as between one man and one woman.",
+                    question: "Must states recognize same-sex marriages?",
+                    options: [
+                        { id: 'no', text: 'No - states can define marriage traditionally', correct: false },
+                        { id: 'yes', text: 'Yes - marriage equality is a constitutional right', correct: true }
+                    ],
+                    decision: "The Court ruled 5-4 that the fundamental right to marry extends to same-sex couples. Justice Kennedy wrote that they 'ask for equal dignity in the eyes of the law. The Constitution grants them that right.'",
+                    impact: "Same-sex marriage became legal nationwide overnight. This represented one of the fastest shifts in social attitudes and law in American history—from criminalization to constitutional protection in just decades.",
+                    societalShift: "From: Same-sex relationships criminalized (until 2003) → To: Marriage equality as constitutional right"
+                }
+            ];
+
+            const speak = (text) => {
+                if (!audioEnabled) return;
+                
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.95;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+                
+                utterance.onstart = () => setIsPlaying(true);
+                utterance.onend = () => setIsPlaying(false);
+                utterance.onerror = () => setIsPlaying(false);
+                
+                window.speechSynthesis.speak(utterance);
+            };
+
+            const stopSpeaking = () => {
+                window.speechSynthesis.cancel();
+                setIsPlaying(false);
+            };
+
+            const handleNext = () => {
+                stopSpeaking();
+                
+                if (gamePhase === 'intro') {
+                    setGamePhase('facts');
+                    speak(cases[currentCase].facts);
+                } else if (gamePhase === 'facts') {
+                    setGamePhase('predict');
+                    speak(cases[currentCase].question);
+                } else if (gamePhase === 'predict' && userPrediction) {
+                    setGamePhase('result');
+                    const correct = cases[currentCase].options.find(o => o.id === userPrediction)?.correct;
+                    if (correct) setScore(score + 10);
+                    speak(cases[currentCase].decision);
+                } else if (gamePhase === 'result') {
+                    setGamePhase('impact');
+                    speak(cases[currentCase].impact + " " + cases[currentCase].societalShift);
+                } else if (gamePhase === 'impact') {
+                    if (currentCase < cases.length - 1) {
+                        setCurrentCase(currentCase + 1);
+                        setGamePhase('intro');
+                        setUserPrediction(null);
+                        speak(cases[currentCase + 1].context);
+                    }
+                }
+            };
+
+            const handleRestart = () => {
+                stopSpeaking();
+                setCurrentCase(0);
+                setGamePhase('intro');
+                setUserPrediction(null);
+                setScore(0);
+            };
+
+            const handlePrediction = (optionId) => {
+                setUserPrediction(optionId);
+            };
+
+            useEffect(() => {
+                if (gamePhase === 'intro') {
+                    speak(cases[currentCase].context);
+                }
+            }, [currentCase]);
+
+            const currentCaseData = cases[currentCase];
+            const isComplete = currentCase === cases.length - 1 && gamePhase === 'impact';
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white p-4">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="text-center mb-8 pt-8">
+                            <h1 className="text-4xl font-bold mb-2">Supreme Court Stories</h1>
+                            <p className="text-blue-200">100 Years of Evolving Justice</p>
+                        </div>
+
+                        <div className="mb-8">
+                            <div className="flex justify-between text-sm mb-2">
+                                <span>Case {currentCase + 1} of {cases.length}</span>
+                                <span className="flex items-center gap-2">
+                                    <AwardIcon />
+                                    {score} points
+                                </span>
+                            </div>
+                            <div className="w-full bg-slate-700 rounded-full h-2">
+                                <div 
+                                    className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+                                    style={{ width: `${((currentCase + 1) / cases.length) * 100}%` }}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex justify-end gap-2 mb-4">
+                            <button
+                                onClick={() => {
+                                    setAudioEnabled(!audioEnabled);
+                                    if (audioEnabled) stopSpeaking();
+                                }}
+                                className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors"
+                            >
+                                {audioEnabled ? <Volume2Icon /> : <VolumeXIcon />}
+                            </button>
+                            {isPlaying && (
+                                <button
+                                    onClick={stopSpeaking}
+                                    className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors"
+                                >
+                                    <PauseIcon />
+                                </button>
+                            )}
+                        </div>
+
+                        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-white/20">
+                            {!isComplete ? (
+                                <>
+                                    <div className="mb-6">
+                                        <div className="text-blue-300 text-sm font-semibold mb-1">
+                                            {currentCaseData.year}
+                                        </div>
+                                        <h2 className="text-3xl font-bold">{currentCaseData.name}</h2>
+                                    </div>
+
+                                    {gamePhase === 'intro' && (
+                                        <div className="space-y-4">
+                                            <h3 className="text-xl font-semibold text-blue-200">Historical Context</h3>
+                                            <p className="text-lg leading-relaxed">{currentCaseData.context}</p>
+                                        </div>
+                                    )}
+
+                                    {gamePhase === 'facts' && (
+                                        <div className="space-y-4">
+                                            <h3 className="text-xl font-semibold text-blue-200">The Case</h3>
+                                            <p className="text-lg leading-relaxed">{currentCaseData.facts}</p>
+                                        </div>
+                                    )}
+
+                                    {gamePhase === 'predict' && (
+                                        <div className="space-y-6">
+                                            <h3 className="text-xl font-semibold text-blue-200">The Constitutional Question</h3>
+                                            <p className="text-lg leading-relaxed mb-6">{currentCaseData.question}</p>
+                                            
+                                            <div className="space-y-3">
+                                                <p className="font-semibold">How do you think the Court ruled?</p>
+                                                {currentCaseData.options.map((option) => (
+                                                    <button
+                                                        key={option.id}
+                                                        onClick={() => handlePrediction(option.id)}
+                                                        className={`w-full p-4 rounded-lg text-left transition-all ${
+                                                            userPrediction === option.id
+                                                                ? 'bg-blue-500 border-2 border-blue-300'
+                                                                : 'bg-slate-800/50 border-2 border-transparent hover:border-blue-400'
+                                                        }`}
+                                                    >
+                                                        {option.text}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {gamePhase === 'result' && (
+                                        <div className="space-y-4">
+                                            <div className={`p-4 rounded-lg ${
+                                                cases[currentCase].options.find(o => o.id === userPrediction)?.correct
+                                                    ? 'bg-green-500/20 border border-green-500'
+                                                    : 'bg-red-500/20 border border-red-500'
+                                            }`}>
+                                                <p className="font-semibold mb-2">
+                                                    {cases[currentCase].options.find(o => o.id === userPrediction)?.correct
+                                                        ? '✓ Correct! +10 points'
+                                                        : '✗ Not quite'}
+                                                </p>
+                                            </div>
+                                            
+                                            <h3 className="text-xl font-semibold text-blue-200">The Court's Decision</h3>
+                                            <p className="text-lg leading-relaxed">{currentCaseData.decision}</p>
+                                        </div>
+                                    )}
+
+                                    {gamePhase === 'impact' && (
+                                        <div className="space-y-6">
+                                            <div>
+                                                <h3 className="text-xl font-semibold text-blue-200 mb-3">The Impact</h3>
+                                                <p className="text-lg leading-relaxed">{currentCaseData.impact}</p>
+                                            </div>
+                                            
+                                            <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 p-4 rounded-lg border border-purple-400/30">
+                                                <h4 className="font-semibold text-purple-200 mb-2">Societal Shift</h4>
+                                                <p className="text-sm leading-relaxed">{currentCaseData.societalShift}</p>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <div className="mt-8 flex justify-between">
+                                        <button
+                                            onClick={handleRestart}
+                                            className="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors flex items-center gap-2"
+                                        >
+                                            <RotateCcwIcon />
+                                            Restart
+                                        </button>
+                                        
+                                        <button
+                                            onClick={handleNext}
+                                            disabled={gamePhase === 'predict' && !userPrediction}
+                                            className="px-6 py-2 rounded-lg bg-blue-500 hover:bg-blue-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                                        >
+                                            {gamePhase === 'impact' && currentCase < cases.length - 1 ? 'Next Case' : 'Continue'}
+                                            <ChevronRightIcon />
+                                        </button>
+                                    </div>
+                                </>
+                            ) : (
+                                <div className="text-center space-y-6">
+                                    <div className="text-6xl mb-4">🏛️</div>
+                                    <h2 className="text-3xl font-bold">Journey Complete!</h2>
+                                    <p className="text-xl">You've explored 100 years of constitutional evolution</p>
+                                    <div className="text-4xl font-bold text-blue-400">Final Score: {score} / 100</div>
+                                    <p className="text-lg leading-relaxed max-w-2xl mx-auto">
+                                        These ten cases show how the Supreme Court has both reflected and shaped society's evolving views on equality, liberty, and justice. The law is never static—it's a living dialogue between our constitutional principles and our changing values.
+                                    </p>
+                                    <button
+                                        onClick={handleRestart}
+                                        className="px-8 py-3 rounded-lg bg-blue-500 hover:bg-blue-400 transition-colors flex items-center gap-2 mx-auto"
+                                    >
+                                        <RotateCcwIcon />
+                                        Play Again
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<SupremeCourtGame />, document.getElementById('root'));
+    </script>
+</body>
+</html>
