@@ -20,33 +20,17 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
-
-        const Volume2Icon = () => (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-            </svg>
-        );
-
-        const VolumeXIcon = () => (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <line x1="23" y1="9" x2="17" y2="15"></line>
-                <line x1="17" y1="9" x2="23" y2="15"></line>
-            </svg>
-        );
-
-        const PauseIcon = () => (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="6" y="4" width="4" height="16"></rect>
-                <rect x="14" y="4" width="4" height="16"></rect>
-            </svg>
-        );
+        const { useState } = React;
 
         const ChevronRightIcon = () => (
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        );
+
+        const ChevronLeftIcon = () => (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
         );
 
@@ -77,20 +61,27 @@
             </svg>
         );
 
+        const CheckCircleIcon = () => (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+        );
+
         const SupremeCourtGame = () => {
-            const [currentCase, setCurrentCase] = useState(0);
-            const [gamePhase, setGamePhase] = useState('intro');
+            const [currentCase, setCurrentCase] = useState(null);
+            const [gamePhase, setGamePhase] = useState('menu');
             const [userPrediction, setUserPrediction] = useState(null);
             const [score, setScore] = useState(0);
-            const [audioEnabled, setAudioEnabled] = useState(true);
-            const [isPlaying, setIsPlaying] = useState(false);
             const [expandedSections, setExpandedSections] = useState({});
+            const [completedCases, setCompletedCases] = useState(new Set());
 
             const cases = [
                 {
                     id: 1,
                     year: 1954,
                     name: "Brown v. Board of Education",
+                    shortDesc: "School segregation and equal protection",
                     context: "In 1950s America, racial segregation was legal and enforced across the South. 'Separate but equal' had been the law since 1896. Schools, restaurants, and public facilities were divided by race. The civil rights movement was just beginning to gain momentum.",
                     contextDeep: "The 1896 Plessy v. Ferguson decision had established that racial segregation was constitutional as long as facilities were 'equal.' In practice, Black schools received a fraction of the funding of white schools. In the South, this inequality was stark: Black students used hand-me-down textbooks, attended schools without proper heating, and had far fewer resources. The NAACP had been methodically challenging segregation through the courts, winning cases about graduate schools and law schools. By the early 1950s, they were ready to challenge the foundation: elementary school segregation itself.",
                     facts: "Linda Brown, a Black third-grader, had to walk miles to her segregated school while a white school was just blocks away. Her father, with the NAACP, challenged school segregation in Topeka, Kansas.",
@@ -113,6 +104,7 @@
                     id: 2,
                     year: 1961,
                     name: "Mapp v. Ohio",
+                    shortDesc: "Illegal searches and the exclusionary rule",
                     context: "In 1961, police often conducted searches without warrants. Evidence obtained illegally could still be used in most state courts. The Fourth Amendment's protection against unreasonable searches wasn't fully enforced at the state level.",
                     contextDeep: "The Fourth Amendment, ratified in 1791, protected against 'unreasonable searches and seizures,' but for most of American history, states could use illegally obtained evidence. The 'exclusionary rule'—excluding such evidence—only applied in federal courts after Weeks v. United States (1914). States were free to admit evidence however they obtained it. This created a two-tiered system where constitutional rights depended on whether you were prosecuted in state or federal court. Most criminal cases happened in state courts, meaning the Fourth Amendment was largely toothless for most Americans.",
                     facts: "Police forced entry into Dollree Mapp's home without a proper warrant, searching for a bombing suspect. They found obscene materials and convicted her. The 'exclusionary rule' (excluding illegally obtained evidence) only applied to federal cases.",
@@ -135,6 +127,7 @@
                     id: 3,
                     year: 1963,
                     name: "Gideon v. Wainwright",
+                    shortDesc: "Right to counsel for poor defendants",
                     context: "In early 1960s, poor defendants in most states had no right to appointed counsel in non-capital cases. The legal system heavily favored those who could afford lawyers. Clarence Earl Gideon's handwritten petition from prison would change everything.",
                     contextDeep: "The Sixth Amendment guarantees the right to counsel, but courts long interpreted this as merely the right to hire a lawyer if you could afford one—not a right to have one provided. In Betts v. Brady (1942), the Supreme Court ruled that appointed counsel was only required in death penalty cases or 'special circumstances' like mental disability. This left most poor defendants to fend for themselves in a complex legal system designed by and for lawyers. The disparity was stark: wealthy defendants had skilled advocates; poor defendants stumbled through trials, often not knowing basic rights or procedures.",
                     facts: "Gideon, a drifter, was charged with breaking into a poolroom in Florida. Too poor to afford a lawyer, he requested appointed counsel. The judge denied his request. Gideon defended himself and was convicted.",
@@ -157,6 +150,7 @@
                     id: 4,
                     year: 1966,
                     name: "Miranda v. Arizona",
+                    shortDesc: "Police warnings and self-incrimination",
                     context: "In 1960s America, police interrogation tactics were often coercive. Suspects didn't always know their rights. The Warren Court was expanding protections for criminal defendants. Popular culture depicted police as heroes who could bend rules.",
                     contextDeep: "Police interrogation manuals of the era taught psychological manipulation techniques: isolating suspects, using good cop/bad cop routines, lying about evidence, and exploiting suspects' ignorance of their rights. The manuals explicitly advised not informing suspects of their rights because it would make getting confessions harder. Confessions were the 'queen of proofs'—juries almost always convicted when presented with a confession. But coerced confessions led to false convictions. The Fifth Amendment protected against self-incrimination, but how could suspects invoke a right they didn't know existed?",
                     facts: "Ernesto Miranda confessed to kidnapping and rape after two hours of police questioning without being told of his right to remain silent or have an attorney present. He had a history of mental illness.",
@@ -179,6 +173,7 @@
                     id: 5,
                     year: 1967,
                     name: "Loving v. Virginia",
+                    shortDesc: "Interracial marriage bans struck down",
                     context: "In 1967, interracial marriage was illegal in 16 states. Anti-miscegenation laws had existed since colonial times. Many Americans viewed racial mixing as taboo. The civil rights movement had made progress, but interracial marriage remained controversial.",
                     contextDeep: "Anti-miscegenation laws dated to the 1660s in colonial America, designed to maintain racial hierarchy and prevent challenges to slavery. After the Civil War, these laws proliferated as Southern states sought to preserve white supremacy. By 1967, 16 states still banned interracial marriage—all in the South and border regions. The rhetoric was explicitly racist: Virginia's law aimed to preserve 'racial integrity' and prevent 'mongrelization.' Scientific racism had been discredited, but cultural taboos remained strong. Even after Brown v. Board desegregated schools, many whites viewed interracial marriage as going 'too far.' Gallup polls showed only 20% of Americans approved of Black-white marriages in 1968.",
                     facts: "Mildred Jeter (Black) and Richard Loving (white) married in Washington D.C., then returned to Virginia. They were arrested, convicted, and banished from the state for violating Virginia's Racial Integrity Act.",
@@ -201,6 +196,7 @@
                     id: 6,
                     year: 1969,
                     name: "Tinker v. Des Moines",
+                    shortDesc: "Student free speech rights in schools",
                     context: "During the Vietnam War, protests were everywhere—college campuses, streets, and increasingly, high schools. Authorities viewed student protests as disruptive. The question of whether students had free speech rights at school was unsettled.",
                     contextDeep: "The Vietnam War divided America. By 1969, over 30,000 Americans had died, and the draft meant young men faced the choice of fighting or fleeing. Protests erupted nationwide. Students led anti-war demonstrations at colleges, and the movement spread to high schools. School administrators, often veterans or war supporters, viewed student protests as disrespectful and dangerous. The prevailing view was that students were subject to school authority and didn't have full constitutional rights on campus. In loco parentis—'in place of parents'—doctrine gave schools broad power to regulate student behavior. But students argued they were citizens too.",
                     facts: "Mary Beth Tinker (13) and other students wore black armbands to school to protest the Vietnam War. School officials suspended them, fearing disruption. The students had been peaceful and non-disruptive.",
@@ -223,6 +219,7 @@
                     id: 7,
                     year: 1973,
                     name: "Roe v. Wade",
+                    shortDesc: "Abortion rights and privacy (overturned 2022)",
                     context: "In the early 1970s, abortion was illegal in most states. Women's liberation movement was gaining strength. The contraceptive pill had been legal for only a decade. Debates about women's autonomy and privacy rights were intensifying.",
                     contextDeep: "Before Roe, abortion was illegal in most states except to save the mother's life. Women sought illegal 'back-alley' abortions, often in dangerous conditions. Thousands died or suffered complications. Wealthy women could travel to states or countries where abortion was legal; poor women risked their lives. The women's movement argued bodily autonomy was essential to equality—without control over reproduction, women couldn't fully participate in society. Opponents viewed abortion as murder of unborn children. The debate was (and remains) fundamental: when does life begin? Who decides? The case emerged as Griswold v. Connecticut (1965) had established a constitutional right to privacy regarding contraception.",
                     facts: "Jane Roe (pseudonym for Norma McCorvey), a pregnant woman in Texas, challenged the state's abortion ban. Texas law only allowed abortion to save the mother's life.",
@@ -245,6 +242,7 @@
                     id: 8,
                     year: 1989,
                     name: "Texas v. Johnson",
+                    shortDesc: "Flag burning as protected speech",
                     context: "In the 1980s, patriotism and flag symbolism were particularly strong amid the Cold War. Many viewed flag burning as the ultimate act of disrespect. Both major political parties supported laws protecting the flag.",
                     contextDeep: "The American flag held sacred status in political culture. Federal law and 48 states banned flag desecration. Veterans' groups lobbied fiercely for flag protection. The Cold War emphasized American values versus Communist oppression, and the flag symbolized freedom. Ronald Reagan's presidency heightened patriotic rhetoric. Flag burning was rare but visceral—when it occurred, public outrage was intense. The legal question was whether symbolic conduct (burning a flag as protest) constituted 'speech' protected by the First Amendment or whether the flag's unique symbolic status justified special protection from desecration.",
                     facts: "Gregory Lee Johnson burned an American flag during a 1984 Republican National Convention protest in Dallas. He was convicted under Texas law criminalizing flag desecration.",
@@ -267,6 +265,7 @@
                     id: 9,
                     year: 2010,
                     name: "Citizens United v. FEC",
+                    shortDesc: "Corporate political spending and free speech",
                     context: "In 2010, campaign finance laws limited corporate spending in elections. The McCain-Feingold Act restricted when corporations could air political ads. Money in politics was controversial, but most agreed on some limits.",
                     contextDeep: "Campaign finance reform had a long history. Watergate scandals led to the Federal Election Campaign Act, which the Court partially upheld in Buckley v. Valeo (1976), ruling that spending money is speech but contribution limits are constitutional to prevent corruption. The McCain-Feingold Act (2002) banned 'electioneering communications'—corporate-funded ads mentioning candidates within 60 days of general elections or 30 days of primaries. The law aimed to prevent corporations from influencing elections with treasury funds. Previous Court precedent in Austin v. Michigan Chamber of Commerce (1990) upheld such restrictions. But the Roberts Court was skeptical of campaign finance limits, viewing them as restricting political speech.",
                     facts: "Citizens United, a conservative group, wanted to air a film critical of Hillary Clinton near the 2008 primary. The FEC blocked it under laws banning corporate-funded 'electioneering communications' near elections.",
@@ -289,6 +288,7 @@
                     id: 10,
                     year: 2015,
                     name: "Obergefell v. Hodges",
+                    shortDesc: "Same-sex marriage equality nationwide",
                     context: "In 2015, same-sex marriage was legal in some states but banned in others. Public opinion had shifted dramatically—from 27% support in 1996 to 60% in 2015. The gay rights movement had achieved growing acceptance, but marriage remained a battleground.",
                     contextDeep: "The gay rights movement's journey was remarkable. In 1986, Bowers v. Hardwick upheld laws criminalizing same-sex intimacy. Just 17 years later, Lawrence v. Texas (2003) overruled Bowers, decriminalizing same-sex relationships nationwide. Massachusetts became the first state to legalize same-sex marriage in 2004. Some states followed through legislation or court decisions; others passed constitutional amendments banning it. The Defense of Marriage Act (1996) defined marriage federally as between man and woman. United States v. Windsor (2013) struck down DOMA's federal definition, requiring federal recognition of state-legal same-sex marriages. By 2015, the question was whether states could still ban same-sex marriage or whether the Constitution required nationwide recognition.",
                     facts: "James Obergefell sued Ohio after it refused to recognize his marriage to John Arthur (who had since died). Multiple same-sex couples from several states challenged laws defining marriage as between one man and one woman.",
@@ -316,79 +316,53 @@
                 }));
             };
 
-            const speak = (text) => {
-                if (!audioEnabled) return;
-                
-                window.speechSynthesis.cancel();
-                
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.95;
-                utterance.pitch = 1;
-                utterance.volume = 1;
-                
-                utterance.onstart = () => setIsPlaying(true);
-                utterance.onend = () => setIsPlaying(false);
-                utterance.onerror = () => setIsPlaying(false);
-                
-                window.speechSynthesis.speak(utterance);
+            const selectCase = (caseIndex) => {
+                setCurrentCase(caseIndex);
+                setGamePhase('intro');
+                setUserPrediction(null);
+                setExpandedSections({});
             };
 
-            const stopSpeaking = () => {
-                window.speechSynthesis.cancel();
-                setIsPlaying(false);
+            const returnToMenu = () => {
+                setGamePhase('menu');
+                setCurrentCase(null);
+                setUserPrediction(null);
+                setExpandedSections({});
             };
 
             const handleNext = () => {
-                stopSpeaking();
-                
                 if (gamePhase === 'intro') {
                     setGamePhase('facts');
-                    speak(cases[currentCase].facts);
                 } else if (gamePhase === 'facts') {
                     setGamePhase('predict');
-                    speak(cases[currentCase].question);
                 } else if (gamePhase === 'predict' && userPrediction) {
                     setGamePhase('result');
                     const correct = cases[currentCase].options.find(o => o.id === userPrediction)?.correct;
                     if (correct) setScore(score + 10);
-                    speak(cases[currentCase].decision);
                 } else if (gamePhase === 'result') {
                     setGamePhase('impact');
-                    speak(cases[currentCase].impact + " " + cases[currentCase].societalShift);
                 } else if (gamePhase === 'impact') {
                     setGamePhase('deepdive');
                 } else if (gamePhase === 'deepdive') {
-                    if (currentCase < cases.length - 1) {
-                        setCurrentCase(currentCase + 1);
-                        setGamePhase('intro');
-                        setUserPrediction(null);
-                        setExpandedSections({});
-                        speak(cases[currentCase + 1].context);
-                    }
+                    setCompletedCases(prev => new Set([...prev, currentCase]));
+                    returnToMenu();
                 }
             };
 
             const handleRestart = () => {
-                stopSpeaking();
-                setCurrentCase(0);
-                setGamePhase('intro');
+                setCurrentCase(null);
+                setGamePhase('menu');
                 setUserPrediction(null);
                 setScore(0);
                 setExpandedSections({});
+                setCompletedCases(new Set());
             };
 
             const handlePrediction = (optionId) => {
                 setUserPrediction(optionId);
             };
 
-            useEffect(() => {
-                if (gamePhase === 'intro') {
-                    speak(cases[currentCase].context);
-                }
-            }, [currentCase]);
-
-            const currentCaseData = cases[currentCase];
-            const isComplete = currentCase === cases.length - 1 && gamePhase === 'deepdive';
+            const currentCaseData = currentCase !== null ? cases[currentCase] : null;
 
             return (
                 <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white p-4">
@@ -398,44 +372,71 @@
                             <p className="text-blue-200">100 Years of Evolving Justice</p>
                         </div>
 
-                        <div className="mb-8">
-                            <div className="flex justify-between text-sm mb-2">
-                                <span>Case {currentCase + 1} of {cases.length}</span>
-                                <span className="flex items-center gap-2">
-                                    <AwardIcon />
-                                    {score} points
-                                </span>
+                        {gamePhase !== 'menu' && (
+                            <div className="mb-8">
+                                <div className="flex justify-between text-sm mb-2">
+                                    <span>Explored: {completedCases.size} of {cases.length}</span>
+                                    <span className="flex items-center gap-2">
+                                        <AwardIcon />
+                                        {score} points
+                                    </span>
+                                </div>
+                                <div className="w-full bg-slate-700 rounded-full h-2">
+                                    <div 
+                                        className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+                                        style={{ width: `${(completedCases.size / cases.length) * 100}%` }}
+                                    />
+                                </div>
                             </div>
-                            <div className="w-full bg-slate-700 rounded-full h-2">
-                                <div 
-                                    className="bg-blue-500 h-2 rounded-full transition-all duration-500"
-                                    style={{ width: `${((currentCase + 1) / cases.length) * 100}%` }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="flex justify-end gap-2 mb-4">
-                            <button
-                                onClick={() => {
-                                    setAudioEnabled(!audioEnabled);
-                                    if (audioEnabled) stopSpeaking();
-                                }}
-                                className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors"
-                            >
-                                {audioEnabled ? <Volume2Icon /> : <VolumeXIcon />}
-                            </button>
-                            {isPlaying && (
-                                <button
-                                    onClick={stopSpeaking}
-                                    className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors"
-                                >
-                                    <PauseIcon />
-                                </button>
-                            )}
-                        </div>
+                        )}
 
                         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-white/20">
-                            {!isComplete ? (
+                            {gamePhase === 'menu' ? (
+                                <div className="space-y-6">
+                                    <div className="text-center mb-6">
+                                        <h2 className="text-2xl font-bold mb-2">Choose a Case to Explore</h2>
+                                        <p className="text-blue-200">Select any landmark case to learn about its impact on society</p>
+                                    </div>
+
+                                    <div className="grid gap-3">
+                                        {cases.map((caseData, index) => (
+                                            <button
+                                                key={caseData.id}
+                                                onClick={() => selectCase(index)}
+                                                className="w-full p-4 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 border-2 border-transparent hover:border-blue-400 transition-all text-left group"
+                                            >
+                                                <div className="flex items-start justify-between gap-4">
+                                                    <div className="flex-1">
+                                                        <div className="flex items-center gap-2 mb-1">
+                                                            <span className="text-blue-300 text-sm font-semibold">{caseData.year}</span>
+                                                            {completedCases.has(index) && (
+                                                                <CheckCircleIcon className="text-green-400" />
+                                                            )}
+                                                        </div>
+                                                        <h3 className="text-lg font-bold mb-1 group-hover:text-blue-300 transition-colors">
+                                                            {caseData.name}
+                                                        </h3>
+                                                        <p className="text-sm text-slate-300">{caseData.shortDesc}</p>
+                                                    </div>
+                                                    <ChevronRightIcon className="text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 mt-1" />
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    {completedCases.size > 0 && (
+                                        <div className="mt-8 pt-6 border-t border-slate-700 text-center">
+                                            <button
+                                                onClick={handleRestart}
+                                                className="px-6 py-3 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors flex items-center gap-2 mx-auto"
+                                            >
+                                                <RotateCcwIcon />
+                                                Reset All Progress
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
                                 <>
                                     <div className="mb-6">
                                         <div className="text-blue-300 text-sm font-semibold mb-1">
@@ -576,11 +577,11 @@
 
                                     <div className="mt-8 flex justify-between">
                                         <button
-                                            onClick={handleRestart}
+                                            onClick={returnToMenu}
                                             className="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors flex items-center gap-2"
                                         >
-                                            <RotateCcwIcon />
-                                            Restart
+                                            <ChevronLeftIcon />
+                                            Back to Menu
                                         </button>
                                         
                                         <button
@@ -588,28 +589,11 @@
                                             disabled={gamePhase === 'predict' && !userPrediction}
                                             className="px-6 py-2 rounded-lg bg-blue-500 hover:bg-blue-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                                         >
-                                            {gamePhase === 'deepdive' && currentCase < cases.length - 1 ? 'Next Case' : 'Continue'}
+                                            {gamePhase === 'deepdive' ? 'Back to Menu' : 'Continue'}
                                             <ChevronRightIcon />
                                         </button>
                                     </div>
                                 </>
-                            ) : (
-                                <div className="text-center space-y-6">
-                                    <div className="text-6xl mb-4">🏛️</div>
-                                    <h2 className="text-3xl font-bold">Journey Complete!</h2>
-                                    <p className="text-xl">You've explored 100 years of constitutional evolution</p>
-                                    <div className="text-4xl font-bold text-blue-400">Final Score: {score} / 100</div>
-                                    <p className="text-lg leading-relaxed max-w-2xl mx-auto">
-                                        These ten cases show how the Supreme Court has both reflected and shaped society's evolving views on equality, liberty, and justice. The law is never static—it's a living dialogue between our constitutional principles and our changing values.
-                                    </p>
-                                    <button
-                                        onClick={handleRestart}
-                                        className="px-8 py-3 rounded-lg bg-blue-500 hover:bg-blue-400 transition-colors flex items-center gap-2 mx-auto"
-                                    >
-                                        <RotateCcwIcon />
-                                        Play Again
-                                    </button>
-                                </div>
                             )}
                         </div>
                     </div>
