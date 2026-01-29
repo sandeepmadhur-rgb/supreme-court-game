@@ -312,6 +312,12 @@
                 summary: "Website designer can't be compelled to create same-sex wedding sites.",
                 ruling: "The Court ruled 6-3 that requiring a website designer to create same-sex wedding websites would violate her First Amendment right against compelled speech.",
                 significance: "This established that some businesses can refuse service to same-sex couples when the service involves expression, raising questions about discrimination limits."
+            },
+            "Students for Fair Admissions v. Harvard": {
+                year: 2023,
+                summary: "Struck down race-conscious college admissions.",
+                ruling: "The Court ruled 6-3 that Harvard and UNC's consideration of race in admissions violated the Equal Protection Clause, effectively ending affirmative action in higher education.",
+                significance: "This overturned decades of precedent allowing race as one factor in admissions, dramatically changing college diversity efforts nationwide."
             }
         };
 
@@ -320,13 +326,11 @@
             const parts = [];
             let lastIndex = 0;
             
-            // Find all case references in the text
             Object.keys(CASE_DATABASE).forEach(caseName => {
                 const regex = new RegExp(caseName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
                 let match;
                 
                 while ((match = regex.exec(text)) !== null) {
-                    // Add text before the match
                     if (match.index > lastIndex) {
                         parts.push({
                             type: 'text',
@@ -335,7 +339,6 @@
                         });
                     }
                     
-                    // Add the case link
                     parts.push({
                         type: 'case',
                         content: caseName,
@@ -347,7 +350,6 @@
                 }
             });
             
-            // Add remaining text
             if (lastIndex < text.length) {
                 parts.push({
                     type: 'text',
@@ -356,14 +358,12 @@
                 });
             }
             
-            // Sort parts by their position in the original text
             parts.sort((a, b) => {
                 const aIndex = a.index !== undefined ? a.index : parseInt(a.key.split('-')[1]);
                 const bIndex = b.index !== undefined ? b.index : parseInt(b.key.split('-')[1]);
                 return aIndex - bIndex;
             });
             
-            // Remove duplicates (in case overlapping matches)
             const uniqueParts = [];
             let currentPos = 0;
             
@@ -394,7 +394,6 @@
             );
         };
 
-        // Modal component for case details
         const CaseModal = ({ caseName, onClose }) => {
             if (!caseName || !CASE_DATABASE[caseName]) return null;
             
@@ -453,8 +452,6 @@
         const SupremeCourtGame = () => {
             const [currentCase, setCurrentCase] = useState(null);
             const [gamePhase, setGamePhase] = useState('menu');
-            const [userPrediction, setUserPrediction] = useState(null);
-            const [score, setScore] = useState(0);
             const [expandedSections, setExpandedSections] = useState({});
             const [completedCases, setCompletedCases] = useState(new Set());
             const [selectedCaseModal, setSelectedCaseModal] = useState(null);
@@ -462,6 +459,60 @@
             const cases = [
                 {
                     id: 1,
+                    year: 1803,
+                    name: "Marbury v. Madison",
+                    shortDesc: "Judicial review and Court's power",
+                    context: "In 1803, the Supreme Court's role in American government was unclear. The Constitution didn't explicitly say courts could strike down laws. The case arose from political warfare between outgoing Federalists and incoming Democratic-Republicans. President Adams made last-minute judicial appointments before leaving office, but his Secretary of State failed to deliver all the commissions.",
+                    contextDeep: "The young republic faced a constitutional crisis. John Adams lost the 1800 election to Thomas Jefferson in a bitter campaign. In his final days, Adams appointed dozens of Federalist judges—the 'midnight judges'—to preserve Federalist influence. William Marbury was appointed Justice of the Peace for D.C., but incoming Secretary of State James Madison refused to deliver his commission. Marbury sued directly in the Supreme Court under the Judiciary Act of 1789, which gave the Court original jurisdiction over such cases. Chief Justice John Marshall faced a dilemma: if he ordered Madison to deliver the commission, Jefferson would ignore it, showing the Court was powerless. If he ruled against Marbury, the Court would appear weak to Federalists.",
+                    facts: "William Marbury sued to force delivery of his judicial commission. He used the Judiciary Act of 1789, which said the Supreme Court had original jurisdiction to issue writs of mandamus (orders compelling government officials to act).",
+                    factsDeep: "Marshall's solution was brilliant political jujitsu. He wrote that Marbury had a right to his commission and Madison was wrong to withhold it—satisfying Federalists. But then Marshall ruled the Judiciary Act section giving the Court original jurisdiction over mandamus cases was unconstitutional because Article III of the Constitution specified the Court's original jurisdiction, and Congress couldn't expand it by statute. This meant the Court couldn't order Madison to deliver the commission—Jefferson won the immediate battle. But Marshall established that the Supreme Court has the power to declare acts of Congress unconstitional—judicial review—winning the war for the Court's authority.",
+                    decision: "The Court ruled that while Marbury had a right to his commission, the portion of the Judiciary Act giving the Supreme Court original jurisdiction to issue writs of mandamus was unconstitutional. The Court declared for the first time that it has the power to review acts of Congress and strike down those that conflict with the Constitution.",
+                    impact: "This decision established judicial review—the Court's power to invalidate laws that violate the Constitution. It made the judiciary a co-equal branch of government and gave courts final say on constitutional meaning. Every Supreme Court case striking down a law traces back to Marbury.",
+                    societalShift: "From: Courts as weak institutions interpreting law → To: Supreme Court as final arbiter of constitutional meaning with power over other branches",
+                    deepDive: {
+                        dissent: "There was no dissent—the decision was unanimous. This was partly strategic; Marshall knew establishing such a momentous power required unanimity. The clever structure of the opinion—giving Jefferson the immediate victory while claiming power for the Court—made it hard to oppose.",
+                        laterCases: "The Court didn't strike down another federal law for 54 years (Dred Scott v. Sandford, 1857). But Marbury established the principle. In the 20th century, judicial review expanded dramatically. Cooper v. Aaron (1958) declared that the Court's constitutional interpretations are 'the supreme law of the land,' binding on all government officials. Modern debates over 'judicial activism' versus 'restraint' stem from Marbury—should unelected judges override elected legislators?",
+                        modernControversy: "Marbury remains controversial. The Constitution doesn't explicitly grant judicial review, though many scholars find it implicit. Critics across the political spectrum question whether nine unelected justices should have final say over democratic majorities. After controversial decisions like Bush v. Gore, Citizens United, or Dobbs, critics ask: who gave the Court this power? The answer is: the Court gave it to itself, in Marbury. Some argue for 'popular constitutionalism' where elected branches share interpretive authority. Others defend judicial review as essential protection for individual rights and constitutional limits on majority rule."
+                    }
+                },
+                {
+                    id: 2,
+                    year: 1942,
+                    name: "Wickard v. Filburn",
+                    shortDesc: "Federal power and interstate commerce",
+                    context: "During the Great Depression and World War II, the federal government massively expanded its economic regulation. The Agricultural Adjustment Act limited how much wheat farmers could grow to stabilize prices and support farmers. The constitutional question was: how far does Congress's power to regulate 'interstate commerce' extend?",
+                    contextDeep: "The New Deal transformed federal power. Before the 1930s, the Court struck down many economic regulations as beyond Congress's interstate commerce power. But FDR's court-packing threat and changing justices led to the 'switch in time that saved nine'—the Court began upholding New Deal programs. By the 1940s, the question was how far this new deference would go. Roscoe Filburn was a small Ohio farmer growing wheat on his own land, using the excess to feed his own animals and family. This seems purely local, not 'interstate commerce.' But the government said even home-grown wheat for home use affects national wheat markets by reducing demand.",
+                    facts: "Roscoe Filburn grew 23 acres of wheat on his farm, exceeding his 11-acre federal allotment. He used the excess wheat to feed his livestock and family, never selling it. The government fined him for exceeding his quota.",
+                    factsDeep: "Filburn argued his wheat never entered interstate commerce—it never left his farm, wasn't sold, and was purely for personal consumption. How could Congress regulate it under the interstate commerce power? The government argued that even home-consumed wheat affects the national wheat market: if Filburn grows his own, he doesn't buy wheat, reducing market demand and affecting prices interstate. Multiply this by thousands of farmers, and home-consumed wheat substantially affects interstate commerce in the aggregate, even if no individual farmer's impact is noticeable.",
+                    decision: "The Court unanimously ruled that even wheat grown for home consumption substantially affects interstate commerce when considered in the aggregate. Congress can regulate local activities if, in total, they have a substantial economic effect on interstate commerce.",
+                    impact: "This decision vastly expanded federal power. If Congress can regulate home-grown wheat never sold, it can regulate almost any economic activity. Wickard became the foundation for expansive federal regulation—environmental laws, civil rights laws, criminal laws—all justified under the commerce power.",
+                    societalShift: "From: Interstate commerce as trade that crosses state lines → To: Interstate commerce as anything affecting the national economy, even if purely local",
+                    deepDive: {
+                        dissent: "There was no dissent. The case was decided unanimously, reflecting post-New Deal consensus about federal power. Even conservative justices accepted broad commerce power by 1942, especially during wartime mobilization.",
+                        laterCases: "For 50 years, Wickard seemed to give Congress unlimited commerce power. But United States v. Lopez (1995) marked the first time in decades the Court struck down a federal law as exceeding commerce power—the Gun-Free School Zones Act. The Court said carrying guns near schools wasn't 'economic activity' and had too tenuous a connection to interstate commerce. United States v. Morrison (2000) struck down parts of the Violence Against Women Act on similar grounds. National Federation of Independent Business v. Sebelius (2012) used this logic to limit Obamacare's individual mandate (though upholding it under taxing power). These cases suggest limits to Wickard, though it remains good law.",
+                        modernControversy: "Wickard epitomizes debates over federal power versus states' rights. Conservatives argue it turned the commerce clause into a blank check for federal expansion, destroying federalism and limited government. They cite Wickard to argue federal overreach on guns, drugs, and healthcare. Progressives defend it as enabling necessary national solutions to national problems—environmental protection, civil rights, worker safety. The marijuana legalization movement highlights tensions: states legalize, but federal prohibition rests on commerce power post-Wickard (even purely intrastate growing affects interstate markets). The debate is really about whether we have a national government with broad powers or a federal system with limited national government."
+                    }
+                },
+                {
+                    id: 3,
+                    year: 1944,
+                    name: "Korematsu v. United States",
+                    shortDesc: "Japanese internment and civil liberties in wartime",
+                    context: "After Pearl Harbor in December 1941, anti-Japanese hysteria swept America. Military and political leaders feared Japanese Americans would aid enemy invasion or sabotage. Despite no evidence of disloyalty, President Roosevelt issued Executive Order 9066 authorizing military commanders to exclude civilians from military areas. This led to forcible removal and imprisonment of 120,000 Japanese Americans—two-thirds U.S. citizens—in desolate internment camps.",
+                    contextDeep: "The internment was motivated by racism, wartime panic, and economic jealousy. Japanese Americans—many successful farmers and business owners—faced discrimination for decades. After Pearl Harbor, newspapers and politicians stoked fears of a 'fifth column' despite FBI and military intelligence reports finding no evidence of organized Japanese American disloyalty. Western states' politicians and businesses saw opportunity to seize Japanese American property. Lt. General John DeWitt, Western Defense Commander, openly expressed racist views: 'A Jap's a Jap.' Families were given days to sell homes and businesses for pennies, then transported to tar-paper barracks in remote camps surrounded by barbed wire and armed guards. Children, elderly, infirm—all imprisoned without charges or trials based solely on ancestry.",
+                    facts: "Fred Korematsu, an American-born citizen of Japanese descent, refused the exclusion order and remained in California. He was arrested, convicted, and sent to an internment camp. He challenged the order as unconstitutional racial discrimination.",
+                    factsDeep: "Korematsu was a 23-year-old welder in Oakland who wanted to stay with his Italian American girlfriend. He had tried to enlist in the U.S. military but was rejected. When evacuation orders came, he had minor plastic surgery and claimed to be of Spanish Hawaiian descent to evade detection. He was arrested and his case was backed by the ACLU as a test of the orders' constitutionality. The government argued 'military necessity'—in wartime, military judgments about security must be deferred to. They claimed they couldn't distinguish loyal from disloyal Japanese Americans quickly, so exclusion of all was necessary. They suppressed contrary evidence: FBI Director Hoover said internment was unnecessary, and intelligence agencies found no evidence of Japanese American espionage.",
+                    decision: "The Court ruled 6-3 that the exclusion order was constitutional. Justice Black's majority opinion said that although racial distinctions are 'immediately suspect,' in the context of war, military necessity could justify the exclusion. The Court deferred to military judgment despite lack of evidence.",
+                    impact: "Korematsu became one of the Court's most discredited decisions, comparable to Dred Scott and Plessy. It was never formally overruled until 2018 (Trump v. Hawaii), though widely condemned. The decision legitimized racial profiling and showed how civil liberties can erode during wartime hysteria.",
+                    societalShift: "From: Constitutional rights as inviolable even in war → To: Acceptance of rights violations for 'military necessity' → Back to: Recognition of internment as racist and unconstitutional injustice",
+                    deepDive: {
+                        dissent: "Justice Murphy's dissent called the decision 'legalization of racism.' He said it fell 'into the ugly abyss of racism' with no military necessity. Justice Jackson warned that the Court's approval would lie 'about like a loaded weapon ready for the hand of any authority' to justify future rights violations. These dissents proved prophetic.",
+                        laterCases: "In Ex Parte Endo (1944), decided the same day, the Court ruled the government couldn't detain concededly loyal citizens—but this came too late for most internees. Post-9/11 cases like Hamdi v. Rumsfeld (2004) cited Korematsu negatively, with Justice O'Connor writing 'a state of war is not a blank check for the President.' In Trump v. Hawaii (2018), upholding the travel ban, Chief Justice Roberts finally stated 'Korematsu was gravely wrong the day it was decided' and that it 'has no place in law under the Constitution.' Justice Sotomayor's dissent argued the majority was repeating Korematsu's mistake by upholding another discriminatory order.",
+                        modernControversy: "Korematsu remains deeply relevant. After 9/11, some cited it to justify profiling Muslims or detaining enemy combatants without trial. The government's 1988 apology and reparations to internment survivors showed official recognition of injustice, but the legal precedent survived until 2018. Critics point to Korematsu whenever wartime security measures threaten civil liberties: surveillance, detention, profiling. The case asks: do constitutional rights exist during emergencies? Can courts effectively check executive power claims of national security? The answer from Korematsu is pessimistic—courts often defer to executive claims, only recognizing injustice decades later."
+                    }
+                },
+                {
+                    id: 4,
                     year: 1954,
                     name: "Brown v. Board of Education",
                     shortDesc: "School segregation and equal protection",
@@ -469,11 +520,6 @@
                     contextDeep: "The 1896 Plessy v. Ferguson decision had established that racial segregation was constitutional as long as facilities were 'equal.' In practice, Black schools received a fraction of the funding of white schools. In the South, this inequality was stark: Black students used hand-me-down textbooks, attended schools without proper heating, and had far fewer resources. The NAACP had been methodically challenging segregation through the courts, winning cases about graduate schools and law schools. By the early 1950s, they were ready to challenge the foundation: elementary school segregation itself.",
                     facts: "Linda Brown, a Black third-grader, had to walk miles to her segregated school while a white school was just blocks away. Her father, with the NAACP, challenged school segregation in Topeka, Kansas.",
                     factsDeep: "The case actually combined five different cases from Kansas, South Carolina, Virginia, Delaware, and Washington D.C. Thurgood Marshall, who would later become the first Black Supreme Court Justice, led the legal team. They presented groundbreaking social science evidence, including psychologist Kenneth Clark's 'doll tests,' which showed that segregation damaged Black children's self-esteem. White children chose white dolls as 'nice' and Black dolls as 'bad.' When Black children made the same choices, it revealed the psychological harm of being told they were inferior. This was revolutionary—using social science in constitutional law.",
-                    question: "Should racial segregation in public schools be constitutional?",
-                    options: [
-                        { id: 'uphold', text: 'Uphold segregation - "separate but equal" is constitutional', correct: false },
-                        { id: 'strike', text: 'Strike down segregation - it violates equal protection', correct: true }
-                    ],
                     decision: "The Court unanimously ruled that 'separate educational facilities are inherently unequal' and violate the 14th Amendment. Chief Justice Warren wrote that segregation generates 'a feeling of inferiority' that affects children's hearts and minds.",
                     impact: "This decision dismantled legal segregation and energized the civil rights movement. It led to lunch counter sit-ins, Freedom Rides, and eventually the Civil Rights Act of 1964. Society's views on racial equality fundamentally shifted.",
                     societalShift: "From: Segregation was socially acceptable and legal → To: Integration as a constitutional mandate and moral imperative",
@@ -484,7 +530,7 @@
                     }
                 },
                 {
-                    id: 2,
+                    id: 5,
                     year: 1961,
                     name: "Mapp v. Ohio",
                     shortDesc: "Illegal searches and the exclusionary rule",
@@ -492,11 +538,6 @@
                     contextDeep: "The Fourth Amendment, ratified in 1791, protected against 'unreasonable searches and seizures,' but for most of American history, states could use illegally obtained evidence. The 'exclusionary rule'—excluding such evidence—only applied in federal courts after Weeks v. United States (1914). States were free to admit evidence however they obtained it. This created a two-tiered system where constitutional rights depended on whether you were prosecuted in state or federal court. Most criminal cases happened in state courts, meaning the Fourth Amendment was largely toothless for most Americans.",
                     facts: "Police forced entry into Dollree Mapp's home without a proper warrant, searching for a bombing suspect. They found obscene materials and convicted her. The 'exclusionary rule' (excluding illegally obtained evidence) only applied to federal cases.",
                     factsDeep: "On May 23, 1957, Cleveland police received a tip that a bombing suspect was hiding in Dollree Mapp's house. Officers knocked and she refused entry without a warrant. They waited for backup, then forced their way in, allegedly waving a fake 'warrant' when she demanded to see it. She grabbed the paper and stuffed it in her bosom; police wrestled it back. They searched her entire house, including her basement and bedroom, finding allegedly obscene books and photos in a trunk. She claimed the materials belonged to a former boarder. She was convicted not for harboring a fugitive (he wasn't there) but for possessing obscenity—evidence found in an illegal search.",
-                    question: "Should illegally obtained evidence be excluded from state criminal trials?",
-                    options: [
-                        { id: 'admit', text: 'Admissible - states can use evidence regardless of how obtained', correct: false },
-                        { id: 'exclude', text: 'Exclude it - Fourth Amendment requires exclusionary rule in state courts', correct: true }
-                    ],
                     decision: "The Court ruled 6-3 that evidence obtained in violation of the Fourth Amendment cannot be used in state courts. This 'exclusionary rule' was deemed essential to deter police misconduct.",
                     impact: "Police procedures transformed overnight. Law enforcement had to obtain proper warrants and follow constitutional procedures. The decision professionalized policing but sparked debates about criminals 'getting off on technicalities.'",
                     societalShift: "From: Loose warrant requirements in state prosecutions → To: Strict Fourth Amendment enforcement protecting privacy rights",
@@ -507,7 +548,25 @@
                     }
                 },
                 {
-                    id: 3,
+                    id: 6,
+                    year: 1962,
+                    name: "Engel v. Vitale",
+                    shortDesc: "School prayer and establishment of religion",
+                    context: "In 1962, public school prayer was commonplace across America. Most people saw it as traditional and harmless. The New York Board of Regents composed a 'non-denominational' prayer for schools: 'Almighty God, we acknowledge our dependence upon Thee, and we beg Thy blessings upon us, our parents, our teachers and our Country.' The question was whether government-sponsored prayer in public schools violated the First Amendment's Establishment Clause.",
+                    contextDeep: "America had a long tradition of civil religion—references to God in public life were everywhere, from 'In God We Trust' on currency to presidential inaugural prayers. Most Americans were Christian and saw school prayer as affirming common values, not establishing a religion. But religious minorities—Jews, atheists, and others—felt coerced. The Establishment Clause says 'Congress shall make no law respecting an establishment of religion,' but what does 'establishment' mean? Does it only forbid official state churches, or does it require government neutrality toward religion? The Warren Court was expanding individual rights and questioning majoritarian practices that burdened minorities.",
+                    facts: "A group of parents in New Hyde Park, New York, challenged the Board of Regents' prayer as a violation of the Establishment Clause. The prayer was voluntary—students could remain silent or be excused—but the parents argued government composition and sponsorship of prayer was unconstitutional regardless of voluntariness.",
+                    factsDeep: "The parents' lawsuit was controversial and unpopular. They received hate mail and threats. The prayer seemed innocuous—it didn't mention Jesus or any specific denomination. Supporters argued it was part of American heritage and fostered moral character. But the challengers noted that government has no business composing prayers or deciding what to say to God. Even 'non-denominational' prayer favors monotheistic religions over others and religion over non-religion. They argued the Founders created the Establishment Clause precisely to keep government out of religion, protecting both religious freedom and religion itself from government interference.",
+                    decision: "The Court ruled 6-1 that government-composed prayer in public schools violates the Establishment Clause, regardless of whether participation is voluntary. Justice Black wrote that the Establishment Clause was designed to prevent government from composing official prayers for any group of Americans to recite.",
+                    impact: "This decision sparked massive backlash. School prayer became a culture war issue that persists today. Many Americans felt the Court was attacking religion. But the decision established that the Establishment Clause requires government neutrality—not hostility—toward religion, protecting religious freedom for all.",
+                    societalShift: "From: Majoritarian religious practices in public schools as normal → To: Strict separation requiring government neutrality toward religion",
+                    deepDive: {
+                        dissent: "Justice Stewart was the sole dissenter. He argued that the prayer didn't establish a religion and that denying students the opportunity for voluntary prayer actually showed hostility to religion, violating neutrality. He pointed to other government acknowledgments of God—legislative prayers, 'In God We Trust'—and asked why school prayer was different. His dissent reflected the view that the Founders intended to prevent established churches, not remove religion from public life.",
+                        laterCases: "Abington School District v. Schempp (1963) extended Engel to ban mandatory Bible reading in schools. Wallace v. Jaffree (1985) struck down moments of silence explicitly for prayer. Lee v. Weisman (1992) banned clergy-led prayer at graduation ceremonies, emphasizing the coercive pressure on students. Santa Fe Independent School District v. Doe (2000) struck down student-led prayers at football games. The Court has consistently applied Engel's principle: government cannot sponsor or organize religious exercises in public schools, even if participation is technically voluntary.",
+                        modernControversy: "School prayer remains politically divisive. Some conservatives seek constitutional amendments to allow school prayer. They argue Engel removed religion from public life and moral education from schools. Progressives and religious minorities defend Engel as protecting religious freedom—government shouldn't tell anyone how to pray. Recent cases involve whether schools must allow private religious groups equal access to facilities (generally yes) and whether teachers or coaches can lead prayers (generally no if organized by school). The core tension persists: does keeping government out of religion protect religious freedom or show hostility to religion?"
+                    }
+                },
+                {
+                    id: 7,
                     year: 1963,
                     name: "Gideon v. Wainwright",
                     shortDesc: "Right to counsel for poor defendants",
@@ -515,11 +574,6 @@
                     contextDeep: "The Sixth Amendment guarantees the right to counsel, but courts long interpreted this as merely the right to hire a lawyer if you could afford one—not a right to have one provided. In Betts v. Brady (1942), the Supreme Court ruled that appointed counsel was only required in death penalty cases or 'special circumstances' like mental disability. This left most poor defendants to fend for themselves in a complex legal system designed by and for lawyers. The disparity was stark: wealthy defendants had skilled advocates; poor defendants stumbled through trials, often not knowing basic rights or procedures.",
                     facts: "Gideon, a drifter, was charged with breaking into a poolroom in Florida. Too poor to afford a lawyer, he requested appointed counsel. The judge denied his request. Gideon defended himself and was convicted.",
                     factsDeep: "Clarence Earl Gideon, 51, was accused of breaking into the Bay Harbor Pool Room in Panama City, Florida, and stealing money from a vending machine and jukebox. At his trial, he asked the judge to appoint a lawyer because he couldn't afford one. The judge refused, citing Florida law that only provided counsel in capital cases. Gideon did his best—cross-examining witnesses, presenting evidence—but he lacked legal training. He was convicted and sentenced to five years. From prison, using prison library resources, Gideon hand-wrote a petition to the Supreme Court in pencil. The Court appointed Abe Fortas (later a Justice) to argue his case. At retrial with a lawyer, Gideon was acquitted in less than an hour.",
-                    question: "Do poor defendants have a constitutional right to appointed counsel?",
-                    options: [
-                        { id: 'no', text: 'No right to counsel - only in death penalty cases', correct: false },
-                        { id: 'yes', text: 'Yes - Sixth Amendment requires lawyers for poor defendants', correct: true }
-                    ],
                     decision: "The Court unanimously ruled that the Sixth Amendment requires states to provide attorneys for defendants who cannot afford them in criminal cases. Justice Black wrote that 'lawyers in criminal courts are necessities, not luxuries.'",
                     impact: "Public defender systems were created across America. The decision acknowledged that fair trials require equal access to legal representation regardless of wealth. It fundamentally changed the criminal justice landscape.",
                     societalShift: "From: Justice dependent on ability to pay → To: Constitutional guarantee of counsel for the poor",
@@ -530,7 +584,25 @@
                     }
                 },
                 {
-                    id: 4,
+                    id: 8,
+                    year: 1964,
+                    name: "New York Times Co. v. Sullivan",
+                    shortDesc: "Defamation, press freedom, and public figures",
+                    context: "In 1964, the civil rights movement was at its height. Southern officials used defamation lawsuits to silence criticism and bankrupt civil rights supporters and newspapers covering the movement. L.B. Sullivan, a Montgomery, Alabama police commissioner, sued the New York Times over an advertisement criticizing police treatment of civil rights protesters. Some statements in the ad were factually incorrect.",
+                    contextDeep: "Sullivan's lawsuit was part of a coordinated strategy to suppress civil rights coverage. Southern officials filed multiple libel suits seeking millions in damages against national media. The goal was to make civil rights reporting financially ruinous. Alabama law made defamation easy to prove—any false statement harming reputation was actionable, with no First Amendment defense. Sullivan won $500,000 (over $5 million today), and other suits totaling $5.6 million were pending. The threat to press freedom was existential—newspapers would self-censor rather than face financial ruin. The case raised fundamental questions: Does the First Amendment protect false statements? Can public officials use defamation law to silence critics?",
+                    facts: "The New York Times published a full-page fundraising ad by civil rights activists describing police actions against protesters in Montgomery. Some statements were inaccurate—for example, it said police 'ringed' a campus when they were nearby but didn't surround it. Sullivan claimed the ad defamed him though he wasn't named.",
+                    factsDeep: "The ad, 'Heed Their Rising Voices,' described 'an unprecedented wave of terror' against peaceful protesters, mentioning police actions without naming Sullivan. He claimed references to 'police' defamed him as commissioner overseeing police. Under Alabama law, the statements were 'libelous per se'—falsely accusing someone of misconduct in their profession—and Sullivan didn't have to prove the statements were false or that he suffered actual harm. The Times argued First Amendment protection, but Alabama courts rejected this, imposing damages. The Supreme Court faced a choice: uphold traditional defamation law and allow suppression of civil rights coverage, or create new First Amendment protections for criticism of public officials.",
+                    decision: "The Court unanimously ruled that public officials cannot recover damages for defamatory falsehoods about their official conduct unless they prove 'actual malice'—that the statement was made with knowledge of falsity or reckless disregard for truth. Mere negligence or factual error isn't enough.",
+                    impact: "This decision revolutionized press freedom and defamation law. It gave media breathing room to cover public affairs vigorously without fear of crippling lawsuits. The 'actual malice' standard made it very difficult for public officials (later extended to public figures) to win defamation cases. It enabled aggressive investigative journalism, including Watergate coverage.",
+                    societalShift: "From: Strict liability for false statements harming reputation → To: Strong First Amendment protection for criticism of public officials, even if false",
+                    deepDive: {
+                        dissent: "There was no dissent. Three justices would have gone even further, creating absolute immunity for criticism of official conduct. Justice Black and Douglas argued the First Amendment categorically protects discussion of public affairs. Justice Goldberg's concurrence agreed. The Court compromised on 'actual malice,' balancing press freedom with some protection for reputation.",
+                        laterCases: "Curtis Publishing Co. v. Butts (1967) extended the actual malice standard to public figures beyond government officials. Gertz v. Robert Welch, Inc. (1974) held that private figures need only prove negligence, not actual malice. This created a two-tier system: public figures face a high bar to win defamation suits; private individuals have an easier standard. The question of who qualifies as a 'public figure' has generated extensive litigation. The standard protects media but makes it nearly impossible for public figures to vindicate reputations against false accusations.",
+                        modernControversy: "Sullivan remains controversial. Justice Thomas has called for reconsidering it, arguing it has no basis in the Constitution's original meaning and that it allows media to destroy reputations with impunity. Some argue the standard was necessary in 1964 to protect civil rights coverage but is abused today by media with less restraint. Others defend it as essential for democratic accountability—officials must accept criticism, even unfair criticism. The rise of social media complicates things: are Twitter users public figures? Can platforms be liable? Should actual malice apply to online speech? Some propose reforms: shorter statutes of limitation, easier corrections, or different standards for different media. But defenders argue weakening Sullivan would chill free speech and help powerful people silence critics."
+                    }
+                },
+                {
+                    id: 9,
                     year: 1966,
                     name: "Miranda v. Arizona",
                     shortDesc: "Police warnings and self-incrimination",
@@ -538,11 +610,6 @@
                     contextDeep: "Police interrogation manuals of the era taught psychological manipulation techniques: isolating suspects, using good cop/bad cop routines, lying about evidence, and exploiting suspects' ignorance of their rights. The manuals explicitly advised not informing suspects of their rights because it would make getting confessions harder. Confessions were the 'queen of proofs'—juries almost always convicted when presented with a confession. But coerced confessions led to false convictions. The Fifth Amendment protected against self-incrimination, but how could suspects invoke a right they didn't know existed?",
                     facts: "Ernesto Miranda confessed to kidnapping and rape after two hours of police questioning without being told of his right to remain silent or have an attorney present. He had a history of mental illness.",
                     factsDeep: "Ernesto Miranda, 23, was arrested in Phoenix for kidnapping and rape based on a lineup identification. Police interrogated him for two hours. Miranda, with an eighth-grade education and history of mental problems, signed a written confession that stated he was confessing 'with full knowledge of my legal rights, understanding any statement I make may be used against me.' But police never told him he had a right to remain silent or to a lawyer. His court-appointed lawyer argued the confession was involuntary. The prosecution relied almost entirely on the confession—other evidence was weak. Miranda was convicted, but the Supreme Court overturned it. Ironically, at retrial without the confession, Miranda was convicted anyway based on other evidence and served time.",
-                    question: "Should confessions obtained without informing suspects of their rights be admissible?",
-                    options: [
-                        { id: 'admit', text: 'Admissible - confessions are valid if voluntary', correct: false },
-                        { id: 'exclude', text: 'Inadmissible - suspects must be warned of their rights', correct: true }
-                    ],
                     decision: "The Court ruled 5-4 that suspects must be informed of their rights (right to remain silent, right to attorney) before police questioning. These became known as 'Miranda rights' or 'Miranda warnings.'",
                     impact: "Every arrest now includes the famous phrase 'You have the right to remain silent...' The ruling transformed police procedures nationwide and became embedded in American culture through TV and movies.",
                     societalShift: "From: Police interrogation with minimal oversight → To: Mandatory rights warnings protecting against self-incrimination",
@@ -553,7 +620,7 @@
                     }
                 },
                 {
-                    id: 5,
+                    id: 10,
                     year: 1967,
                     name: "Loving v. Virginia",
                     shortDesc: "Interracial marriage bans struck down",
@@ -561,11 +628,6 @@
                     contextDeep: "Anti-miscegenation laws dated to the 1660s in colonial America, designed to maintain racial hierarchy and prevent challenges to slavery. After the Civil War, these laws proliferated as Southern states sought to preserve white supremacy. By 1967, 16 states still banned interracial marriage—all in the South and border regions. The rhetoric was explicitly racist: Virginia's law aimed to preserve 'racial integrity' and prevent 'mongrelization.' Scientific racism had been discredited, but cultural taboos remained strong. Even after Brown v. Board desegregated schools, many whites viewed interracial marriage as going 'too far.' Gallup polls showed only 20% of Americans approved of Black-white marriages in 1968.",
                     facts: "Mildred Jeter (Black) and Richard Loving (white) married in Washington D.C., then returned to Virginia. They were arrested, convicted, and banished from the state for violating Virginia's Racial Integrity Act.",
                     factsDeep: "Mildred Jeter and Richard Loving grew up together in rural Caroline County, Virginia. When Mildred became pregnant, they traveled to D.C. to marry legally, then returned home. Five weeks later, police raided their bedroom in the middle of the night, arrested them, and charged them with violating Virginia's ban on interracial marriage. The judge suspended their one-year jail sentence on the condition they leave Virginia for 25 years. The judge proclaimed: 'Almighty God created the races white, black, yellow, malay and red, and he placed them on separate continents... The fact that he separated the races shows that he did not intend for the races to mix.' The Lovings moved to D.C. but missed home. With ACLU help, they sued, and the case reached the Supreme Court.",
-                    question: "Can states ban interracial marriage?",
-                    options: [
-                        { id: 'yes', text: 'Yes - states can regulate marriage as they see fit', correct: false },
-                        { id: 'no', text: 'No - such bans violate equal protection and due process', correct: true }
-                    ],
                     decision: "The Court unanimously struck down all anti-miscegenation laws, declaring that 'the freedom to marry has long been recognized as one of the vital personal rights essential to the orderly pursuit of happiness.'",
                     impact: "Interracial marriages went from 3% in 1967 to 19% by 2019. This case laid groundwork for later marriage equality decisions. Social acceptance of interracial relationships dramatically increased.",
                     societalShift: "From: Interracial marriage as criminal act in many states → To: Marriage as fundamental right regardless of race",
@@ -576,7 +638,7 @@
                     }
                 },
                 {
-                    id: 6,
+                    id: 11,
                     year: 1969,
                     name: "Tinker v. Des Moines",
                     shortDesc: "Student free speech rights in schools",
@@ -584,11 +646,6 @@
                     contextDeep: "The Vietnam War divided America. By 1969, over 30,000 Americans had died, and the draft meant young men faced the choice of fighting or fleeing. Protests erupted nationwide. Students led anti-war demonstrations at colleges, and the movement spread to high schools. School administrators, often veterans or war supporters, viewed student protests as disrespectful and dangerous. The prevailing view was that students were subject to school authority and didn't have full constitutional rights on campus. In loco parentis—'in place of parents'—doctrine gave schools broad power to regulate student behavior. But students argued they were citizens too.",
                     facts: "Mary Beth Tinker (13) and other students wore black armbands to school to protest the Vietnam War. School officials suspended them, fearing disruption. The students had been peaceful and non-disruptive.",
                     factsDeep: "In December 1965, Mary Beth Tinker, her brother John (15), and friend Christopher Eckhardt (16) planned to wear black armbands to Des Moines schools to mourn Vietnam War deaths and support a Christmas truce. Hearing of the plan, principals preemptively adopted a policy banning armbands, threatening suspension. The students wore them anyway. Mary Beth, a quiet eighth-grader, was called to the principal's office and suspended. The suspensions lasted until they agreed to return without armbands. Other students wore political buttons and even an Iron Cross without punishment—only the anti-war armbands were banned. The Tinkers sued, arguing selective enforcement violated their First Amendment rights.",
-                    question: "Do students have First Amendment rights in public schools?",
-                    options: [
-                        { id: 'no', text: 'No - schools can restrict student speech to maintain order', correct: false },
-                        { id: 'yes', text: 'Yes - students retain free speech rights unless substantially disruptive', correct: true }
-                    ],
                     decision: "The Court ruled 7-2 that students don't 'shed their constitutional rights to freedom of speech at the schoolhouse gate.' Schools can only restrict speech that substantially disrupts school operations.",
                     impact: "Students gained recognized First Amendment protections. The case empowered youth activism and established that schools aren't absolute authorities over expression. It remains the foundation for student speech rights today.",
                     societalShift: "From: Students as subjects of school authority with no speech rights → To: Students as citizens with constitutional protections",
@@ -599,7 +656,7 @@
                     }
                 },
                 {
-                    id: 7,
+                    id: 12,
                     year: 1973,
                     name: "Roe v. Wade",
                     shortDesc: "Abortion rights and privacy (overturned 2022)",
@@ -607,11 +664,6 @@
                     contextDeep: "Before Roe, abortion was illegal in most states except to save the mother's life. Women sought illegal 'back-alley' abortions, often in dangerous conditions. Thousands died or suffered complications. Wealthy women could travel to states or countries where abortion was legal; poor women risked their lives. The women's movement argued bodily autonomy was essential to equality—without control over reproduction, women couldn't fully participate in society. Opponents viewed abortion as murder of unborn children. The debate was (and remains) fundamental: when does life begin? Who decides? The case emerged as Griswold v. Connecticut (1965) had established a constitutional right to privacy regarding contraception.",
                     facts: "Jane Roe (pseudonym for Norma McCorvey), a pregnant woman in Texas, challenged the state's abortion ban. Texas law only allowed abortion to save the mother's life.",
                     factsDeep: "Norma McCorvey, 22, was unmarried, poor, and already had two children she'd given up. Pregnant again, she sought an abortion in Texas but couldn't afford to travel to a legal state. Two recent law school graduates, Sarah Weddington and Linda Coffee, took her case as a vehicle to challenge abortion bans. McCorvey never had an abortion—she gave birth and placed the child for adoption before the case was decided. The case consolidated privacy rights established in Griswold with equal protection arguments. Justice Blackmun researched abortion history, finding that for much of Western history, abortion before 'quickening' (feeling fetal movement) wasn't criminal. The trimester framework balanced state interests: no regulation in first trimester, reasonable regulation in second, and prohibition in third except for mother's health.",
-                    question: "Does the Constitution protect a woman's right to choose abortion?",
-                    options: [
-                        { id: 'no', text: 'No right to abortion - states can ban it completely', correct: false },
-                        { id: 'yes', text: 'Constitutional right to privacy includes abortion choice', correct: true }
-                    ],
                     decision: "The Court ruled 7-2 that the Constitution's right to privacy extends to a woman's decision to have an abortion, balanced against state interests that grow stronger through pregnancy (trimester framework).",
                     impact: "This decision became one of the most contested in American history, spawning decades of political and cultural battles. It was overturned by Dobbs v. Jackson (2022), showing how legal interpretations can reverse course.",
                     societalShift: "From: Abortion as criminal act → To: Recognized constitutional right (for 49 years) → Back to state-by-state regulation",
@@ -622,7 +674,25 @@
                     }
                 },
                 {
-                    id: 8,
+                    id: 13,
+                    year: 1978,
+                    name: "Regents of University of California v. Bakke",
+                    shortDesc: "Affirmative action in college admissions",
+                    context: "In the 1970s, many universities adopted affirmative action programs to increase minority enrollment. UC Davis Medical School reserved 16 of 100 seats for disadvantaged minorities. Allan Bakke, a white applicant with higher test scores than some admitted minority students, was rejected twice. He sued, claiming reverse discrimination violated the Equal Protection Clause and Civil Rights Act.",
+                    contextDeep: "The civil rights movement had achieved legal equality, but stark disparities persisted. Universities sought to remedy past discrimination and increase diversity. But race-conscious admissions raised difficult questions: Is considering race to help minorities different from using it to harm them? Can remedying societal discrimination justify race-based preferences? What about individuals like Bakke who suffered no advantage from past discrimination but now faced disadvantage? The case forced the Court to grapple with whether the Equal Protection Clause is colorblind—treating any racial classification identically—or allows race-conscious remedies for past injustice.",
+                    facts: "Allan Bakke applied to UC Davis Medical School twice and was rejected both times. His test scores and grades were higher than some minority students admitted under the 16-seat quota. He sued, arguing the quota violated his rights under the Equal Protection Clause and Title VI of the Civil Rights Act.",
+                    factsDeep: "Bakke was 32, a white former Marine and engineer seeking a career change to medicine. UC Davis's special admissions program set aside 16 of 100 seats for 'economically and/or educationally disadvantaged' minorities—defined as Blacks, Chicanos, Asians, and American Indians. Regular applicants competed for 84 seats; special admissions candidates competed only for 16. Bakke's application scores were higher than several special admissions admits. He claimed the quota excluded him based solely on race. The university argued the program was necessary to remedy past discrimination, increase healthcare in underserved communities, and achieve educational diversity. The case became a referendum on affirmative action itself.",
+                    decision: "The Court issued a fractured 4-1-4 decision. Justice Powell's controlling opinion held that racial quotas are unconstitutional, but race can be one factor among many in admissions. The Court ordered UC Davis to admit Bakke but allowed race-conscious admissions to achieve diversity.",
+                    impact: "This decision established the framework for affirmative action in higher education for 45 years. Universities could consider race to achieve diversity but couldn't use quotas or make race the determining factor. The compromise satisfied no one fully but allowed affirmative action to continue in modified form.",
+                    societalShift: "From: Racial quotas as acceptable remedies for past discrimination → To: Race as one factor among many in holistic admissions → To: Race-conscious admissions prohibited (2023)",
+                    deepDive: {
+                        dissent: "The case produced six opinions. Four justices thought racial quotas were permissible remedies for societal discrimination. Four thought any use of race violated the Equal Protection Clause. Justice Powell alone took the middle position that race could be one factor for diversity. Justices Brennan, White, Marshall, and Blackmun argued that race-conscious remedies for past discrimination were constitutionally permissible and that the quota was acceptable. Justice Marshall's opinion was particularly powerful, detailing the history of racial discrimination and arguing that colorblindness ignores reality. Justices Stevens, Burger, Stewart, and Rehnquist thought the Civil Rights Act prohibited any racial preferences, making constitutional questions unnecessary.",
+                        laterCases: "Grutter v. Bollinger (2003) upheld Michigan Law School's holistic consideration of race, affirming Powell's diversity rationale. The Court said racial preferences must be narrowly tailored, used as a 'plus factor,' and subject to time limits—expecting they'd be unnecessary in 25 years. Gratz v. Bollinger (2003) struck down Michigan's undergraduate point system that automatically awarded points for minority status. Fisher v. University of Texas (2013 and 2016) subjected race-conscious admissions to strict judicial scrutiny but ultimately upheld Texas's program. Students for Fair Admissions v. Harvard (2023) overruled Grutter, holding that any consideration of race in admissions violates the Equal Protection Clause, effectively ending affirmative action in higher education.",
+                        modernControversy: "The 2023 SFFA decision dramatically changed college admissions. Supporters of affirmative action argue that ending race-conscious admissions will reverse diversity gains and entrench racial inequality, as admission is increasingly correlated with wealth and legacy admits favor white students. They note persistent racial gaps in educational opportunity and argue universities should address these. Opponents argue affirmative action perpetuates racial thinking, stigmatizes minority students by implying they needed preferences, and discriminates against Asian Americans who face higher admissions bars. They advocate colorblind meritocracy. The debate reflects deeper tensions over whether achieving equality requires temporary race-consciousness or strict colorblindness, and whether diversity is a compelling interest justifying racial classifications."
+                    }
+                },
+                {
+                    id: 14,
                     year: 1989,
                     name: "Texas v. Johnson",
                     shortDesc: "Flag burning as protected speech",
@@ -630,11 +700,6 @@
                     contextDeep: "The American flag held sacred status in political culture. Federal law and 48 states banned flag desecration. Veterans' groups lobbied fiercely for flag protection. The Cold War emphasized American values versus Communist oppression, and the flag symbolized freedom. Ronald Reagan's presidency heightened patriotic rhetoric. Flag burning was rare but visceral—when it occurred, public outrage was intense. The legal question was whether symbolic conduct (burning a flag as protest) constituted 'speech' protected by the First Amendment or whether the flag's unique symbolic status justified special protection from desecration.",
                     facts: "Gregory Lee Johnson burned an American flag during a 1984 Republican National Convention protest in Dallas. He was convicted under Texas law criminalizing flag desecration.",
                     factsDeep: "During the 1984 Republican National Convention in Dallas, Gregory Johnson participated in a 'Reagan Funeral' demonstration protesting Reagan administration policies. The group marched through Dallas, spray-painting buildings and overturning planters. Someone handed Johnson an American flag taken from a flagpole. When they reached Dallas City Hall, Johnson doused the flag in kerosene and set it on fire while protesters chanted 'America, the red, white, and blue, we spit on you.' Witnesses testified feeling 'deeply offended.' No one was physically harmed. Texas prosecuted Johnson under a law banning desecration of 'venerated objects.' He received one year in jail and a $2,000 fine.",
-                    question: "Is flag burning protected political speech under the First Amendment?",
-                    options: [
-                        { id: 'no', text: 'No protection - flag burning can be criminalized', correct: false },
-                        { id: 'yes', text: 'Protected speech - even offensive symbolic expression is constitutional', correct: true }
-                    ],
                     decision: "The Court ruled 5-4 that flag burning constitutes symbolic speech protected by the First Amendment. Justice Brennan wrote that 'the government may not prohibit expression of an idea simply because society finds it offensive.'",
                     impact: "This deeply unpopular decision reinforced that free speech protections extend to offensive and unpatriotic expression. It demonstrated the Court's willingness to protect unpopular speech against majoritarian preferences.",
                     societalShift: "From: Patriotic symbols deserving special legal protection → To: Free speech protection even for deeply offensive symbolic acts",
@@ -645,7 +710,43 @@
                     }
                 },
                 {
-                    id: 9,
+                    id: 15,
+                    year: 2000,
+                    name: "Bush v. Gore",
+                    shortDesc: "2000 presidential election and equal protection",
+                    context: "The 2000 presidential election between George W. Bush and Al Gore was the closest in American history. It came down to Florida's 25 electoral votes. Florida's result was so close it triggered an automatic machine recount. Bush led by only 537 votes out of nearly 6 million cast. Disputes erupted over butterfly ballots, hanging chads, and recount procedures. The entire presidency hinged on how Florida counted votes.",
+                    contextDeep: "Election night 2000 was chaos. TV networks called Florida for Gore, then Bush, then 'too close to call.' Gore conceded, then retracted. Florida law required an automatic recount for margins under 0.5%. The machine recount narrowed Bush's lead to 327 votes. Gore requested manual recounts in four heavily Democratic counties. Florida's Supreme Court ordered statewide manual recount of 'undervotes'—ballots where machines detected no presidential vote. Different counties used different standards to determine 'voter intent' from partially-punched ballots. Bush appealed to the U.S. Supreme Court, arguing inconsistent standards violated equal protection. The Court's decision would determine the president.",
+                    facts: "The Florida Supreme Court ordered a statewide manual recount of undervotes. Bush appealed to the U.S. Supreme Court, arguing that the lack of uniform standards for determining voter intent violated the Equal Protection Clause. The Court had to decide whether to stop the recount and, if so, whether there was time to conduct a recount with uniform standards before the electoral college deadline.",
+                    factsDeep: "The case was decided on a brutally compressed timeline. The Court heard arguments on December 11 and issued its decision at 10 PM on December 12—the federal deadline for certifying electors. The per curiam (unsigned) opinion held that Florida's standardless recount violated equal protection because different counties used different criteria to determine voter intent—some looked for 'dimpled chads,' others required 'hanging chads.' But the Court also held there was no time to fix this problem and conduct a recount with uniform standards. Therefore, the recount must stop and Florida's existing certification of Bush as winner stood. This handed Bush the presidency by 537 votes in Florida.",
+                    decision: "The Court ruled 5-4 that Florida's standardless manual recount violated the Equal Protection Clause. The Court further ruled 7-2 that there was insufficient time to conduct a proper recount before the federal deadline, effectively ending the recount and securing Bush's victory.",
+                    impact: "This decision made the Supreme Court the ultimate arbiter of a presidential election. It raised fundamental questions about the Court's role in politics, partisan decision-making, and state versus federal control of elections. The decision remains one of the most controversial in modern history.",
+                    societalShift: "From: Elections decided by voters and state procedures → To: Supreme Court as potential kingmaker in disputed elections",
+                    deepDive: {
+                        dissent: "Justice Stevens's dissent accused the majority of partisan decision-making, warning that 'the loser of this case will be the Nation's confidence in the judge as an impartial guardian of the rule of law.' Justice Breyer's dissent argued the Court should have let Florida resolve its own election dispute, noting there was time for Florida courts to establish uniform standards. The dissenters saw the decision as the Court inserting itself into a political question that states should resolve. Many noted the 5-4 split aligned with justices' perceived political leanings—five Republican appointees in the majority, four Democratic appointees dissenting.",
+                        laterCases: "Bush v. Gore explicitly stated it was limited to the case's specific facts and not precedent for future cases. Courts have rarely cited it since. The decision didn't establish clear principles about election recounts or equal protection in voting. However, it demonstrated the Court's willingness to intervene in election disputes, raising questions about its role in future contested elections. The 2020 election saw dozens of lawsuits challenging results, with some citing Bush v. Gore, though courts rejected challenges. The case remains a reference point whenever the Court's role in elections is debated.",
+                        modernControversy: "Bush v. Gore is widely viewed as one of the Court's most illegitimate decisions. Critics across the political spectrum question whether the five-justice majority genuinely applied equal protection principles or simply wanted Bush to win. The unsigned opinion, the explicit statement that it set no precedent, and the Court's direct role in determining the president all suggest a result-oriented decision. Even some conservatives critical of judicial activism defend the outcome but acknowledge the reasoning was weak. The decision damaged public perception of the Court as above politics. Each disputed election since raises the specter of another Bush v. Gore. The case highlights tensions between having clear election winners and ensuring every vote counts, and questions whether courts should resolve political disputes or defer to political processes."
+                    }
+                },
+                {
+                    id: 16,
+                    year: 2008,
+                    name: "District of Columbia v. Heller",
+                    shortDesc: "Individual right to gun ownership",
+                    context: "For most of American history, courts read the Second Amendment as protecting a collective right related to state militias, not an individual right to own guns for personal use. In 2008, this changed. Washington D.C. banned handgun ownership and required other firearms to be kept unloaded and disassembled or trigger-locked. Dick Heller, a D.C. special police officer, challenged the law, arguing it violated the Second Amendment.",
+                    contextDeep: "The Second Amendment states: 'A well regulated Militia, being necessary to the security of a free State, the right of the people to keep and bear Arms, shall not be infringed.' For decades, the dominant interpretation focused on the 'Militia' clause—the amendment protected state militias against federal disarmament, not individual gun rights. United States v. Miller (1939) upheld federal gun regulations without recognizing an individual right. Gun control advocates argued the amendment was about collective defense, not personal weapons. But gun rights advocates argued 'the people' meant individuals, and the militia clause merely explained one reason for the right. Conservative legal scholars developed an 'originalist' interpretation that the amendment protected individual gun ownership. By 2008, this view had gained traction.",
+                    facts: "Washington D.C.'s Firearms Control Regulations Act of 1975 prohibited residents from owning handguns, required rifles and shotguns to be kept unloaded and disassembled or trigger-locked at home. Dick Heller, a licensed special police officer, applied to register a handgun to keep at home for self-defense. The District refused. He sued.",
+                    factsDeep: "Heller wasn't a typical plaintiff—he was allowed to carry a handgun at work protecting federal buildings but couldn't keep one at home. He lived in a high-crime neighborhood and wanted a functional firearm for self-defense. The case was carefully constructed by libertarian lawyers to test the D.C. ban. The District defended its law citing high gun violence rates and arguing that Miller established that the Second Amendment protected only militia-related arms. Heller's lawyers argued the text clearly protected an individual right, citing founding-era sources showing that 'bear arms' included self-defense, not just military service.",
+                    decision: "The Court ruled 5-4 that the Second Amendment protects an individual right to possess firearms for lawful purposes like self-defense in the home. The Court struck down D.C.'s handgun ban and requirement that other firearms be kept inoperable.",
+                    impact: "This decision revolutionized Second Amendment law. Before Heller, courts rarely struck down gun regulations. After, the individual right framework forced courts to scrutinize gun laws. Heller became a flashpoint in gun debates and transformed constitutional interpretation of the Second Amendment.",
+                    societalShift: "From: Second Amendment as collective militia right → To: Individual constitutional right to own guns for self-defense",
+                    deepDive: {
+                        dissent: "Justice Stevens's dissent argued the majority ignored the militia clause and misread history. He said the amendment protected states' rights to maintain armed militias against federal interference, not individual gun ownership. He emphasized that for 70 years the Court and legal consensus understood the Second Amendment this way. Justice Breyer's dissent argued that even if there's an individual right, D.C.'s law was a reasonable regulation that balanced public safety against gun rights. He noted high gun death rates and questioned whether the Court should second-guess legislative judgments about public safety.",
+                        laterCases: "McDonald v. City of Chicago (2010) extended Heller to state and local governments through the Fourteenth Amendment, striking down Chicago's handgun ban. But the scope of Heller remained unclear. Lower courts upheld many gun regulations—assault weapon bans, concealed carry restrictions, background checks—reasoning that Heller protected some gun rights but allowed reasonable regulations. New York State Rifle & Pistol Association v. Bruen (2022) significantly expanded Heller, striking down New York's concealed carry licensing law and establishing that gun regulations must be 'consistent with the Nation's historical tradition of firearm regulation.' This heightened scrutiny threatens many existing gun laws.",
+                        modernControversy: "Heller remains intensely controversial. Gun rights advocates celebrate it as vindicating constitutional rights and argue it doesn't go far enough—many regulations still infringe on Second Amendment rights. Gun control advocates argue Heller was wrongly decided based on flawed history and hampers efforts to reduce gun violence. They point to high U.S. gun death rates compared to other democracies with stricter gun laws. The debate reflects fundamental values conflicts: individual liberty versus collective safety, constitutional text versus changing times, originalism versus living constitutionalism. Post-Uvalde and mass shooting tragedies, pressure grows for stronger gun laws, but Heller and Bruen constrain options. Some propose constitutional amendments; others hope for different Court composition to overrule Heller."
+                    }
+                },
+                {
+                    id: 17,
                     year: 2010,
                     name: "Citizens United v. FEC",
                     shortDesc: "Corporate political spending and free speech",
@@ -653,184 +754,187 @@
                     contextDeep: "Campaign finance reform had a long history. Watergate scandals led to the Federal Election Campaign Act, which the Court partially upheld in Buckley v. Valeo (1976), ruling that spending money is speech but contribution limits are constitutional to prevent corruption. The McCain-Feingold Act (2002) banned 'electioneering communications'—corporate-funded ads mentioning candidates within 60 days of general elections or 30 days of primaries. The law aimed to prevent corporations from influencing elections with treasury funds. Previous Court precedent in Austin v. Michigan Chamber of Commerce (1990) upheld such restrictions. But the Roberts Court was skeptical of campaign finance limits, viewing them as restricting political speech.",
                     facts: "Citizens United, a conservative group, wanted to air a film critical of Hillary Clinton near the 2008 primary. The FEC blocked it under laws banning corporate-funded 'electioneering communications' near elections.",
                     factsDeep: "Citizens United, a conservative nonprofit, produced 'Hillary: The Movie,' a 90-minute documentary highly critical of Hillary Clinton. They wanted to air it on video-on-demand within 30 days of the 2008 Democratic primaries and run TV ads promoting it. The FEC said this violated McCain-Feingold's ban on corporate electioneering communications. Citizens United initially challenged the law narrowly, arguing the documentary was exempt. But at oral argument, the government lawyer said the logic of the law would allow banning books if corporations published them near elections. This alarmed the Court. The justices ordered re-argument on whether to overturn Austin and parts of McConnell v. FEC entirely—a much broader question than originally briefed.",
-                    question: "Can the government restrict corporate political spending?",
-                    options: [
-                        { id: 'yes', text: 'Yes - corporate money can be limited to prevent corruption', correct: false },
-                        { id: 'no', text: 'No - such restrictions violate First Amendment free speech', correct: true }
-                    ],
                     decision: "The Court ruled 5-4 that corporate political spending is protected speech under the First Amendment. The decision equated money with speech and said 'independent expenditures' don't corrupt or create appearance of corruption.",
                     impact: "This unleashed unlimited corporate and union money into elections through Super PACs. Campaign spending exploded. Critics say it gave wealthy interests outsized influence; supporters say it protected political speech.",
                     societalShift: "From: Broad acceptance of campaign finance limits → To: Unlimited independent political spending as constitutional right",
                     deepDive: {
                         dissent: "Justice Stevens's 90-page dissent, his last major opinion, argued the majority misunderstood the First Amendment. He distinguished corporations from natural persons—corporations are legal fictions created by state law, not rights-bearing citizens. Unlimited corporate spending creates corruption and the appearance of corruption, drowning out individual voices. He accused the majority of 'judicial activism,' overturning decades of precedent and laws, and deciding issues not properly before the Court. Stevens warned of a 'cataclysmic' effect on democracy, predicting unlimited corporate money would distort elections.",
-                        laterCases: "SpeechNow.org v. FEC (2010) quickly followed, applying Citizens United to allow unlimited contributions to Super PACs (committees making independent expenditures). McCutcheon v. FEC (2014) struck down aggregate contribution limits—the total amount individuals could give across all federal candidates and parties. These decisions created the current system: limited direct contributions to candidates but unlimited independent spending through Super PACs. Critics note the 'independent' label is fiction—Super PACs coordinate closely with campaigns despite nominal legal barriers.",
-                        modernControversy: "Citizens United transformed American elections. Super PAC spending skyrocketed from virtually nothing to billions per cycle. A tiny number of mega-donors now dominate election funding. Critics argue this creates an oligarchy where wealthy interests control politics, pointing to studies showing politicians are more responsive to donors than constituents. Defenders argue spending hasn't proven to buy elections (many big spenders lose) and that restrictions are paternalistic—voters can assess arguments regardless of funding sources. Reform proposals include constitutional amendments, public financing, or disclosure requirements, but the Court's equation of money with speech makes regulation difficult."
-                    }
-                },
-                {
-                    id: 10,
-                    year: 2015,
-                    name: "Obergefell v. Hodges",
-                    shortDesc: "Same-sex marriage equality nationwide",
-                    context: "In 2015, same-sex marriage was legal in some states but banned in others. Public opinion had shifted dramatically—from 27% support in 1996 to 60% in 2015. The gay rights movement had achieved growing acceptance, but marriage remained a battleground.",
-                    contextDeep: "The gay rights movement's journey was remarkable. In 1986, Bowers v. Hardwick upheld laws criminalizing same-sex intimacy. Just 17 years later, Lawrence v. Texas (2003) overruled Bowers, decriminalizing same-sex relationships nationwide. Massachusetts became the first state to legalize same-sex marriage in 2004. Some states followed through legislation or court decisions; others passed constitutional amendments banning it. The Defense of Marriage Act (1996) defined marriage federally as between man and woman. United States v. Windsor (2013) struck down DOMA's federal definition, requiring federal recognition of state-legal same-sex marriages. By 2015, the question was whether states could still ban same-sex marriage or whether the Constitution required nationwide recognition.",
-                    facts: "James Obergefell sued Ohio after it refused to recognize his marriage to John Arthur (who had since died). Multiple same-sex couples from several states challenged laws defining marriage as between one man and one woman.",
-                    factsDeep: "The case consolidated challenges from Michigan, Kentucky, Ohio, and Tennessee. James Obergefell and John Arthur, together 20+ years, married in Maryland because Ohio banned same-sex marriage. Arthur was dying of ALS. They wanted Obergefell recognized as surviving spouse on the death certificate. They chartered a medical plane to Maryland, married on the airport tarmac, and flew home. Arthur died three months later. Ohio refused to list Obergefell as spouse. Other plaintiffs included couples denied marriage licenses and couples whose out-of-state marriages weren't recognized for adoption, death benefits, and other purposes. All raised Fourteenth Amendment challenges: denying marriage violated due process (fundamental right to marry) and equal protection (discriminating based on sexual orientation).",
-                    question: "Must states recognize same-sex marriages?",
-                    options: [
-                        { id: 'no', text: 'No - states can define marriage traditionally', correct: false },
-                        { id: 'yes', text: 'Yes - marriage equality is a constitutional right', correct: true }
-                    ],
-                    decision: "The Court ruled 5-4 that the fundamental right to marry extends to same-sex couples. Justice Kennedy wrote that they 'ask for equal dignity in the eyes of the law. The Constitution grants them that right.'",
-                    impact: "Same-sex marriage became legal nationwide overnight. This represented one of the fastest shifts in social attitudes and law in American history—from criminalization to constitutional protection in just decades.",
-                    societalShift: "From: Same-sex relationships criminalized (until 2003) → To: Marriage equality as constitutional right",
-                    deepDive: {
-                        dissent: "All four dissenting justices wrote separate opinions. Chief Justice Roberts argued marriage has been understood as between man and woman throughout history, and the Court was imposing its policy preferences rather than interpreting the Constitution. He warned that the decision short-circuited democratic debate and would fuel resentment. Justice Scalia called it a 'judicial putsch' and 'threat to American democracy.' Justice Thomas argued it violated states' sovereignty and individual liberty by forcing participation in same-sex marriages. Justice Alito emphasized that marriage has historically been about procreation and child-rearing, and many religions view same-sex marriage as inconsistent with their beliefs.",
-                        laterCases: "Post-Obergefell litigation focuses on religious liberty conflicts. Masterpiece Cakeshop v. Colorado (2018) ruled for a baker who refused to make a same-sex wedding cake, but on narrow grounds of religious hostility by the civil rights commission, not establishing a broad religious exemption. 303 Creative v. Elenis (2023) held that a website designer couldn't be compelled to create same-sex wedding websites, ruling that compelled speech violated the First Amendment. Courts are still working out when religious objections allow refusal of services to same-sex couples versus when they constitute illegal discrimination.",
-                        modernControversy: "Obergefell remains controversial despite broad public support for same-sex marriage. Justice Thomas suggested in his Dobbs concurrence that the Court should reconsider Obergefell, Lawrence, and Griswold—all based on similar substantive due process reasoning. This alarmed LGBTQ+ advocates. Congress responded with the Respect for Marriage Act (2022), requiring states to recognize out-of-state same-sex marriages even if Obergefell is overturned. Religious liberty conflicts continue: can adoption agencies refuse same-sex couples? Can schools be required to recognize same-sex marriage in curricula over parental objections? The law has settled; cultural and religious debates continue."
-                    }
-                }
-            ];
-
+laterCases: "SpeechNow.org v. FEC (2010) quickly followed, applying Citizens United to allow unlimited contributions to Super PACs (committees making independent expenditures). McCutcheon v. FEC (2014) struck down aggregate contribution limits—the total amount individuals could give across all federal candidates and parties. These decisions created the current system: limited direct contributions to candidates but unlimited independent spending through Super PACs. Critics note the 'independent' label is fiction—Super PACs coordinate closely with campaigns despite nominal legal barriers.",
+modernControversy: "Citizens United transformed American elections. Super PAC spending skyrocketed from virtually nothing to billions per cycle. A tiny number of mega-donors now dominate election funding. Critics argue this creates an oligarchy where wealthy interests control politics, pointing to studies showing politicians are more responsive to donors than constituents. Defenders argue spending hasn't proven to buy elections (many big spenders lose) and that restrictions are paternalistic—voters can assess arguments regardless of funding sources. Reform proposals include constitutional amendments, public financing, or disclosure requirements, but the Court's equation of money with speech makes regulation difficult."
+}
+},
+{
+id: 18,
+year: 2013,
+name: "Shelby County v. Holder",
+shortDesc: "Voting Rights Act and federal oversight",
+context: "The Voting Rights Act of 1965 was one of the civil rights movement's greatest achievements. It combated racial discrimination in voting, particularly in the South. Section 5 required certain states and jurisdictions with histories of discrimination to get federal approval ('preclearance') before changing voting laws. Section 4(b) used a 1965 formula to determine which jurisdictions were covered. By 2013, some argued the formula was outdated.",
+contextDeep: "After the Fifteenth Amendment guaranteed voting rights regardless of race, Southern states used literacy tests, poll taxes, and violence to disenfranchise Black voters. The Voting Rights Act finally enforced the Fifteenth Amendment. Section 5's preclearance was powerful—covered jurisdictions had to prove changes weren't discriminatory before implementation. This stopped discriminatory changes before they affected elections. The formula worked: Black voter registration in covered states jumped from 29% to 73% within a decade. But by 2013, some argued the South had changed, covered jurisdictions were treated unfairly based on 50-year-old data, and Section 5 violated federalism by treating states differently.",
+facts: "Shelby County, Alabama challenged the Voting Rights Act's preclearance requirement, arguing that Section 4(b)'s coverage formula was outdated and violated state sovereignty. The county had a history of racial discrimination but argued modern conditions had changed.",
+factsDeep: "Shelby County wasn't a random plaintiff—conservative activists chose it carefully. Alabama had extensive documented discrimination but also showed progress. The argument was that 1965 conditions no longer justified treating Southern states differently. The Justice Department defended the law, noting that between 1982 and 2006, DOJ had blocked over 700 discriminatory voting changes in covered jurisdictions. Congress had reauthorized the Act in 2006 for 25 more years after extensive hearings showing ongoing discrimination. But Chief Justice Roberts had long been skeptical of race-conscious remedies, writing in a prior case that 'things have changed in the South.'",
+decision: "The Court ruled 5-4 that Section 4(b)'s coverage formula was unconstitutional because it was based on outdated data and didn't account for current conditions. Without a valid coverage formula, Section 5's preclearance requirement became unenforceable. Congress could write a new formula but hasn't.",
+impact: "Within hours of the decision, Texas and other states implemented voter ID laws and other restrictions previously blocked by preclearance. The decision gutted the Voting Rights Act's most powerful tool and enabled a wave of voting restrictions that disproportionately affect minority voters.",
+societalShift: "From: Strong federal oversight preventing discriminatory voting changes → To: States free to change voting laws without preclearance, even in areas with discrimination history",
+deepDive: {
+dissent: "Justice Ginsburg's dissent argued the decision was like 'throwing away your umbrella in a rainstorm because you are not getting wet.' She detailed ongoing discrimination in covered jurisdictions that the majority ignored. She noted that Congress had extensively documented continued need for preclearance in 2006 and that courts should defer to Congress's judgment. The dissent argued federalism doesn't protect state rights to discriminate and that the Fifteenth Amendment explicitly authorizes Congress to enforce voting rights. Ginsburg accused the majority of judicial activism—striking down a law Congress overwhelmingly reauthorized with extensive evidence supporting it.",
+laterCases: "Without preclearance, challenges to discriminatory voting laws now require expensive, time-consuming litigation after laws are already implemented and affecting elections. Brnovich v. Democratic National Committee (2021) made such challenges even harder, upholding Arizona voting restrictions despite evidence of racially disparate impact. The Court ruled that states have broad latitude to regulate elections and that mere disparate impact doesn't prove discrimination. This further weakened voting rights enforcement. Meanwhile, Congress has failed to pass new preclearance formulas despite multiple attempts, reflecting partisan polarization over voting rights.",
+modernControversy: "Shelby County's impact is hotly debated. Supporters argue the decision recognized Southern progress and that different treatment of states was unfair. They claim modern voting restrictions are race-neutral efforts to prevent fraud. Critics point to immediate implementation of restrictive laws and studies showing disproportionate impact on minority voters. Voter ID requirements, reduced early voting, polling place closures in minority areas, and voter roll purges all accelerated post-Shelby. The debate reflects fundamental disagreements: has racial discrimination in voting largely ended, requiring only general enforcement, or does it persist in new forms requiring special scrutiny? Are voting restrictions legitimate election security measures or modern voter suppression? The 2020 election and January 6th intensified debates over voting rights, election integrity, and federal versus state control of elections."
+}
+},
+{
+id: 19,
+year: 2015,
+name: "Obergefell v. Hodges",
+shortDesc: "Same-sex marriage equality nationwide",
+context: "In 2015, same-sex marriage was legal in some states but banned in others. Public opinion had shifted dramatically—from 27% support in 1996 to 60% in 2015. The gay rights movement had achieved growing acceptance, but marriage remained a battleground.",
+contextDeep: "The gay rights movement's journey was remarkable. In 1986, Bowers v. Hardwick upheld laws criminalizing same-sex intimacy. Just 17 years later, Lawrence v. Texas (2003) overruled Bowers, decriminalizing same-sex relationships nationwide. Massachusetts became the first state to legalize same-sex marriage in 2004. Some states followed through legislation or court decisions; others passed constitutional amendments banning it. The Defense of Marriage Act (1996) defined marriage federally as between man and woman. United States v. Windsor (2013) struck down DOMA's federal definition, requiring federal recognition of state-legal same-sex marriages. By 2015, the question was whether states could still ban same-sex marriage or whether the Constitution required nationwide recognition.",
+facts: "James Obergefell sued Ohio after it refused to recognize his marriage to John Arthur (who had since died). Multiple same-sex couples from several states challenged laws defining marriage as between one man and one woman.",
+factsDeep: "The case consolidated challenges from Michigan, Kentucky, Ohio, and Tennessee. James Obergefell and John Arthur, together 20+ years, married in Maryland because Ohio banned same-sex marriage. Arthur was dying of ALS. They wanted Obergefell recognized as surviving spouse on the death certificate. They chartered a medical plane to Maryland, married on the airport tarmac, and flew home. Arthur died three months later. Ohio refused to list Obergefell as spouse. Other plaintiffs included couples denied marriage licenses and couples whose out-of-state marriages weren't recognized for adoption, death benefits, and other purposes. All raised Fourteenth Amendment challenges: denying marriage violated due process (fundamental right to marry) and equal protection (discriminating based on sexual orientation).",
+decision: "The Court ruled 5-4 that the fundamental right to marry extends to same-sex couples. Justice Kennedy wrote that they 'ask for equal dignity in the eyes of the law. The Constitution grants them that right.'",
+impact: "Same-sex marriage became legal nationwide overnight. This represented one of the fastest shifts in social attitudes and law in American history—from criminalization to constitutional protection in just decades.",
+societalShift: "From: Same-sex relationships criminalized (until 2003) → To: Marriage equality as constitutional right",
+deepDive: {
+dissent: "All four dissenting justices wrote separate opinions. Chief Justice Roberts argued marriage has been understood as between man and woman throughout history, and the Court was imposing its policy preferences rather than interpreting the Constitution. He warned that the decision short-circuited democratic debate and would fuel resentment. Justice Scalia called it a 'judicial putsch' and 'threat to American democracy.' Justice Thomas argued it violated states' sovereignty and individual liberty by forcing participation in same-sex marriages. Justice Alito emphasized that marriage has historically been about procreation and child-rearing, and many religions view same-sex marriage as inconsistent with their beliefs.",
+laterCases: "Post-Obergefell litigation focuses on religious liberty conflicts. Masterpiece Cakeshop v. Colorado (2018) ruled for a baker who refused to make a same-sex wedding cake, but on narrow grounds of religious hostility by the civil rights commission, not establishing a broad religious exemption. 303 Creative v. Elenis (2023) held that a website designer couldn't be compelled to create same-sex wedding websites, ruling that compelled speech violated the First Amendment. Courts are still working out when religious objections allow refusal of services to same-sex couples versus when they constitute illegal discrimination.",
+modernControversy: "Obergefell remains controversial despite broad public support for same-sex marriage. Justice Thomas suggested in his Dobbs concurrence that the Court should reconsider Obergefell, Lawrence, and Griswold—all based on similar substantive due process reasoning. This alarmed LGBTQ+ advocates. Congress responded with the Respect for Marriage Act (2022), requiring states to recognize out-of-state same-sex marriages even if Obergefell is overturned. Religious liberty conflicts continue: can adoption agencies refuse same-sex couples? Can schools be required to recognize same-sex marriage in curricula over parental objections? The law has settled; cultural and religious debates continue."
+}
+},
+{
+id: 20,
+year: 2023,
+name: "Students for Fair Admissions v. Harvard",
+shortDesc: "Affirmative action banned in college admissions",
+context: "Since Regents of University of California v. Bakke (1978), universities could consider race as one factor in admissions to achieve diversity. This framework governed for 45 years. But challenges persisted. Students for Fair Admissions (SFFA), founded by anti-affirmative action activist Edward Blum, sued Harvard and UNC, arguing their race-conscious admissions discriminated against Asian American and white applicants.",
+contextDeep: "Affirmative action had always been contested. Grutter v. Bollinger (2003) reaffirmed Bakke, allowing race-conscious admissions for diversity while requiring narrow tailoring and predicting they'd be unnecessary in 25 years. But the Court's composition changed dramatically. Justice O'Connor, Grutter's author, retired. Justice Scalia died and was replaced by Justice Gorsuch. Justice Kennedy retired and was replaced by Justice Kavanaugh. Justice Ginsburg died and was replaced by Justice Barrett. By 2023, six conservative justices formed a supermajority, and Chief Justice Roberts had long opposed race-conscious policies. SFFA's lawsuits claimed Harvard discriminated against Asian Americans through 'holistic' review that disadvantaged them, and that UNC's consideration of race wasn't narrowly tailored.",
+facts: "SFFA challenged Harvard's and UNC's race-conscious admissions processes. They argued that considering race violated Title VI (for Harvard) and the Equal Protection Clause (for UNC), and that universities engaged in racial balancing rather than pursuing genuine diversity. They particularly emphasized discrimination against Asian American applicants.",
+factsDeep: "The cases were extensively litigated. District courts found Harvard's process considered race but didn't discriminate against Asian Americans, and that both universities' programs served compelling diversity interests and were narrowly tailored. Appeals courts affirmed. But the Supreme Court's conservative majority was skeptical. At oral arguments, they questioned whether diversity was compelling, whether universities could define their own educational interests, and whether race-conscious admissions were truly necessary. The universities defended their programs as essential for educational benefits of diversity, preparing leaders for a diverse society, and remedying underrepresentation caused by societal inequalities.",
+decision: "The Court ruled 6-3 that Harvard's and UNC's race-conscious admissions violate the Equal Protection Clause and Title VI. Chief Justice Roberts wrote that the programs lacked sufficiently focused and measurable objectives, employed race negatively against Asian Americans and whites, involved racial stereotyping, and lacked meaningful endpoints. The Court effectively ended affirmative action in higher education.",
+impact: "This decision dramatically changed college admissions nationwide. Universities scrambled to maintain diversity without considering race. Some turned to socioeconomic factors, geographic diversity, and eliminating legacy preferences. Early data suggests minority enrollment decreased at selective schools. The decision reshaped debates over diversity, meritocracy, and equal opportunity.",
+societalShift: "From: Race-conscious admissions to achieve diversity (45 years) → To: Strict colorblindness in college admissions",
+deepDive: {
+dissent: "Justice Sotomayor's passionate dissent, joined by Justices Kagan and Jackson, accused the majority of ignoring ongoing racial inequality and making it harder to achieve the Constitution's promise of equality. She detailed persistent racial gaps in education, health, wealth, and opportunity. She argued the majority's colorblindness ignores that race still matters in America and that eliminating race-conscious admissions would entrench advantages for privileged applicants. Justice Jackson wrote separately, arguing the majority's analysis was flawed and that universities should be able to pursue diverse student bodies. She wrote 'with every pronouncement that race does not matter, the gap between the Court's pronouncements and the lived reality of Americans widens.'",
+laterCases: "The decision's scope remains unclear. Does it apply only to higher education or to employment, contracting, and other contexts where Grutter applied? Can universities consider race in applicants' essays discussing how race shaped their experiences? The majority said yes to essays, but how this works in practice is uncertain. Lower courts are now interpreting SFFA's reach. Some predict challenges to diversity programs in corporations, government contracting, and other areas. The decision may herald broader rollback of race-conscious policies across society.",
+modernControversy: "SFFA sparked intense debate. Supporters argue it ends racial preferences that were always constitutionally dubious, that admissions should be based on merit without racial considerations, and that affirmative action stigmatized minority students and discriminated against Asian Americans and whites. Critics argue it will reduce diversity at elite schools, entrench advantages for wealthy white applicants (who benefit from legacy preferences, test prep, expensive extracurriculars), ignore ongoing inequality and discrimination, and that 'colorblindness' perpetuates the status quo favoring historically privileged groups. The debate reflects fundamental tensions over how to achieve racial equality: does it require temporary race-consciousness to overcome past discrimination, or does it require strict colorblindness regardless of current inequality?"
+}
+}
+];
             const toggleSection = (section) => {
-                setExpandedSections(prev => ({
-                    ...prev,
-                    [section]: !prev[section]
-                }));
-            };
+            setExpandedSections(prev => ({
+                ...prev,
+                [section]: !prev[section]
+            }));
+        };
 
-            const selectCase = (caseIndex) => {
-                setCurrentCase(caseIndex);
-                setGamePhase('intro');
-                setUserPrediction(null);
-                setExpandedSections({});
-            };
+        const selectCase = (caseIndex) => {
+            setCurrentCase(caseIndex);
+            setGamePhase('contextfacts');
+            setExpandedSections({});
+        };
 
-            const returnToMenu = () => {
-                setGamePhase('menu');
-                setCurrentCase(null);
-                setUserPrediction(null);
-                setExpandedSections({});
-            };
+        const returnToMenu = () => {
+            setGamePhase('menu');
+            setCurrentCase(null);
+            setExpandedSections({});
+        };
 
-            const handleNext = () => {
-                if (gamePhase === 'intro') {
-                    setGamePhase('facts');
-                } else if (gamePhase === 'facts') {
-                    setGamePhase('predict');
-                } else if (gamePhase === 'predict' && userPrediction) {
-                    setGamePhase('result');
-                    const correct = cases[currentCase].options.find(o => o.id === userPrediction)?.correct;
-                    if (correct) setScore(score + 10);
-                } else if (gamePhase === 'result') {
-                    setGamePhase('impact');
-                } else if (gamePhase === 'impact') {
-                    setGamePhase('deepdive');
-                } else if (gamePhase === 'deepdive') {
-                    setCompletedCases(prev => new Set([...prev, currentCase]));
-                    returnToMenu();
-                }
-            };
+        const handleNext = () => {
+            if (gamePhase === 'contextfacts') {
+                setGamePhase('decisionimpact');
+            } else if (gamePhase === 'decisionimpact') {
+                setGamePhase('deepdive');
+            } else if (gamePhase === 'deepdive') {
+                setCompletedCases(prev => new Set([...prev, currentCase]));
+                returnToMenu();
+            }
+        };
 
-            const handleRestart = () => {
-                setCurrentCase(null);
-                setGamePhase('menu');
-                setUserPrediction(null);
-                setScore(0);
-                setExpandedSections({});
-                setCompletedCases(new Set());
-            };
+        const handleRestart = () => {
+            setCurrentCase(null);
+            setGamePhase('menu');
+            setExpandedSections({});
+            setCompletedCases(new Set());
+        };
 
-            const handlePrediction = (optionId) => {
-                setUserPrediction(optionId);
-            };
+        const currentCaseData = currentCase !== null ? cases[currentCase] : null;
 
-            const currentCaseData = currentCase !== null ? cases[currentCase] : null;
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white p-4">
+                <div className="max-w-6xl mx-auto">
+                    <div className="text-center mb-8 pt-8">
+                        <h1 className="text-4xl font-bold mb-2">Supreme Court Stories</h1>
+                        <p className="text-blue-200">200+ Years of Constitutional Evolution</p>
+                    </div>
 
-            return (
-                <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white p-4">
-                    <div className="max-w-4xl mx-auto">
-                        <div className="text-center mb-8 pt-8">
-                            <h1 className="text-4xl font-bold mb-2">Supreme Court Stories</h1>
-                            <p className="text-blue-200">100 Years of Evolving Justice</p>
-                        </div>
-
-                        {gamePhase !== 'menu' && (
-                            <div className="mb-8">
-                                <div className="flex justify-between text-sm mb-2">
-                                    <span>Explored: {completedCases.size} of {cases.length}</span>
-                                    <span className="flex items-center gap-2">
-                                        <AwardIcon />
-                                        {score} points
-                                    </span>
-                                </div>
-                                <div className="w-full bg-slate-700 rounded-full h-2">
-                                    <div 
-                                        className="bg-blue-500 h-2 rounded-full transition-all duration-500"
-                                        style={{ width: `${(completedCases.size / cases.length) * 100}%` }}
-                                    />
-                                </div>
+                    {gamePhase !== 'menu' && (
+                        <div className="mb-8">
+                            <div className="flex justify-between text-sm mb-2">
+                                <span>Explored: {completedCases.size} of {cases.length}</span>
                             </div>
-                        )}
+                            <div className="w-full bg-slate-700 rounded-full h-2">
+                                <div 
+                                    className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+                                    style={{ width: `${(completedCases.size / cases.length) * 100}%` }}
+                                />
+                            </div>
+                        </div>
+                    )}
 
-                        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-white/20">
-                            {gamePhase === 'menu' ? (
-                                <div className="space-y-6">
-                                    <div className="text-center mb-6">
-                                        <h2 className="text-2xl font-bold mb-2">Choose a Case to Explore</h2>
-                                        <p className="text-blue-200">Select any landmark case to learn about its impact on society</p>
-                                    </div>
-
-                                    <div className="grid gap-3">
-                                        {cases.map((caseData, index) => (
-                                            <button
-                                                key={caseData.id}
-                                                onClick={() => selectCase(index)}
-                                                className="w-full p-4 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 border-2 border-transparent hover:border-blue-400 transition-all text-left group"
-                                            >
-                                                <div className="flex items-start justify-between gap-4">
-                                                    <div className="flex-1">
-                                                        <div className="flex items-center gap-2 mb-1">
-                                                            <span className="text-blue-300 text-sm font-semibold">{caseData.year}</span>
-                                                            {completedCases.has(index) && (
-                                                                <CheckCircleIcon className="text-green-400" />
-                                                            )}
-                                                        </div>
-                                                        <h3 className="text-lg font-bold mb-1 group-hover:text-blue-300 transition-colors">
-                                                            {caseData.name}
-                                                        </h3>
-                                                        <p className="text-sm text-slate-300">{caseData.shortDesc}</p>
-                                                    </div>
-                                                    <ChevronRightIcon className="text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 mt-1" />
-                                                </div>
-                                            </button>
-                                        ))}
-                                    </div>
-
-                                    {completedCases.size > 0 && (
-                                        <div className="mt-8 pt-6 border-t border-slate-700 text-center">
-                                            <button
-                                                onClick={handleRestart}
-                                                className="px-6 py-3 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors flex items-center gap-2 mx-auto"
-                                            >
-                                                <RotateCcwIcon />
-                                                Reset All Progress
-                                            </button>
-                                        </div>
-                                    )}
+                    <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-white/20">
+                        {gamePhase === 'menu' ? (
+                            <div className="space-y-6">
+                                <div className="text-center mb-6">
+                                    <h2 className="text-2xl font-bold mb-2">Choose a Case to Explore</h2>
+                                    <p className="text-blue-200">Select any landmark case to learn about its impact on society</p>
                                 </div>
-                            ) : (
-                                <>
-                                    <div className="mb-6">
-                                        <div className="text-blue-300 text-sm font-semibold mb-1">
-                                            {currentCaseData.year}
-                                        </div>
-                                        <h2 className="text-3xl font-bold">{currentCaseData.name}</h2>
-                                    </div>
 
-                                    {gamePhase === 'intro' && (
-                                        <div className="space-y-4">
-                                            <h3 className="text-xl font-semibold text-blue-200">Historical Context</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {cases.map((caseData, index) => (
+                                        <button
+                                            key={caseData.id}
+                                            onClick={() => selectCase(index)}
+                                            className="p-4 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 border-2 border-transparent hover:border-blue-400 transition-all text-left group h-full"
+                                        >
+                                            <div className="flex flex-col h-full">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <span className="text-blue-300 text-sm font-semibold">{caseData.year}</span>
+                                                    {completedCases.has(index) && (
+                                                        <CheckCircleIcon className="text-green-400 flex-shrink-0" />
+                                                    )}
+                                                </div>
+                                                <h3 className="text-base font-bold mb-2 group-hover:text-blue-300 transition-colors">
+                                                    {caseData.name}
+                                                </h3>
+                                                <p className="text-sm text-slate-300 flex-grow">{caseData.shortDesc}</p>
+                                            </div>
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {completedCases.size > 0 && (
+                                    <div className="mt-8 pt-6 border-t border-slate-700 text-center">
+                                        <button
+                                            onClick={handleRestart}
+                                            className="px-6 py-3 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors flex items-center gap-2 mx-auto"
+                                        >
+                                            <RotateCcwIcon />
+                                            Reset All Progress
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <>
+                                <div className="mb-6">
+                                    <div className="text-blue-300 text-sm font-semibold mb-1">
+                                        {currentCaseData.year}
+                                    </div>
+                                    <h2 className="text-3xl font-bold">{currentCaseData.name}</h2>
+                                </div>
+
+                                {gamePhase === 'contextfacts' && (
+                                    <div className="space-y-6">
+                                        <div>
+                                            <h3 className="text-xl font-semibold text-blue-200 mb-3">Historical Context</h3>
                                             <p className="text-lg leading-relaxed">{currentCaseData.context}</p>
                                             
                                             {currentCaseData.contextDeep && (
@@ -853,11 +957,9 @@
                                                 </div>
                                             )}
                                         </div>
-                                    )}
 
-                                    {gamePhase === 'facts' && (
-                                        <div className="space-y-4">
-                                            <h3 className="text-xl font-semibold text-blue-200">The Case</h3>
+                                        <div>
+                                            <h3 className="text-xl font-semibold text-blue-200 mb-3">The Case</h3>
                                             <p className="text-lg leading-relaxed">{currentCaseData.facts}</p>
                                             
                                             {currentCaseData.factsDeep && (
@@ -880,128 +982,88 @@
                                                 </div>
                                             )}
                                         </div>
-                                    )}
+                                    </div>
+                                )}
 
-                                    {gamePhase === 'predict' && (
-                                        <div className="space-y-6">
-                                            <h3 className="text-xl font-semibold text-blue-200">The Constitutional Question</h3>
-                                            <p className="text-lg leading-relaxed mb-6">{currentCaseData.question}</p>
-                                            
-                                            <div className="space-y-3">
-                                                <p className="font-semibold">How do you think the Court ruled?</p>
-                                                {currentCaseData.options.map((option) => (
-                                                    <button
-                                                        key={option.id}
-                                                        onClick={() => handlePrediction(option.id)}
-                                                        className={`w-full p-4 rounded-lg text-left transition-all ${
-                                                            userPrediction === option.id
-                                                                ? 'bg-blue-500 border-2 border-blue-300'
-                                                                : 'bg-slate-800/50 border-2 border-transparent hover:border-blue-400'
-                                                        }`}
-                                                    >
-                                                        {option.text}
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {gamePhase === 'result' && (
-                                        <div className="space-y-4">
-                                            <div className={`p-4 rounded-lg ${
-                                                cases[currentCase].options.find(o => o.id === userPrediction)?.correct
-                                                    ? 'bg-green-500/20 border border-green-500'
-                                                    : 'bg-red-500/20 border border-red-500'
-                                            }`}>
-                                                <p className="font-semibold mb-2">
-                                                    {cases[currentCase].options.find(o => o.id === userPrediction)?.correct
-                                                        ? '✓ Correct! +10 points'
-                                                        : '✗ Not quite'}
-                                                </p>
-                                            </div>
-                                            
-                                            <h3 className="text-xl font-semibold text-blue-200">The Court's Decision</h3>
+                                {gamePhase === 'decisionimpact' && (
+                                    <div className="space-y-6">
+                                        <div>
+                                            <h3 className="text-xl font-semibold text-blue-200 mb-3">The Court's Decision</h3>
                                             <p className="text-lg leading-relaxed">{currentCaseData.decision}</p>
                                         </div>
-                                    )}
 
-                                    {gamePhase === 'impact' && (
-                                        <div className="space-y-6">
-                                            <div>
-                                                <h3 className="text-xl font-semibold text-blue-200 mb-3">The Impact</h3>
-                                                <p className="text-lg leading-relaxed">{currentCaseData.impact}</p>
-                                            </div>
-                                            
-                                            <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 p-4 rounded-lg border border-purple-400/30">
-                                                <h4 className="font-semibold text-purple-200 mb-2">Societal Shift</h4>
-                                                <p className="text-sm leading-relaxed">{currentCaseData.societalShift}</p>
-                                            </div>
+                                        <div>
+                                            <h3 className="text-xl font-semibold text-blue-200 mb-3">The Impact</h3>
+                                            <p className="text-lg leading-relaxed">{currentCaseData.impact}</p>
                                         </div>
-                                    )}
-
-                                    {gamePhase === 'deepdive' && currentCaseData.deepDive && (
-                                        <div className="space-y-6">
-                                            <h3 className="text-2xl font-bold text-blue-200 mb-4">Deep Dive Analysis</h3>
-                                            
-                                            <div className="space-y-4">
-                                                <div className="bg-slate-800/50 rounded-lg p-5 border border-slate-700">
-                                                    <h4 className="text-lg font-semibold text-orange-300 mb-3">Dissenting Opinions</h4>
-                                                    <p className="text-sm leading-relaxed">
-                                                        <CaseText text={currentCaseData.deepDive.dissent} onCaseClick={setSelectedCaseModal} />
-                                                    </p>
-                                                </div>
-
-                                                <div className="bg-slate-800/50 rounded-lg p-5 border border-slate-700">
-                                                    <h4 className="text-lg font-semibold text-green-300 mb-3">Later Cases & Evolution</h4>
-                                                    <p className="text-sm leading-relaxed">
-                                                        <CaseText text={currentCaseData.deepDive.laterCases} onCaseClick={setSelectedCaseModal} />
-                                                    </p>
-                                                </div>
-
-                                                <div className="bg-slate-800/50 rounded-lg p-5 border border-slate-700">
-                                                    <h4 className="text-lg font-semibold text-red-300 mb-3">Modern Controversy</h4>
-                                                    <p className="text-sm leading-relaxed">
-                                                        <CaseText text={currentCaseData.deepDive.modernControversy} onCaseClick={setSelectedCaseModal} />
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    <div className="mt-8 flex justify-between">
-                                        <button
-                                            onClick={returnToMenu}
-                                            className="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors flex items-center gap-2"
-                                        >
-                                            <ChevronLeftIcon />
-                                            Back to Menu
-                                        </button>
                                         
-                                        <button
-                                            onClick={handleNext}
-                                            disabled={gamePhase === 'predict' && !userPrediction}
-                                            className="px-6 py-2 rounded-lg bg-blue-500 hover:bg-blue-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                                        >
-                                            {gamePhase === 'deepdive' ? 'Back to Menu' : 'Continue'}
-                                            <ChevronRightIcon />
-                                        </button>
+                                        <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 p-4 rounded-lg border border-purple-400/30">
+                                            <h4 className="font-semibold text-purple-200 mb-2">Societal Shift</h4>
+                                            <p className="text-sm leading-relaxed">{currentCaseData.societalShift}</p>
+                                        </div>
                                     </div>
-                                </>
-                            )}
-                        </div>
+                                )}
+
+                                {gamePhase === 'deepdive' && currentCaseData.deepDive && (
+                                    <div className="space-y-6">
+                                        <h3 className="text-2xl font-bold text-blue-200 mb-4">Deep Dive Analysis</h3>
+                                        
+                                        <div className="space-y-4">
+                                            <div className="bg-slate-800/50 rounded-lg p-5 border border-slate-700">
+                                                <h4 className="text-lg font-semibold text-orange-300 mb-3">Dissenting Opinions</h4>
+                                                <p className="text-sm leading-relaxed">
+                                                    <CaseText text={currentCaseData.deepDive.dissent} onCaseClick={setSelectedCaseModal} />
+                                                </p>
+                                            </div>
+
+                                            <div className="bg-slate-800/50 rounded-lg p-5 border border-slate-700">
+                                                <h4 className="text-lg font-semibold text-green-300 mb-3">Later Cases & Evolution</h4>
+                                                <p className="text-sm leading-relaxed">
+                                                    <CaseText text={currentCaseData.deepDive.laterCases} onCaseClick={setSelectedCaseModal} />
+                                                </p>
+                                            </div>
+
+                                            <div className="bg-slate-800/50 rounded-lg p-5 border border-slate-700">
+                                                <h4 className="text-lg font-semibold text-red-300 mb-3">Modern Controversy</h4>
+                                                <p className="text-sm leading-relaxed">
+                                                    <CaseText text={currentCaseData.deepDive.modernControversy} onCaseClick={setSelectedCaseModal} />
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div className="mt-8 flex justify-between">
+                                    <button
+                                        onClick={returnToMenu}
+                                        className="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors flex items-center gap-2"
+                                    >
+                                        <ChevronLeftIcon />
+                                        Back to Menu
+                                    </button>
+                                    
+                                    <button
+                                        onClick={handleNext}
+                                        className="px-6 py-2 rounded-lg bg-blue-500 hover:bg-blue-400 transition-colors flex items-center gap-2"
+                                    >
+                                        {gamePhase === 'deepdive' ? 'Back to Menu' : 'Continue'}
+                                        <ChevronRightIcon />
+                                    </button>
+                                </div>
+                            </>
+                        )}
                     </div>
-
-                    {selectedCaseModal && (
-                        <CaseModal 
-                            caseName={selectedCaseModal} 
-                            onClose={() => setSelectedCaseModal(null)} 
-                        />
-                    )}
                 </div>
-            );
-        };
 
-        ReactDOM.render(<SupremeCourtGame />, document.getElementById('root'));
-    </script>
-</body>
-</html>
+                {selectedCaseModal && (
+                    <CaseModal 
+                        caseName={selectedCaseModal} 
+                        onClose={() => setSelectedCaseModal(null)} 
+                    />
+                )}
+            </div>
+        );
+    };
+
+    ReactDOM.render(<SupremeCourtGame />, document.getElementById('root'));
+</script>
