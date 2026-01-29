@@ -84,367 +84,80 @@
             </svg>
         );
 
-        const CASE_DATABASE = {
-            "Plessy v. Ferguson": {
-                year: 1896,
-                summary: "Upheld racial segregation under the 'separate but equal' doctrine.",
-                ruling: "The Court ruled 7-1 that racial segregation in public facilities was constitutional as long as the separate facilities were equal in quality.",
-                significance: "This decision legitimized Jim Crow laws and state-sponsored racial segregation for nearly 60 years until Brown v. Board overturned it."
-            },
-            "Brown II": {
-                year: 1955,
-                summary: "Ordered implementation of Brown v. Board's desegregation mandate.",
-                ruling: "The Court ordered schools to desegregate 'with all deliberate speed' but provided no specific timeline or enforcement mechanism.",
-                significance: "The vague language allowed Southern states to resist integration for years, requiring additional court orders and federal intervention to achieve desegregation."
-            },
-            "Green v. County School Board": {
-                year: 1968,
-                summary: "Required school districts to take affirmative steps toward actual integration.",
-                ruling: "The Court ruled that 'freedom of choice' plans that maintained segregated schools were insufficient; districts must actively integrate.",
-                significance: "This shifted the focus from merely ending legal segregation to requiring concrete integration measures and results."
-            },
-            "Swann v. Charlotte-Mecklenburg": {
-                year: 1971,
-                summary: "Approved busing as a tool to achieve school desegregation.",
-                ruling: "The Court unanimously upheld court-ordered busing to achieve racial balance in schools, even across district lines.",
-                significance: "This controversial decision sparked intense opposition to busing and became a major political issue, ultimately leading to limitations on desegregation remedies."
-            },
-            "Parents Involved in Community Schools v. Seattle": {
-                year: 2007,
-                summary: "Struck down voluntary school integration plans using racial classifications.",
-                ruling: "The Court ruled 5-4 that school districts cannot use race as a factor in student assignment, even to promote integration.",
-                significance: "Critics argue this decision undermined Brown's legacy by preventing schools from addressing de facto segregation caused by residential patterns."
-            },
-            "Weeks v. United States": {
-                year: 1914,
-                summary: "Established the exclusionary rule in federal courts.",
-                ruling: "The Court ruled that evidence obtained through illegal searches cannot be used in federal criminal prosecutions.",
-                significance: "This created the exclusionary rule but only applied it to federal cases, leaving states free to use illegally obtained evidence until Mapp extended it."
-            },
-            "United States v. Leon": {
-                year: 1984,
-                summary: "Created the 'good faith exception' to the exclusionary rule.",
-                ruling: "The Court ruled 6-3 that evidence obtained with a defective warrant is admissible if police reasonably believed the warrant was valid.",
-                significance: "This significantly weakened Mapp's protections by allowing illegally obtained evidence when police mistakes were made in 'good faith.'"
-            },
-            "Hudson v. Michigan": {
-                year: 2006,
-                summary: "Violations of knock-and-announce rules don't trigger exclusion.",
-                ruling: "The Court ruled 5-4 that evidence is admissible even when police violate the requirement to knock and announce before entering.",
-                significance: "This further eroded the exclusionary rule by creating another exception, allowing evidence even when proper procedures weren't followed."
-            },
-            "Herring v. United States": {
-                year: 2009,
-                summary: "Evidence admissible when police errors are negligent rather than deliberate.",
-                ruling: "The Court ruled 5-4 that the exclusionary rule doesn't apply when police mistakes result from negligence rather than intentional misconduct.",
-                significance: "This created yet another exception to Mapp, making it harder to exclude evidence and easier for police to benefit from their mistakes."
-            },
-            "Betts v. Brady": {
-                year: 1942,
-                summary: "Denied right to appointed counsel in non-capital state cases.",
-                ruling: "The Court ruled 6-3 that states were not required to provide lawyers to poor defendants except in death penalty cases or 'special circumstances.'",
-                significance: "This decision left most poor defendants without legal representation until Gideon overruled it, creating widespread injustice in the legal system."
-            },
-            "Argersinger v. Hamlin": {
-                year: 1972,
-                summary: "Extended right to counsel to misdemeanors with jail time.",
-                ruling: "The Court ruled unanimously that defendants cannot be imprisoned for any offense, felony or misdemeanor, without being represented by counsel.",
-                significance: "This expanded Gideon's protection to cover misdemeanors, ensuring counsel for millions more defendants facing even short jail sentences."
-            },
-            "Alabama v. Shelton": {
-                year: 2002,
-                summary: "Right to counsel required even for suspended sentences.",
-                ruling: "The Court ruled 5-4 that defendants cannot receive suspended jail sentences without being represented by counsel.",
-                significance: "This closed a loophole where defendants could be jailed for violating probation on convictions obtained without a lawyer."
-            },
-            "Strickland v. Washington": {
-                year: 1984,
-                summary: "Set standard for ineffective assistance of counsel claims.",
-                ruling: "The Court established a two-part test: defendants must prove their lawyer's performance was deficient AND that it affected the outcome.",
-                significance: "This extremely deferential standard makes it very difficult to win ineffective assistance claims, even when lawyers provide terrible representation."
-            },
-            "New York v. Quarles": {
-                year: 1984,
-                summary: "Created 'public safety exception' to Miranda warnings.",
-                ruling: "The Court ruled 5-4 that police can ask questions without Miranda warnings when public safety is at immediate risk.",
-                significance: "This weakened Miranda by allowing unwarned interrogation in emergency situations, though defining 'public safety' remains contentious."
-            },
-            "Berghuis v. Thompkins": {
-                year: 2010,
-                summary: "Suspects must explicitly invoke Miranda rights; silence isn't enough.",
-                ruling: "The Court ruled 5-4 that suspects must unambiguously invoke their right to remain silent; merely staying silent doesn't invoke Miranda.",
-                significance: "This made it easier for police to continue interrogation, as suspects must affirmatively assert rights rather than police stopping when suspects go quiet."
-            },
-            "Maryland v. Shatzer": {
-                year: 2010,
-                summary: "Police can re-interrogate suspects after 14-day breaks.",
-                ruling: "The Court ruled unanimously that if a suspect invokes Miranda and is released from custody for 14+ days, police can re-approach without violating Miranda.",
-                significance: "This created a time-based exception allowing police to repeatedly attempt interrogation after cooling-off periods."
-            },
-            "Vega v. Tekoh": {
-                year: 2022,
-                summary: "Miranda violations cannot be sued over in federal civil rights cases.",
-                ruling: "The Court ruled 6-3 that violating Miranda is not itself a constitutional violation that can be remedied through civil lawsuits.",
-                significance: "This relegated Miranda to a procedural rule rather than a constitutional right, eliminating civil remedies for violations."
-            },
-            "Zablocki v. Redhail": {
-                year: 1978,
-                summary: "Struck down law restricting marriage for those behind on child support.",
-                ruling: "The Court ruled 8-1 that a Wisconsin law preventing marriage for people with outstanding child support obligations violated the right to marry.",
-                significance: "This reinforced that marriage is a fundamental right that cannot be denied based on financial status."
-            },
-            "Turner v. Safley": {
-                year: 1987,
-                summary: "Established prisoners' right to marry.",
-                ruling: "The Court ruled that prison regulations restricting inmates' right to marry must be reasonably related to legitimate penological interests.",
-                significance: "This recognized that even incarcerated individuals retain the fundamental right to marry, though prisons can impose reasonable restrictions."
-            },
-            "Obergefell v. Hodges": {
-                year: 2015,
-                summary: "Legalized same-sex marriage nationwide.",
-                ruling: "The Court ruled 5-4 that the fundamental right to marry extends to same-sex couples under the Due Process and Equal Protection Clauses.",
-                significance: "This made same-sex marriage legal in all 50 states, representing one of the fastest civil rights transformations in American history."
-            },
-            "Bethel School District v. Fraser": {
-                year: 1986,
-                summary: "Schools can punish vulgar or lewd speech.",
-                ruling: "The Court ruled 7-2 that schools can discipline students for sexual innuendo and vulgar language in school assemblies.",
-                significance: "This created an exception to Tinker, distinguishing political speech (protected) from lewd speech (not protected) in schools."
-            },
-            "Hazelwood v. Kuhlmeier": {
-                year: 1988,
-                summary: "Schools can censor school-sponsored student publications.",
-                ruling: "The Court ruled 5-3 that schools can censor school-sponsored newspapers and other expressive activities if educationally justified.",
-                significance: "This gave schools broad authority over student journalism and school-sponsored speech, further limiting Tinker's protections."
-            },
-            "Morse v. Frederick": {
-                year: 2007,
-                summary: "Schools can restrict speech promoting illegal drug use.",
-                ruling: "The Court ruled 5-4 that schools can punish student speech advocating illegal drug use, even off school grounds at school events.",
-                significance: "This created another exception to Tinker for drug-related speech, expanding schools' censorship authority beyond the schoolhouse gate."
-            },
-            "Mahanoy Area School District v. B.L.": {
-                year: 2021,
-                summary: "Schools have limited authority over off-campus student speech.",
-                ruling: "The Court ruled 8-1 that schools have diminished authority to regulate off-campus speech but didn't establish clear boundaries.",
-                significance: "This addressed social media but left many questions unanswered about when schools can punish students for posts made outside school."
-            },
-            "Griswold v. Connecticut": {
-                year: 1965,
-                summary: "Established constitutional right to privacy for contraception.",
-                ruling: "The Court ruled 7-2 that married couples have a right to privacy that protects their use of contraception.",
-                significance: "This created the constitutional right to privacy that became the foundation for Roe and other privacy-based decisions."
-            },
-            "Planned Parenthood v. Casey": {
-                year: 1992,
-                summary: "Reaffirmed Roe but replaced trimester framework with undue burden test.",
-                ruling: "The Court ruled 5-4 to preserve Roe's core holding while allowing states to regulate abortion if they don't create an 'undue burden.'",
-                significance: "This preserved abortion rights while permitting waiting periods, parental consent, and counseling requirements that Roe might have prohibited."
-            },
-            "Whole Woman's Health v. Hellerstedt": {
-                year: 2016,
-                summary: "Struck down Texas abortion clinic regulations as undue burdens.",
-                ruling: "The Court ruled 5-3 that Texas regulations requiring hospital admitting privileges and surgical-center standards imposed undue burdens without health benefits.",
-                significance: "This was the Court's strongest affirmation of abortion rights in decades, requiring evidence that restrictions actually promote health."
-            },
-            "Dobbs v. Jackson Women's Health Organization": {
-                year: 2022,
-                summary: "Overturned Roe and Casey, returning abortion regulation to states.",
-                ruling: "The Court ruled 6-3 that the Constitution does not protect a right to abortion, overruling Roe and Casey.",
-                significance: "This ended the constitutional right to abortion after 49 years, allowing states to ban or severely restrict abortion."
-            },
-            "United States v. Eichman": {
-                year: 1990,
-                summary: "Struck down federal Flag Protection Act.",
-                ruling: "The Court ruled 5-4 that a federal law criminalizing flag desecration violated the First Amendment, following Texas v. Johnson.",
-                significance: "This reaffirmed that even content-neutral laws protecting the flag violate free speech, ending legislative attempts to ban flag burning."
-            },
-            "Buckley v. Valeo": {
-                year: 1976,
-                summary: "Equated campaign spending with speech but upheld contribution limits.",
-                ruling: "The Court ruled that spending money on campaigns is protected speech, but contribution limits to prevent corruption are constitutional.",
-                significance: "This created the framework that spending = speech while allowing some regulation, setting up the tensions that led to Citizens United."
-            },
-            "Austin v. Michigan Chamber of Commerce": {
-                year: 1990,
-                summary: "Upheld restrictions on corporate political spending.",
-                ruling: "The Court ruled 6-3 that states can prohibit corporations from using treasury funds for independent political expenditures.",
-                significance: "This case was explicitly overruled by Citizens United, which rejected the idea that corporate wealth poses unique corruption risks."
-            },
-            "SpeechNow.org v. FEC": {
-                year: 2010,
-                summary: "Allowed unlimited contributions to Super PACs.",
-                ruling: "A federal appeals court applied Citizens United to rule that individuals can make unlimited contributions to independent expenditure committees.",
-                significance: "This created Super PACs and unleashed unlimited money into politics, as donors can give unlimited amounts to groups making 'independent' expenditures."
-            },
-            "McCutcheon v. FEC": {
-                year: 2014,
-                summary: "Struck down aggregate contribution limits.",
-                ruling: "The Court ruled 5-4 that limits on the total amount individuals can contribute to all federal candidates and committees combined violate the First Amendment.",
-                significance: "This allowed wealthy donors to contribute to unlimited numbers of candidates, dramatically increasing the influence of mega-donors."
-            },
-            "Bowers v. Hardwick": {
-                year: 1986,
-                summary: "Upheld laws criminalizing same-sex intimacy.",
-                ruling: "The Court ruled 5-4 that states can criminalize consensual same-sex sexual conduct, finding no constitutional right to such privacy.",
-                significance: "This decision legitimized discrimination against LGBTQ+ people until Lawrence v. Texas overruled it 17 years later."
-            },
-            "Lawrence v. Texas": {
-                year: 2003,
-                summary: "Struck down laws criminalizing same-sex intimacy.",
-                ruling: "The Court ruled 6-3 that laws prohibiting consensual same-sex sexual conduct violate the Due Process Clause, overruling Bowers.",
-                significance: "This decriminalized same-sex relationships nationwide and laid the groundwork for marriage equality in Obergefell."
-            },
-            "United States v. Windsor": {
-                year: 2013,
-                summary: "Struck down federal definition of marriage as opposite-sex only.",
-                ruling: "The Court ruled 5-4 that the Defense of Marriage Act's federal definition of marriage violated equal protection by denying federal benefits to same-sex couples.",
-                significance: "This required federal recognition of state-legal same-sex marriages and set the stage for nationwide marriage equality in Obergefell."
-            },
-            "Masterpiece Cakeshop v. Colorado": {
-                year: 2018,
-                summary: "Ruled for baker on narrow grounds of government religious hostility.",
-                ruling: "The Court ruled 7-2 for a baker who refused to make a same-sex wedding cake, but only because the civil rights commission showed hostility toward his religion.",
-                significance: "This avoided establishing a broad religious exemption from anti-discrimination laws, leaving the core conflict between religious liberty and LGBTQ+ rights unresolved."
-            },
-            "303 Creative v. Elenis": {
-                year: 2023,
-                summary: "Website designer can't be compelled to create same-sex wedding sites.",
-                ruling: "The Court ruled 6-3 that requiring a website designer to create same-sex wedding websites would violate her First Amendment right against compelled speech.",
-                significance: "This established that some businesses can refuse service to same-sex couples when the service involves expression, raising questions about discrimination limits."
-            },
-            "Students for Fair Admissions v. Harvard": {
-                year: 2023,
-                summary: "Struck down race-conscious college admissions.",
-                ruling: "The Court ruled 6-3 that Harvard and UNC's consideration of race in admissions violated the Equal Protection Clause, effectively ending affirmative action in higher education.",
-                significance: "This overturned decades of precedent allowing race as one factor in admissions, dramatically changing college diversity efforts nationwide."
-            },
-            "United States v. Lopez": {
-                year: 1995,
-                summary: "First case in decades limiting Congress's commerce power.",
-                ruling: "The Court ruled 5-4 that the Gun-Free School Zones Act exceeded Congress's Commerce Clause authority because carrying guns near schools wasn't economic activity.",
-                significance: "This marked the first time since the New Deal that the Court struck down a federal law as exceeding commerce power, suggesting limits to Wickard's expansive view."
-            },
-            "United States v. Morrison": {
-                year: 2000,
-                summary: "Struck down parts of Violence Against Women Act as exceeding commerce power.",
-                ruling: "The Court ruled 5-4 that Congress couldn't regulate gender-motivated violence under the Commerce Clause because it wasn't economic activity.",
-                significance: "This reinforced Lopez's limits on federal power and showed the Rehnquist Court's federalism revival, protecting state authority from federal encroachment."
-            },
-            "National Federation of Independent Business v. Sebelius": {
-                year: 2012,
-                summary: "Upheld Obamacare's individual mandate as a tax, but limited commerce power.",
-                ruling: "The Court ruled 5-4 that the individual mandate couldn't be justified under the Commerce Clause (can't compel commerce), but was valid as a tax.",
-                significance: "This further limited Wickard-style commerce power reasoning while creatively using taxing power to save the Affordable Care Act's core provision."
-            },
-            "Ex Parte Endo": {
-                year: 1944,
-                summary: "Government can't detain concededly loyal citizens.",
-                ruling: "The Court ruled unanimously that the government couldn't continue detaining Japanese Americans whose loyalty was conceded.",
-                significance: "Decided the same day as Korematsu, this provided some limits on internment but came too late for most internees who had already been detained for years."
-            },
-            "Hamdi v. Rumsfeld": {
-                year: 2004,
-                summary: "Enemy combatants have due process rights to challenge detention.",
-                ruling: "The Court ruled 8-1 that U.S. citizens detained as enemy combatants must be given meaningful opportunity to contest the basis for detention before a neutral decision-maker.",
-                significance: "Justice O'Connor wrote that 'a state of war is not a blank check for the President,' rejecting Korematsu-style deference to executive wartime claims."
-            },
-            "Trump v. Hawaii": {
-                year: 2018,
-                summary: "Upheld travel ban, formally overruled Korematsu.",
-                ruling: "The Court ruled 5-4 that President Trump's travel ban restricting entry from several Muslim-majority countries was within executive authority over immigration and national security.",
-                significance: "Chief Justice Roberts explicitly stated 'Korematsu was gravely wrong' and has 'no place in law under the Constitution,' formally overruling it after 74 years."
-            },
-            "Cooper v. Aaron": {
-                year: 1958,
-                summary: "Court's constitutional interpretations are supreme law binding all government officials.",
-                ruling: "The Court unanimously ruled that Arkansas officials must comply with Brown v. Board's desegregation mandate, declaring that judicial interpretations of the Constitution are the supreme law of the land.",
-                significance: "This reinforced Marbury's judicial review power and established that all government officials are bound by the Court's constitutional interpretations, not just parties to cases."
-            },
-            "Dred Scott v. Sandford": {
-                year: 1857,
-                summary: "Denied citizenship to Black Americans, declared Missouri Compromise unconstitutional.",
-                ruling: "The Court ruled 7-2 that people of African descent couldn't be U.S. citizens and that Congress couldn't prohibit slavery in territories.",
-                significance: "Widely considered the Court's worst decision, it accelerated the path to Civil War and was overruled by the 13th and 14th Amendments."
-            },
-            "McConnell v. FEC": {
-                year: 2003,
-                summary: "Upheld major provisions of McCain-Feingold campaign finance law.",
-                ruling: "The Court ruled 5-4 that restrictions on soft money and electioneering communications were constitutional efforts to prevent corruption.",
-                significance: "This validated campaign finance regulation, but was partially overruled by Citizens United seven years later."
-            },
-            "Grutter v. Bollinger": {
-                year: 2003,
-                summary: "Upheld race-conscious law school admissions for diversity.",
-                ruling: "The Court ruled 5-4 that Michigan Law School's holistic consideration of race to achieve diversity was constitutional and narrowly tailored.",
-                significance: "This reaffirmed Bakke's diversity rationale and set the framework for affirmative action until Students for Fair Admissions overruled it in 2023."
-            },
-            "Gratz v. Bollinger": {
-                year: 2003,
-                summary: "Struck down Michigan's undergraduate point-based admissions system.",
-                ruling: "The Court ruled 6-3 that automatically awarding points to underrepresented minorities was not narrowly tailored and violated equal protection.",
-                significance: "Decided the same day as Grutter, this required individualized consideration of race rather than mechanical systems, though both cases were later overruled."
-            },
-            "Fisher v. University of Texas": {
-                year: 2016,
-                summary: "Upheld University of Texas's race-conscious admissions after strict scrutiny.",
-                ruling: "The Court ruled 4-3 that Texas's consideration of race was narrowly tailored to achieve diversity when race-neutral alternatives proved insufficient.",
-                significance: "This was the Court's last major affirmative action decision before the composition changed, applying strict scrutiny but still upholding race-conscious admissions."
-            },
-            "Curtis Publishing Co. v. Butts": {
-                year: 1967,
-                summary: "Extended actual malice standard to public figures beyond government officials.",
-                ruling: "The Court extended New York Times v. Sullivan's actual malice requirement to public figures who aren't government officials.",
-                significance: "This expanded press freedom protections but made it harder for celebrities, athletes, and other public figures to win defamation cases."
-            },
-            "Gertz v. Robert Welch, Inc.": {
-                year: 1974,
-                summary: "Private figures need only prove negligence, not actual malice, in defamation cases.",
-                ruling: "The Court ruled that private individuals suing for defamation need only prove negligence rather than actual malice, creating a two-tier system.",
-                significance: "This balanced press freedom with protecting ordinary people's reputations, making it easier for non-public figures to win defamation suits."
-            },
-            "Abington School District v. Schempp": {
-                year: 1963,
-                summary: "Banned mandatory Bible reading in public schools.",
-                ruling: "The Court ruled 8-1 that state-sponsored Bible reading and Lord's Prayer recitation in public schools violate the Establishment Clause.",
-                significance: "This extended Engel v. Vitale one year later, reinforcing that government cannot sponsor religious exercises in public schools."
-            },
-            "Wallace v. Jaffree": {
-                year: 1985,
-                summary: "Struck down moment of silence law enacted for prayer purposes.",
-                ruling: "The Court ruled 6-3 that Alabama's moment of silence law was unconstitutional because legislative history showed it was enacted to return prayer to schools.",
-                significance: "This showed that even neutral-seeming practices violate the Establishment Clause when motivated by religious purpose."
-            },
-            "Lee v. Weisman": {
-                year: 1992,
-                summary: "Banned clergy-led prayer at public school graduation ceremonies.",
-                ruling: "The Court ruled 5-4 that school-sponsored prayer at graduation violates the Establishment Clause due to coercive pressure on students.",
-                significance: "This extended school prayer bans to graduation ceremonies, emphasizing that even voluntary participation involves subtle coercion in school settings."
-            },
-            "Santa Fe Independent School District v. Doe": {
-                year: 2000,
-                summary: "Struck down student-led prayer at football games.",
-                ruling: "The Court ruled 6-3 that student-led, student-initiated prayer broadcast over PA system at football games violates the Establishment Clause.",
-                significance: "This showed that prayer at school-sponsored events violates the Establishment Clause even when delivered by students rather than staff."
-            },
-            "Respect for Marriage Act": {
-                year: 2022,
-                summary: "Federal law requiring recognition of out-of-state same-sex marriages.",
-                ruling: "Congress passed this law requiring states to recognize same-sex marriages performed in other states, even if Obergefell is overturned.",
-                significance: "This provides statutory protection for same-sex marriage independent of Obergefell, though it doesn't require states to issue licenses."
-            }
+        // Oyez.org URLs for Supreme Court cases
+        const OYEZ_LINKS = {
+            "Plessy v. Ferguson": "https://www.oyez.org/cases/1850-1900/163us537",
+            "Brown II": "https://www.oyez.org/cases/1954/1",
+            "Green v. County School Board": "https://www.oyez.org/cases/1967/695",
+            "Swann v. Charlotte-Mecklenburg": "https://www.oyez.org/cases/1970/281",
+            "Parents Involved in Community Schools v. Seattle": "https://www.oyez.org/cases/2006/05-908",
+            "Weeks v. United States": "https://www.oyez.org/cases/1900-1940/232us383",
+            "United States v. Leon": "https://www.oyez.org/cases/1983/82-1771",
+            "Hudson v. Michigan": "https://www.oyez.org/cases/2005/04-1360",
+            "Herring v. United States": "https://www.oyez.org/cases/2008/07-513",
+            "Betts v. Brady": "https://www.oyez.org/cases/1940-1955/316us455",
+            "Argersinger v. Hamlin": "https://www.oyez.org/cases/1971/70-5015",
+            "Alabama v. Shelton": "https://www.oyez.org/cases/2001/00-1214",
+            "Strickland v. Washington": "https://www.oyez.org/cases/1983/82-1554",
+            "New York v. Quarles": "https://www.oyez.org/cases/1983/82-1213",
+            "Berghuis v. Thompkins": "https://www.oyez.org/cases/2009/08-1470",
+            "Maryland v. Shatzer": "https://www.oyez.org/cases/2009/08-680",
+            "Vega v. Tekoh": "https://www.oyez.org/cases/2021/21-499",
+            "Zablocki v. Redhail": "https://www.oyez.org/cases/1977/76-879",
+            "Turner v. Safley": "https://www.oyez.org/cases/1986/85-1384",
+            "Obergefell v. Hodges": "https://www.oyez.org/cases/2014/14-556",
+            "Bethel School District v. Fraser": "https://www.oyez.org/cases/1985/84-1667",
+            "Hazelwood v. Kuhlmeier": "https://www.oyez.org/cases/1987/86-836",
+            "Morse v. Frederick": "https://www.oyez.org/cases/2006/06-278",
+            "Mahanoy Area School District v. B.L.": "https://www.oyez.org/cases/2020/20-255",
+            "Griswold v. Connecticut": "https://www.oyez.org/cases/1964/496",
+            "Planned Parenthood v. Casey": "https://www.oyez.org/cases/1991/91-744",
+            "Whole Woman's Health v. Hellerstedt": "https://www.oyez.org/cases/2015/15-274",
+            "Dobbs v. Jackson Women's Health Organization": "https://www.oyez.org/cases/2021/19-1392",
+            "United States v. Eichman": "https://www.oyez.org/cases/1989/89-1433",
+            "Buckley v. Valeo": "https://www.oyez.org/cases/1975/75-436",
+            "Austin v. Michigan Chamber of Commerce": "https://www.oyez.org/cases/1989/88-1569",
+            "SpeechNow.org v. FEC": null, // Federal appeals court case, not on Oyez
+            "McCutcheon v. FEC": "https://www.oyez.org/cases/2013/12-536",
+            "Bowers v. Hardwick": "https://www.oyez.org/cases/1985/85-140",
+            "Lawrence v. Texas": "https://www.oyez.org/cases/2002/02-102",
+            "United States v. Windsor": "https://www.oyez.org/cases/2012/12-307",
+            "Masterpiece Cakeshop v. Colorado": "https://www.oyez.org/cases/2017/16-111",
+            "303 Creative v. Elenis": "https://www.oyez.org/cases/2022/21-476",
+            "Students for Fair Admissions v. Harvard": "https://www.oyez.org/cases/2022/20-1199",
+            "United States v. Lopez": "https://www.oyez.org/cases/1994/93-1260",
+            "United States v. Morrison": "https://www.oyez.org/cases/1999/99-5",
+            "National Federation of Independent Business v. Sebelius": "https://www.oyez.org/cases/2011/11-393",
+            "Ex Parte Endo": "https://www.oyez.org/cases/1940-1955/323us283",
+            "Hamdi v. Rumsfeld": "https://www.oyez.org/cases/2003/03-6696",
+            "Trump v. Hawaii": "https://www.oyez.org/cases/2017/17-965",
+            "Cooper v. Aaron": "https://www.oyez.org/cases/1958/1",
+            "Dred Scott v. Sandford": "https://www.oyez.org/cases/1850-1900/60us393",
+            "McConnell v. FEC": "https://www.oyez.org/cases/2003/02-1674",
+            "Grutter v. Bollinger": "https://www.oyez.org/cases/2002/02-241",
+            "Gratz v. Bollinger": "https://www.oyez.org/cases/2002/02-516",
+            "Fisher v. University of Texas": "https://www.oyez.org/cases/2015/14-981",
+            "Curtis Publishing Co. v. Butts": "https://www.oyez.org/cases/1966/150",
+            "Gertz v. Robert Welch, Inc.": "https://www.oyez.org/cases/1973/72-617",
+            "Abington School District v. Schempp": "https://www.oyez.org/cases/1962/142",
+            "Wallace v. Jaffree": "https://www.oyez.org/cases/1984/83-812",
+            "Lee v. Weisman": "https://www.oyez.org/cases/1991/90-1014",
+            "Santa Fe Independent School District v. Doe": "https://www.oyez.org/cases/1999/99-62",
+            "Respect for Marriage Act": null // This is a law, not a case
         };
 
-        // Component to render text with clickable case links
-        const CaseText = ({ text, onCaseClick }) => {
+        // Component to render text with clickable case links that open Oyez
+        const CaseText = ({ text }) => {
             const parts = [];
             let lastIndex = 0;
             
-            Object.keys(CASE_DATABASE).forEach(caseName => {
+            // Find all case references in the text
+            Object.keys(OYEZ_LINKS).forEach(caseName => {
                 const regex = new RegExp(caseName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
                 let match;
                 
                 while ((match = regex.exec(text)) !== null) {
+                    // Add text before the match
                     if (match.index > lastIndex) {
                         parts.push({
                             type: 'text',
@@ -453,9 +166,11 @@
                         });
                     }
                     
+                    // Add the case link
                     parts.push({
                         type: 'case',
                         content: caseName,
+                        url: OYEZ_LINKS[caseName],
                         key: `case-${match.index}`,
                         index: match.index
                     });
@@ -464,6 +179,7 @@
                 }
             });
             
+            // Add remaining text
             if (lastIndex < text.length) {
                 parts.push({
                     type: 'text',
@@ -472,12 +188,14 @@
                 });
             }
             
+            // Sort parts by their position in the original text
             parts.sort((a, b) => {
                 const aIndex = a.index !== undefined ? a.index : parseInt(a.key.split('-')[1]);
                 const bIndex = b.index !== undefined ? b.index : parseInt(b.key.split('-')[1]);
                 return aIndex - bIndex;
             });
             
+            // Remove duplicates (in case overlapping matches)
             const uniqueParts = [];
             let currentPos = 0;
             
@@ -492,12 +210,18 @@
             return (
                 <>
                     {uniqueParts.map(part => 
-                        part.type === 'case' ? (
-                            <span
+                        part.type === 'case' && part.url ? (
+                            <a
                                 key={part.key}
+                                href={part.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="case-link"
-                                onClick={() => onCaseClick(part.content)}
                             >
+                                {part.content}
+                            </a>
+                        ) : part.type === 'case' ? (
+                            <span key={part.key} className="case-link" style={{cursor: 'not-allowed', opacity: 0.5}} title="No Oyez page available">
                                 {part.content}
                             </span>
                         ) : (
@@ -508,67 +232,12 @@
             );
         };
 
-        const CaseModal = ({ caseName, onClose }) => {
-            if (!caseName || !CASE_DATABASE[caseName]) return null;
-            
-            const caseData = CASE_DATABASE[caseName];
-            
-            return (
-                <div 
-                    className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50"
-                    onClick={onClose}
-                >
-                    <div 
-                        className="bg-slate-800 rounded-2xl p-6 max-w-2xl w-full border-2 border-blue-500/30 shadow-2xl max-h-[80vh] overflow-y-auto"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <div className="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 className="text-2xl font-bold text-white mb-1">{caseName}</h3>
-                                <p className="text-blue-300 font-semibold">{caseData.year}</p>
-                            </div>
-                            <button
-                                onClick={onClose}
-                                className="text-slate-400 hover:text-white transition-colors"
-                            >
-                                <XIcon />
-                            </button>
-                        </div>
-                        
-                        <div className="space-y-4">
-                            <div>
-                                <h4 className="text-lg font-semibold text-blue-300 mb-2">Summary</h4>
-                                <p className="text-slate-200 leading-relaxed">{caseData.summary}</p>
-                            </div>
-                            
-                            <div>
-                                <h4 className="text-lg font-semibold text-green-300 mb-2">The Ruling</h4>
-                                <p className="text-slate-200 leading-relaxed">{caseData.ruling}</p>
-                            </div>
-                            
-                            <div>
-                                <h4 className="text-lg font-semibold text-purple-300 mb-2">Why It Matters</h4>
-                                <p className="text-slate-200 leading-relaxed">{caseData.significance}</p>
-                            </div>
-                        </div>
-                        
-                        <button
-                            onClick={onClose}
-                            className="mt-6 w-full px-4 py-2 bg-blue-500 hover:bg-blue-400 rounded-lg transition-colors font-semibold"
-                        >
-                            Close
-                        </button>
-                    </div>
-                </div>
-            );
-        };
 
         const SupremeCourtGame = () => {
             const [currentCase, setCurrentCase] = useState(null);
             const [gamePhase, setGamePhase] = useState('menu');
             const [expandedSections, setExpandedSections] = useState({});
             const [completedCases, setCompletedCases] = useState(new Set());
-            const [selectedCaseModal, setSelectedCaseModal] = useState(null);
 
             const cases = [
                 {
@@ -1064,7 +733,7 @@ modernControversy: "SFFA sparked intense debate. Supporters argue it ends racial
                                                     {expandedSections.contextDeep && (
                                                         <div className="mt-3 p-4 bg-slate-800/50 rounded-lg">
                                                             <p className="text-sm leading-relaxed">
-                                                                <CaseText text={currentCaseData.contextDeep} onCaseClick={setSelectedCaseModal} />
+                                                                <CaseText text={currentCaseData.contextDeep}  />
                                                             </p>
                                                         </div>
                                                     )}
@@ -1089,7 +758,7 @@ modernControversy: "SFFA sparked intense debate. Supporters argue it ends racial
                                                     {expandedSections.factsDeep && (
                                                         <div className="mt-3 p-4 bg-slate-800/50 rounded-lg">
                                                             <p className="text-sm leading-relaxed">
-                                                                <CaseText text={currentCaseData.factsDeep} onCaseClick={setSelectedCaseModal} />
+                                                                <CaseText text={currentCaseData.factsDeep}  />
                                                             </p>
                                                         </div>
                                                     )}
@@ -1126,21 +795,21 @@ modernControversy: "SFFA sparked intense debate. Supporters argue it ends racial
                                             <div className="bg-slate-800/50 rounded-lg p-5 border border-slate-700">
                                                 <h4 className="text-lg font-semibold text-orange-300 mb-3">Dissenting Opinions</h4>
                                                 <p className="text-sm leading-relaxed">
-                                                    <CaseText text={currentCaseData.deepDive.dissent} onCaseClick={setSelectedCaseModal} />
+                                                    <CaseText text={currentCaseData.deepDive.dissent}  />
                                                 </p>
                                             </div>
 
                                             <div className="bg-slate-800/50 rounded-lg p-5 border border-slate-700">
                                                 <h4 className="text-lg font-semibold text-green-300 mb-3">Later Cases & Evolution</h4>
                                                 <p className="text-sm leading-relaxed">
-                                                    <CaseText text={currentCaseData.deepDive.laterCases} onCaseClick={setSelectedCaseModal} />
+                                                    <CaseText text={currentCaseData.deepDive.laterCases}  />
                                                 </p>
                                             </div>
 
                                             <div className="bg-slate-800/50 rounded-lg p-5 border border-slate-700">
                                                 <h4 className="text-lg font-semibold text-red-300 mb-3">Modern Controversy</h4>
                                                 <p className="text-sm leading-relaxed">
-                                                    <CaseText text={currentCaseData.deepDive.modernControversy} onCaseClick={setSelectedCaseModal} />
+                                                    <CaseText text={currentCaseData.deepDive.modernControversy}  />
                                                 </p>
                                             </div>
                                         </div>
@@ -1168,16 +837,3 @@ modernControversy: "SFFA sparked intense debate. Supporters argue it ends racial
                         )}
                     </div>
                 </div>
-
-                {selectedCaseModal && (
-                    <CaseModal 
-                        caseName={selectedCaseModal} 
-                        onClose={() => setSelectedCaseModal(null)} 
-                    />
-                )}
-            </div>
-        );
-    };
-
-    ReactDOM.render(<SupremeCourtGame />, document.getElementById('root'));
-</script>
